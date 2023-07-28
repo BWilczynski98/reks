@@ -9,12 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/hoist-non-react-statics": "^3.3.1",
     "@types/node": "20.4.5",
     "@types/react": "18.2.16",
     "@types/react-dom": "18.2.7",
+    "@types/use-sync-external-store": "^0.0.3",
     "autoprefixer": "10.4.14",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.12",
+    "hoist-non-react-statics": "^3.3.2",
     "next": "13.4.12",
     "postcss": "8.4.27",
     "react": "18.2.0",
