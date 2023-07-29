@@ -1,10 +1,10 @@
 {
   "semi": false,
   "trailingComma": "es5",
+  "singleQuote": false,
   "tabWidth": 2,
   "useTabs": false,
   "proseWrap": "always",
   "printWidth": 120,
-  "singleAttributePerLine": true,
-  "parser": "html"
+  "singleAttributePerLine": true
 }
