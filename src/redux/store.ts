@@ -1,15 +1,19 @@
-import { configureStore } from "@reduxjs/toolkit"
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
+import { setupListeners } from "@reduxjs/toolkit/dist/query"
 import counterReducer from "./features/counterSlice"
 import { userApi } from "./services/userApi"
-import { setupListeners } from "@reduxjs/toolkit/dist/query"
+
+export const rootReducer = combineReducers({
+  counterReducer,
+  [userApi.reducerPath]: userApi.reducer,
+})
+
+export const rootMiddleware = [userApi.middleware]
 
 export const store = configureStore({
-  reducer: {
-    counterReducer,
-    [userApi.reducerPath]: userApi.reducer,
-  },
+  reducer: rootReducer,
   devTools: process.env.NODE_ENV !== "production",
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({}).concat([userApi.middleware]),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(rootMiddleware),
 })
 
 setupListeners(store.dispatch)

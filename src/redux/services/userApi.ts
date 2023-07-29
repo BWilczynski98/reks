@@ -1,27 +1,16 @@
-// api for test
+import { emptySplitApi as api } from "../emptyApi"
 
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-
-type User = {
-  id: number
-  name: string
-  email: number
-}
-
-export const userApi = createApi({
-  reducerPath: "userApi",
-  refetchOnFocus: true,
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://jsonplaceholder.typicode.com/",
-  }),
-  endpoints: (builder) => ({
-    getUsers: builder.query<User[], null>({
-      query: () => "users",
-    }),
-    getUserById: builder.query<User, { id: string }>({
-      query: ({ id }) => `users/${id}`,
+const injectedRtkApi = api.injectEndpoints({
+  endpoints: (build) => ({
+    createUser: build.mutation({
+      query: (user) => ({
+        url: "/user/register",
+        method: "POST",
+        body: user,
+      }),
     }),
   }),
 })
 
-export const { useGetUsersQuery, useGetUserByIdQuery } = userApi
+export const { useCreateUserMutation } = injectedRtkApi
+export { injectedRtkApi as userApi }
