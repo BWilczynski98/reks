@@ -7,8 +7,6 @@ export default function Home() {
   const count = useAppSelector((state) => state.counterReducer.value)
   const dispatch = useAppDispatch()
   const { data } = useGetUsersQuery(null)
-  console.log(count)
-  console.log(data)
 
   return (
     <main>
