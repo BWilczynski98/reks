@@ -5,5 +5,6 @@
   "useTabs": false,
   "proseWrap": "always",
   "printWidth": 120,
-  "singleAttributePerLine": true
+  "singleAttributePerLine": true,
+  "parser": "html"
 }
