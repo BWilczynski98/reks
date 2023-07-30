@@ -10,6 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
     "@prisma/client": "^5.0.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/hoist-non-react-statics": "^3.3.1",
@@ -28,11 +29,15 @@
     "next-auth": "^4.22.3",
     "postcss": "8.4.27",
     "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.45.2",
+    "react-icons": "^4.10.1",
     "react-redux": "^8.1.1",
     "tailwindcss": "3.3.3",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
