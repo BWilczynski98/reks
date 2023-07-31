@@ -25,6 +25,24 @@ const schema = yup
 type FormData = yup.InferType<typeof schema>
 
 export default function RegisterPage() {
+  useEffect(() => {
+    // Funkcja, która sprawdzi, czy urządzenie obsługuje blokowanie orientacji
+    function lockOrientation() {
+      if ("orientation" in window.screen) {
+        // Blokowanie orientacji na urządzeniach mobilnych w trybie portretowym
+        window.screen.orientation.lock("portrait").catch((err) => {
+          console.error("Nie udało się zablokować orientacji:", err)
+        })
+      }
+    }
+
+    // Wywołujemy funkcję do zablokowania orientacji po załadowaniu strony
+    lockOrientation()
+
+    // Ponieważ lock() API jest obsługiwane tylko na urządzeniach mobilnych,
+    // możemy obsłużyć także zmianę orientacji na desktopach, aby przywrócić orientację portretową.
+  }, [])
+
   const {
     control,
     handleSubmit,
