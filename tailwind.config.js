@@ -11,6 +11,7 @@ module.exports = {
       default: "4px",
     },
     colors: {
+      background: "#FAFAFA",
       primary: {
         50: "#f3f2ff",
         100: "#eae7ff",
