@@ -26,9 +26,8 @@ type FormData = yup.InferType<typeof schema>
 
 export default function RegisterPage() {
   useEffect(() => {
-    return () => {
-      screen.orientation.lock("portrait")
-    }
+    console.log("lock")
+    screen.orientation.lock("portrait")
   }, [])
 
   const {
