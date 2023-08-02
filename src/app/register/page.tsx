@@ -16,7 +16,7 @@ import { Errors } from "../types/errorsDictionary"
 import { Alert } from "../components/UI/Alert"
 import { Severity } from "../types/alert"
 import { TextFieldType } from "../types/textfield"
-import { useAlert } from "../hooks/useDisclose"
+import { useAlert } from "../hooks/useAlert"
 
 const schema = yup
   .object({
