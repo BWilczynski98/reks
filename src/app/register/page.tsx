@@ -63,7 +63,7 @@ export default function RegisterPage() {
     setPasswordVisibility((prev) => !prev)
   }
 
-  const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
+  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     setIsLoading(true)
     createUser({ email: data.email.toLowerCase(), password: data.password })
       .unwrap()
