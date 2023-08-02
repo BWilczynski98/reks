@@ -1,7 +1,7 @@
 import { body } from "@/app/lib/fonts"
-import React from "react"
-import cx from "classnames"
 import { TextFieldType } from "@/app/types/textfield"
+import cx from "classnames"
+import React from "react"
 
 type Props = {
   placeholder?: string
@@ -65,16 +65,17 @@ export const TextField = ({
           value={value}
           onChange={(e) => onChange(e.target.value)}
         />
-
-        <span
-          className={cx(
-            "text-[18px] sm:text-[24px] absolute top-1/2 right-5 transform -translate-y-1/2 cursor-pointer text-neutral-950",
-            { "text-red-500": error }
-          )}
-          onClick={handleTogglePasswordVisbility}
-        >
-          {icon}
-        </span>
+        {icon ? (
+          <span
+            className={cx(
+              "text-[18px] sm:text-[24px] absolute top-1/2 right-5 transform -translate-y-1/2 cursor-pointer text-neutral-400",
+              { "text-red-500": error }
+            )}
+            onClick={handleTogglePasswordVisbility}
+          >
+            {icon}
+          </span>
+        ) : null}
       </div>
       {error ? (
         <div>

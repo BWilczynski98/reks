@@ -1,22 +1,21 @@
 "use client"
 import { useCreateUserMutation } from "@/redux/services/userApi"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
 import * as yup from "yup"
 import { Banner } from "../assets/svg/banner"
+import { Alert } from "../components/UI/Alert"
 import { Button } from "../components/UI/Button"
 import { Logo } from "../components/UI/Logo/Logo"
 import { Navigator } from "../components/UI/Navigator"
 import { PageTitle } from "../components/UI/PageTitle"
 import { TextField } from "../components/UI/TextField"
-import { useRouter } from "next/navigation"
-import { Errors } from "../types/errorsDictionary"
-import { Alert } from "../components/UI/Alert"
-import { Severity } from "../types/alert"
-import { TextFieldType } from "../types/textfield"
 import { useAlert } from "../hooks/useAlert"
+import { Errors } from "../types/errorsDictionary"
+import { TextFieldType } from "../types/textfield"
 
 const schema = yup
   .object({
@@ -55,17 +54,13 @@ export default function RegisterPage() {
   })
   const router = useRouter()
   const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
-  const [confirmPasswordVisibility, setConfirmPasswordVisibility] = useState<boolean>(false)
+
   const [createUser] = useCreateUserMutation()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { alert, handleOpen: handleOpenAlert, handleClose: handleCloseAlert } = useAlert()
 
   const handleTogglePasswordVisbility = () => {
     setPasswordVisibility((prev) => !prev)
-  }
-
-  const handleToggleConfirmPasswordVisbility = () => {
-    setConfirmPasswordVisibility((prev) => !prev)
   }
 
   const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
@@ -132,7 +127,7 @@ export default function RegisterPage() {
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TextField
-                  placeholder={passwordVisibility ? "haslo" : "*****"}
+                  placeholder={passwordVisibility ? "haslo" : "•••••"}
                   label="Hasło"
                   type={passwordVisibility ? TextFieldType.TEXT : TextFieldType.PASSWORD}
                   name="password"
@@ -151,15 +146,14 @@ export default function RegisterPage() {
               control={control}
               render={({ field: { onChange, value } }) => (
                 <TextField
-                  placeholder={confirmPasswordVisibility ? "haslo" : "*****"}
+                  placeholder={passwordVisibility ? "haslo" : "•••••"}
                   label="Powtórz hasło"
-                  type={confirmPasswordVisibility ? TextFieldType.TEXT : TextFieldType.PASSWORD}
+                  type={passwordVisibility ? TextFieldType.TEXT : TextFieldType.PASSWORD}
                   name="confirmPassword"
                   id="confirmPassword"
                   onChange={onChange}
                   value={value}
-                  icon={confirmPasswordVisibility ? <AiFillEye /> : <AiFillEyeInvisible />}
-                  handleTogglePasswordVisbility={handleToggleConfirmPasswordVisbility}
+                  handleTogglePasswordVisbility={handleTogglePasswordVisbility}
                   error={!!errors.confirmPassword}
                   errorMessage={errors.confirmPassword?.message}
                 />
