@@ -1,12 +1,14 @@
 import { body } from "@/app/lib/fonts"
 import React from "react"
+import cx from "classnames"
+import { TextFieldType } from "@/app/types/textfield"
 
 type Props = {
   placeholder?: string
   label?: string
   name?: string
   id?: string
-  type?: "text" | "password" | "email" | "number"
+  type?: TextFieldType
   required?: boolean
   error?: boolean
   errorMessage?: string
@@ -21,7 +23,7 @@ export const TextField = ({
   label,
   name,
   id,
-  type = "text",
+  type = TextFieldType.TEXT,
   required = false,
   error = false,
   errorMessage,
@@ -31,21 +33,29 @@ export const TextField = ({
   onChange,
 }: Props) => {
   return (
-    <div className={`${body.className} flex gap-1 flex-col w-[80vh] max-w-[254px]`}>
+    <div className={`${body.className} flex gap-1 flex-col w-full`}>
       <div>
         <label
           htmlFor={name}
-          className={`text-sm sm:text-base font-medium ${error ? "text-red-500" : "text-neutral-950 "}`}
+          className={cx("text-sm sm:text-base font-medium, text-neutral-950", {
+            "text-red-500": error,
+          })}
         >
           {label}
         </label>
       </div>
       <div className="relative">
         <input
-          className={`w-full px-3 py-4 text-sm sm:text-base outline-none ring-1 ring-neutral-400 ring-inset focus:ring-2 rounded-default 
-          ${!error && "focus:ring-primary-700"} ${error ? "ring-red-500" : "ring-neutral-400"} ${
-            error ? "placeholder:text-red-300" : "placeholder:text-neutral-200"
-          } text-neutral-950`}
+          className={cx(
+            "w-full px-3 py-4 text-sm sm:text-base outline-none ring-1 ring-neutral-400 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700",
+            {
+              "pl-3": icon,
+              "pr-12": icon,
+              "ring-red-500": error,
+              "focus:ring-red-500": error,
+              "placeholder:text-red-300": error,
+            }
+          )}
           name={name}
           id={id}
           type={type}
@@ -57,9 +67,10 @@ export const TextField = ({
         />
 
         <span
-          className={`text-[18px] sm:text-[24px] absolute top-1/2 right-5 transform -translate-y-1/2 cursor-pointer ${
-            error ? "text-red-500" : "text-neutral-950"
-          }`}
+          className={cx(
+            "text-[18px] sm:text-[24px] absolute top-1/2 right-5 transform -translate-y-1/2 cursor-pointer text-neutral-950",
+            { "text-red-500": error }
+          )}
           onClick={handleTogglePasswordVisbility}
         >
           {icon}
@@ -67,7 +78,7 @@ export const TextField = ({
       </div>
       {error ? (
         <div>
-          <p className="text-base text-red-500">{errorMessage}</p>
+          <p className="text-sm text-red-500">{errorMessage}</p>
         </div>
       ) : null}
     </div>
