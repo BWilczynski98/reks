@@ -5,8 +5,8 @@ export const metadata: Metadata = {
   title: "Reks - rejestracja",
 }
 
-const CartLayout = ({ children }: { children: React.ReactNode }) => {
+const RegisterLayout = ({ children }: { children: React.ReactNode }) => {
   return <div>{children}</div>
 }
 
-export default CartLayout
+export default RegisterLayout
