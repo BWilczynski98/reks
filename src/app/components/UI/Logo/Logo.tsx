@@ -4,7 +4,7 @@ import React from "react"
 export const Logo = () => {
   return (
     <div className={headline.className}>
-      <h1 className="text-2xl font-bold">
+      <h1 className="text-2xl font-bold sm:text-3xl">
         <span className="text-primary-700">Reks&nbsp;</span>Manager
       </h1>
     </div>

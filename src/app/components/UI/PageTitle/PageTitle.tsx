@@ -6,5 +6,5 @@ type Props = {
 }
 
 export const PageTitle = ({ children }: Props) => {
-  return <h1 className={`${headline.className} text-xl font-bold text-center w-full`}>{children}</h1>
+  return <h1 className={`${headline.className} text-2xl font-bold text-center w-full sm:text-3xl`}>{children}</h1>
 }

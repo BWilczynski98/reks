@@ -9,7 +9,7 @@ type Props = {
 
 export const Navigator = ({ icon, description, span, onClick }: Props) => {
   return (
-    <div className="flex items-center justify-center select-none">
+    <div className="flex items-center justify-center text-sm select-none sm:text-base">
       <p>{icon}</p>
       <p>
         <span>{description}&nbsp;</span>
