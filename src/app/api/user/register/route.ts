@@ -6,7 +6,6 @@ import { NextResponse } from "next/server"
 export async function POST(req: NextRequest) {
   const body = await req.json()
   const { email, password } = body
-  console.log(body)
 
   // body empty input validation
   if (!email || !password) {
