@@ -7,3 +7,10 @@ export enum Errors {
   INCORRECT_CONFIRM_PASSWORD = "Hasła muszą być takie same",
   MIN_LENGTH_PASSWORD = "Hasło musi się składać z conajmniej 6 znaków",
 }
+
+export enum RequestErrors {
+  EMAIL_EXIST = "This email address is already exist",
+  EMPTY_DATA = "Please enter an email and password",
+  NO_USER_FOUND = "No user found",
+  INCORRECT_PASSWORD = "Incorrect password",
+}
