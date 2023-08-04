@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
 import * as yup from "yup"
-import { Alert, Button, Logo, Navigator, PageTitle, TextField, Banner } from "../components/UI"
+import { Alert, Button, Logo, Navigator, PageTitle, TextField, Banner } from "@/app/components/UI"
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useLayoutEffect } from "react"
@@ -13,6 +13,7 @@ import { ButtonType } from "../types/button"
 import { Errors } from "../types/errorsDictionary"
 import { Routes } from "../types/routes"
 import { TextFieldType } from "../types/textfield"
+import { body } from "../lib/fonts"
 
 const schema = yup.object({
   email: yup
@@ -126,7 +127,7 @@ export default function LoginPage() {
             />
             <div>
               <p
-                className="text-sm text-right cursor-pointer sm:text-base"
+                className={`${body.className} text-sm text-right cursor-pointer sm:text-base`}
                 onClick={() => router.push(Routes.RESET_PASSWORD)}
               >
                 Zapomniałeś/aś hasło?
