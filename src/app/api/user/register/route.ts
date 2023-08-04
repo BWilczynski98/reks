@@ -2,6 +2,7 @@ import bcrypt from "bcrypt"
 import { prisma } from "@/app/lib/prisma"
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
+import { RequestErrors } from "@/app/types/errorsDictionary"
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
@@ -20,7 +21,7 @@ export async function POST(req: NextRequest) {
   })
 
   if (exist) {
-    return new NextResponse("This email address is already exist", { status: 400 })
+    return new NextResponse(RequestErrors.EMAIL_EXIST, { status: 400 })
   }
 
   const hashedPassword = await bcrypt.hash(password, 10)
