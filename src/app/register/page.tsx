@@ -2,19 +2,15 @@
 import { useCreateUserMutation } from "@/redux/services/userApi"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
 import * as yup from "yup"
-import { Banner } from "../assets/svg/banner"
-import { Alert } from "../components/UI/Alert"
-import { Button } from "../components/UI/Button"
-import { Logo } from "../components/UI/Logo/Logo"
-import { Navigator } from "../components/UI/Navigator"
-import { PageTitle } from "../components/UI/PageTitle"
-import { TextField } from "../components/UI/TextField"
-import { useAlert } from "../hooks/useAlert"
+import { Alert, Button, Logo, Navigator, PageTitle, TextField, Banner } from "../components/UI"
+import { useAlert, useDisclose, useToggle } from "../hooks"
+import { Severity } from "../types/alert"
+import { ButtonType } from "../types/button"
 import { Errors } from "../types/errorsDictionary"
+import { Routes } from "../types/routes"
 import { TextFieldType } from "../types/textfield"
 
 const schema = yup
@@ -53,37 +49,32 @@ export default function RegisterPage() {
     },
   })
   const router = useRouter()
-  const [passwordVisibility, setPasswordVisibility] = useState<boolean>(false)
-
-  const [createUser] = useCreateUserMutation()
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { toggle: passwordVisibility, handleToggle: handleTogglePasswordVisbility } = useToggle()
   const { alert, handleOpen: handleOpenAlert, handleClose: handleCloseAlert } = useAlert()
+  const [createUser] = useCreateUserMutation()
+  const { state: isLoading, handleOpen: startLoading, handleClose: stopLoading } = useDisclose()
 
-  const handleTogglePasswordVisbility = () => {
-    setPasswordVisibility((prev) => !prev)
-  }
-
-  const onSubmit: SubmitHandler<FormData> = (data: FormData) => {
-    setIsLoading(true)
+  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+    startLoading()
     createUser({ email: data.email.toLowerCase(), password: data.password })
       .unwrap()
       .then((res) => {
         console.log(res)
-        router.push("/login")
+        router.push(Routes.LOGIN)
         resetField("email")
         resetField("password")
         resetField("confirmPassword")
       })
       .catch((error) => {
         console.log(error)
-        handleOpenAlert({ status: error.originalStatus, data: error.data })
+        handleOpenAlert({ severity: Severity.ERROR, data: error.data })
       })
-      .finally(() => setIsLoading(false))
+      .finally(() => stopLoading())
   }
 
   return (
     <main className="flex">
-      <div className="hidden w-1/2 h-screen border xl:block">
+      <div className="hidden w-1/2 h-screen xl:block">
         <Banner />
       </div>
       <div className="relative flex flex-col items-center justify-center w-full h-screen bg-background xl:w-1/2 ">
@@ -161,7 +152,7 @@ export default function RegisterPage() {
             />
             <div className="pt-5">
               <Button
-                type="submit"
+                type={ButtonType.SUBMIT}
                 loading={isLoading}
               >
                 Zarejestruj konto
@@ -172,7 +163,7 @@ export default function RegisterPage() {
             <Navigator
               description={"Masz konto?"}
               span={"Zaloguj się"}
-              onClick={() => router.push("/login")}
+              onClick={() => router.push(Routes.LOGIN)}
             />
           </div>
         </div>
