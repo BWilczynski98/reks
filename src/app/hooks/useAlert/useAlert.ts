@@ -1,10 +1,9 @@
-import { Severity } from "@/app/types/alert"
 import type { Severity as SeverityType } from "@/app/types/alert"
-import React, { useState } from "react"
+import { RequestErrors } from "@/app/types/errorsDictionary"
+import { useState } from "react"
 
 type Props = {
   severity: SeverityType | null
-
   message: string
   isOpen: boolean
 }
@@ -12,29 +11,29 @@ type Props = {
 export const useAlert = () => {
   const [alert, setAlert] = useState<Props>({ severity: null, message: "", isOpen: false })
 
-  const checkStatusCategory = (status: number): Severity | null => {
-    const statusParseToString = status.toString()
-    const firstDigit = statusParseToString.charAt(0)
-    switch (firstDigit) {
-      case "1":
-        return Severity.INFO
-      case "2":
-        return Severity.SUCCESS
-      case "3":
-        return Severity.INFO
-      case "4":
-        return Severity.ERROR
-      case "5":
-        return Severity.ERROR
-      default:
-        return Severity.INFO
-    }
-  }
+  const handleOpen = ({ severity, data }: { severity: SeverityType; data: string }) => {
+    let message = ""
 
-  const handleOpen = ({ status, data }: { status: number; data: string }) => {
+    switch (data) {
+      case RequestErrors.EMAIL_EXIST:
+        message = "Istnieje już konto o takim adresie email"
+        break
+      case RequestErrors.EMPTY_DATA:
+        message = "Wprowadź adres e-mail i hasło"
+        break
+      case RequestErrors.NO_USER_FOUND:
+        message = "Nie znaleziono konta o takim adresie email"
+        break
+      case RequestErrors.INCORRECT_PASSWORD:
+        message = "Podane hasło jest nieprawidłowe"
+        break
+      default:
+        message = "Wystąpił problem, spróbuj jeszcze raz"
+        break
+    }
     setAlert({
-      severity: checkStatusCategory(status),
-      message: data,
+      severity,
+      message,
       isOpen: true,
     })
   }

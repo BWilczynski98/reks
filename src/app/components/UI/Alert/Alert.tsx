@@ -1,6 +1,6 @@
 import { body } from "@/app/lib/fonts"
-import { Severity } from "@/app/types/alert"
 import type { Severity as SeverityType } from "@/app/types/alert"
+import { Severity } from "@/app/types/alert"
 import cx from "classnames"
 import React from "react"
 import { BiCheckCircle, BiErrorCircle, BiInfoCircle } from "react-icons/bi"
@@ -13,7 +13,7 @@ type Props = {
   onClose: () => void
 }
 
-export const Alert = ({ children, severity = Severity.INFO, open, onClose }: Props) => {
+export const Alert = ({ children, severity = Severity.SUCCESS, open, onClose }: Props) => {
   let icon = <BiInfoCircle />
   let title
   switch (severity) {
@@ -25,13 +25,9 @@ export const Alert = ({ children, severity = Severity.INFO, open, onClose }: Pro
       title = "Błąd"
       icon = <BiErrorCircle />
       break
-    case Severity.INFO:
-      title = "Informacja"
-      icon = <BiInfoCircle />
-      break
     default:
-      title = "Informacja"
-      icon = <BiInfoCircle />
+      title = "Sukces"
+      icon = <BiCheckCircle />
       break
   }
 
@@ -44,8 +40,6 @@ export const Alert = ({ children, severity = Severity.INFO, open, onClose }: Pro
             "border-green-300": severity === Severity.SUCCESS,
             "bg-red-100": severity === Severity.ERROR,
             "border-red-300": severity === Severity.ERROR,
-            "bg-sky-100": severity === Severity.INFO,
-            "border-sky-300": severity === Severity.INFO,
           })}
         >
           <div className="flex items-center justify-between pb-2">
@@ -54,7 +48,6 @@ export const Alert = ({ children, severity = Severity.INFO, open, onClose }: Pro
                 className={cx("text-xl", {
                   "text-green-300": severity === Severity.SUCCESS,
                   "text-red-300": severity === Severity.ERROR,
-                  "text-sky-300": severity === Severity.INFO,
                 })}
               >
                 {icon}
