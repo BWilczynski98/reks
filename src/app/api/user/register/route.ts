@@ -13,6 +13,8 @@ export async function POST(req: NextRequest) {
     return new NextResponse("Missing fields", { status: 400 })
   }
 
+  const test = await prisma.user.update
+
   // I check if the account with the given email address exists
   const exist = await prisma.user.findUnique({
     where: {
