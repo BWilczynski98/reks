@@ -1,11 +1,9 @@
-"use client"
-
-import { WelcomeTemplate } from "./components/UI/emails/WelcomeTemplate"
+import ServerComponent from "./components/ServerComponent/ServerComponents"
 
 export default function Home() {
   return (
     <main>
-      <WelcomeTemplate />
+      <ServerComponent />
     </main>
   )
 }
