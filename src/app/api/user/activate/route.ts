@@ -11,9 +11,16 @@ export async function POST(req: NextRequest) {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10)
-  const user = await prisma.user.update({
+  const user = await prisma.user.findFirst({
     where: {
-      tokenToActivate: token,
+      tokenToActivate,
+    },
+  })
+  const userUpdate = await prisma.user.update({
+    where: {
+      tokenToActivate: user?.tokenToActivate as string,
+      email: user?.email,
+      id: user?.id,
     },
     data: {
       active: true,
@@ -22,5 +29,5 @@ export async function POST(req: NextRequest) {
     },
   })
 
-  return NextResponse.json(user)
+  return NextResponse.json(userUpdate)
 }
