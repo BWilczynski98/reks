@@ -10,7 +10,6 @@ import { ButtonType } from "../types/button"
 import { Errors } from "../types/errorsDictionary"
 import { Routes } from "../types/routes"
 import { TextFieldType } from "../types/textfield"
-import { useForgotPassowrdMutation } from "@/redux/services/userApi"
 
 const schema = yup.object({
   email: yup
@@ -32,19 +31,9 @@ export default function ResetPasswordPage() {
   } = useForm({ resolver: yupResolver(schema), defaultValues: { email: "" } })
   const { alert, handleOpen: handleOpenAlert, handleClose: handleCloseAlert } = useAlert()
   const { state: isLoading, handleOpen: startLoading, handleClose: stopLoading } = useDisclose()
-  const [forgotPassword] = useForgotPassowrdMutation()
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     startLoading()
-    forgotPassword({ email: data.email })
-      .unwrap()
-      .then((res) => {
-        console.log(res)
-        resetField("email")
-      })
-      .catch((error) => {
-        console.log(error)
-      })
 
     stopLoading()
   }

@@ -16,15 +16,8 @@ const injectedRtkApi = api.injectEndpoints({
         body: user,
       }),
     }),
-    forgotPassowrd: build.mutation({
-      query: (user) => ({
-        url: "/send",
-        method: "Post",
-        body: user,
-      }),
-    }),
   }),
 })
 
-export const { useCreateUserMutation, useActivateUserAccountMutation, useForgotPassowrdMutation } = injectedRtkApi
+export const { useCreateUserMutation, useActivateUserAccountMutation } = injectedRtkApi
 export { injectedRtkApi as userApi }

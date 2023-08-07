@@ -1,5 +1,5 @@
 "use client"
-import { useCreateUserMutation, useForgotPassowrdMutation } from "@/redux/services/userApi"
+import { useCreateUserMutation } from "@/redux/services/userApi"
 import { Button, TextField } from "@components/UI"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useAlert, useDisclose, useToggle } from "@hooks/index"
@@ -43,7 +43,7 @@ export default function AdminPage() {
   const { toggle: passwordVisibility, handleToggle: handleTogglePasswordVisbility } = useToggle()
   const { alert, handleOpen: handleOpenAlert, handleClose: handleCloseAlert } = useAlert()
   const [createUser] = useCreateUserMutation()
-  const [forgotPassword] = useForgotPassowrdMutation()
+
   const { state: isLoading, handleOpen: startLoading, handleClose: stopLoading } = useDisclose()
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {

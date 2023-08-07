@@ -5,7 +5,7 @@ const getData = async () => {
 
 const ServerComponent = async () => {
   const data = await getData()
-  console.log(data)
+
   return <div>Server component</div>
 }
 
