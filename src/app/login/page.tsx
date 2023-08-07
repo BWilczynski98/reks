@@ -52,6 +52,7 @@ export default function LoginPage() {
     await startLoading()
     await signIn("credentials", { ...data, redirect: false }).then((callback) => {
       if (callback?.error) {
+        console.log(callback?.error)
         handleOpenAlert({ severity: Severity.ERROR, data: callback?.error })
       }
 
