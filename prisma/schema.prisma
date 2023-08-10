@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email                String   @unique
-  password             String
-  role                 Role     @default(USER)
-  name                 String?
+  password             String?  
+  id                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   active               Boolean  @default(false)
   createdAt            DateTime @default(now())
+  name                 String?
+  role                 Role     @default(USER)
   updatedAt            DateTime @updatedAt
   tokenToActivate      String?
   tokenToResetPassword String?

@@ -1,17 +1,25 @@
 "use client"
 import { useCreateUserMutation } from "@/redux/services/userApi"
-import { Button, TextField } from "@components/UI"
+import { Alert, Button, Modal, TextField } from "@components/UI"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useAlert, useDisclose, useToggle } from "@hooks/index"
+import { useAlert, useDisclose } from "@hooks/index"
 import { randomBytes } from "crypto"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
-import { headline } from "../lib/fonts"
+import { body, headline } from "../lib/fonts"
 import { Severity } from "../types/alert"
 import { ButtonType } from "../types/button"
 import { Errors } from "../types/errorsDictionary"
 import { TextFieldType } from "../types/textfield"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+
+type UserAccountProps = {
+  email: string | null
+  name: string | null
+  tokenToActivate: string | null
+}
 
 const schema = yup
   .object({
@@ -39,46 +47,72 @@ export default function AdminPage() {
       name: "",
     },
   })
-  const router = useRouter()
-  const { toggle: passwordVisibility, handleToggle: handleTogglePasswordVisbility } = useToggle()
   const { alert, handleOpen: handleOpenAlert, handleClose: handleCloseAlert } = useAlert()
+  const { state: modalIsOpen, handleOpen: handleOpenModal, handleClose: handleCloseModal } = useDisclose()
   const [createUser] = useCreateUserMutation()
-
   const { state: isLoading, handleOpen: startLoading, handleClose: stopLoading } = useDisclose()
+  const [userAccountData, setUserAccountData] = useState<UserAccountProps>({
+    email: null,
+    name: null,
+    tokenToActivate: null,
+  })
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-    const randomPassword = randomBytes(20).toString("hex")
     const tokenToActivate = randomBytes(40).toString("hex")
-    console.log(randomPassword)
+    setUserAccountData({ ...data, tokenToActivate })
+    handleOpenModal()
+  }
+
+  const sendRequest = async () => {
+    handleCloseModal()
     startLoading()
-    createUser({
-      email: data.email.toLowerCase(),
-      password: randomPassword,
-      name: data.name.toLowerCase(),
-      tokenToActivate,
-    })
+
+    createUser({ ...userAccountData })
       .unwrap()
       .then((res) => {
         console.log(res)
         resetField("email")
         resetField("name")
+        toast.success("Wiadomość wysłana", { position: toast.POSITION.BOTTOM_RIGHT })
       })
       .catch((error) => {
         console.log(error)
         handleOpenAlert({ severity: Severity.ERROR, data: error.data })
+        toast.error("Coś poszło nie tak", { position: toast.POSITION.BOTTOM_LEFT })
       })
       .finally(() => stopLoading())
   }
 
   return (
-    <main className="flex p-2">
-      <section>
+    <main className={`${body.className} flex flex-col p-2 w-96`}>
+      <Modal
+        title="Rejestracja użytkownika"
+        open={modalIsOpen}
+        onClose={handleCloseModal}
+        onConfirm={sendRequest}
+      >
+        <p>
+          Wyślij na adres email&nbsp;
+          <span className="font-semibold">{userAccountData.email}</span> link do aktywacji konta.
+        </p>
+      </Modal>
+      <div className="w-full">
+        <Alert
+          open={alert.isOpen}
+          severity={alert.severity}
+          onClose={handleCloseAlert}
+        >
+          {alert.message}
+        </Alert>
+      </div>
+
+      <section className="w-full">
         <div>
           <h3 className={`${headline.className} text-xl`}>Dodaj nowego użytkownika</h3>
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-1 md:gap-2 w-96"
+          className="flex flex-col gap-1 md:gap-2"
         >
           <Controller
             name="email"
@@ -120,11 +154,12 @@ export default function AdminPage() {
               type={ButtonType.SUBMIT}
               loading={isLoading}
             >
-              Wyślij link aktywacyjny
+              Dodaj
             </Button>
           </div>
         </form>
       </section>
+      <ToastContainer autoClose={3000} />
     </main>
   )
 }
