@@ -7,13 +7,13 @@ import { Alert, Button, Logo, Navigator, PageTitle, TextField, Banner } from "@/
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useLayoutEffect } from "react"
-import { useAlert, useDisclose, useToggle } from "../hooks"
+import { useAlert, useDisclose, useToggle } from "@hooks/index"
 import { Severity } from "../types/alert"
 import { ButtonType } from "../types/button"
 import { Errors } from "../types/errorsDictionary"
 import { Routes } from "../types/routes"
 import { TextFieldType } from "../types/textfield"
-import { body } from "../lib/fonts"
+import { body } from "@lib/fonts"
 
 const schema = yup.object({
   email: yup
@@ -52,6 +52,7 @@ export default function LoginPage() {
     await startLoading()
     await signIn("credentials", { ...data, redirect: false }).then((callback) => {
       if (callback?.error) {
+        console.log(callback?.error)
         handleOpenAlert({ severity: Severity.ERROR, data: callback?.error })
       }
 

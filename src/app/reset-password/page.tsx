@@ -3,9 +3,9 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { useRouter } from "next/navigation"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
-import { Alert, Banner, Button, Logo, Navigator, PageTitle, TextField } from "../components/UI"
-import { useAlert, useDisclose } from "../hooks"
-import { body } from "../lib/fonts"
+import { Alert, Banner, Button, Logo, Navigator, PageTitle, TextField } from "@components/UI"
+import { useAlert, useDisclose } from "@hooks/index"
+import { body } from "@lib/fonts"
 import { ButtonType } from "../types/button"
 import { Errors } from "../types/errorsDictionary"
 import { Routes } from "../types/routes"
@@ -34,8 +34,7 @@ export default function ResetPasswordPage() {
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     startLoading()
-    await console.log("send email on adress: ", data.email)
-    resetField("email")
+
     stopLoading()
   }
 

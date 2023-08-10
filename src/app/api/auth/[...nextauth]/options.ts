@@ -6,6 +6,16 @@ import type { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
 export const options: NextAuthOptions = {
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) token.role = user.role
+      return token
+    },
+    async session({ session, token }) {
+      if (session?.user) session.user.role = token.role
+      return session
+    },
+  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -21,6 +31,10 @@ export const options: NextAuthOptions = {
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         })
+
+        if (!user?.active) {
+          throw new Error("Your account has not been activated")
+        }
 
         if (!user || !user?.password) {
           throw new Error(RequestErrors.NO_USER_FOUND)
