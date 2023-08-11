@@ -1,4 +1,4 @@
-import { WelcomeTemplate } from "@/app/components/UI/emails/WelcomeTemplate"
+import { EmailTemplate } from "@/app/components/UI/emails/EmailTemplate"
 import { prisma } from "@/app/lib/prisma"
 import { RequestErrors } from "@/app/types/errorsDictionary"
 import type { NextRequest } from "next/server"
@@ -31,21 +31,30 @@ export async function POST(req: NextRequest) {
     data: {
       email,
       password: "",
-      tokenToActivate,
       name,
     },
   })
 
+  const token = await prisma.activeToken.create({
+    data: { token: tokenToActivate, user: { connect: { id: user.id } } },
+  })
+
   try {
     const firstNameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
+    const description =
+      "Na podany adres email zostało założone konto w aplikacji reks-manager. Aby dokończyć proces rejestracji przejdz na strone aktywacji naciskając przycisk i nadaj hasło."
+    const notice =
+      "Pamiętaj, ten mail jest ważny przez 24 godziny, po upływie tego czasu możliwość aktywacji konta zostanie zablokowana. Jeśli czas minął, skontaktuj się z administratorem"
+    const link = `activate/${tokenToActivate}`
+    const buttonTitle = "Aktywuj konto"
     const data = await resend.emails.send({
       from: "Reks <support@reks-manager.pl>",
       to: email,
       subject: "Aktywuj konto",
-      react: WelcomeTemplate({ firstName: firstNameCapitalize, tokenToActivate }),
+      react: EmailTemplate({ firstName: firstNameCapitalize, description, notice, link, buttonTitle }),
     })
 
-    return NextResponse.json(user)
+    return NextResponse.json("Registration successful", { status: 201 })
   } catch (error) {
     return NextResponse.json({ error })
   }

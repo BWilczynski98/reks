@@ -16,8 +16,27 @@ const injectedRtkApi = api.injectEndpoints({
         body: user,
       }),
     }),
+    sendResetPasswordLink: build.mutation({
+      query: (user) => ({
+        url: "/user/sendResetPasswordLink",
+        method: "POST",
+        body: user,
+      }),
+    }),
+    changeUserPassword: build.mutation({
+      query: (user) => ({
+        url: "/user/reset-password",
+        method: "POST",
+        body: user,
+      }),
+    }),
   }),
 })
 
-export const { useCreateUserMutation, useActivateUserAccountMutation } = injectedRtkApi
+export const {
+  useCreateUserMutation,
+  useActivateUserAccountMutation,
+  useSendResetPasswordLinkMutation,
+  useChangeUserPasswordMutation,
+} = injectedRtkApi
 export { injectedRtkApi as userApi }

@@ -1,31 +1,32 @@
-import prisma from "@/app/lib/prisma"
+import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
+import { prisma } from "@lib/prisma"
 import bcrypt from "bcrypt"
-import { NextRequest, NextResponse } from "next/server"
 
 const dayjs = require("dayjs")
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { tokenToActivate, password } = body
-  const hashedPassword = await bcrypt.hash(password, 10)
-
-  if (!tokenToActivate) {
+  const { tokenToResetPassword, password } = body
+  const newPassword = await bcrypt.hash(password, 10)
+  if (!tokenToResetPassword) {
     return new NextResponse("Invalid token", { status: 400 })
   }
 
   const user = await prisma.user.findFirst({
     where: {
-      tokenToActivate: {
-        token: tokenToActivate,
+      tokenToResetPassword: {
+        token: tokenToResetPassword,
       },
     },
   })
 
-  const userToken = await prisma.activeToken.findUnique({
+  const userToken = await prisma.resetPasswordToken.findUnique({
     where: {
       userId: user?.id,
     },
   })
+
   const now = dayjs()
   const userTokenCreateDate = dayjs(userToken?.createAt)
   const timeDifference = now.diff(userTokenCreateDate)
@@ -40,16 +41,15 @@ export async function POST(req: NextRequest) {
       id: user?.id,
     },
     data: {
-      active: true,
-      password: hashedPassword,
+      password: newPassword,
     },
   })
 
-  await prisma.activeToken.delete({
+  await prisma.resetPasswordToken.delete({
     where: {
       userId: user?.id,
     },
   })
 
-  return NextResponse.json("Activation successful", { status: 200 })
+  return NextResponse.json("Password reset was successful", { status: 200 })
 }

@@ -1,15 +1,18 @@
 "use client"
+import { useSendResetPasswordLinkMutation } from "@/redux/services/userApi"
+import { Alert, Banner, Button, Logo, Navigator, PageTitle, TextField } from "@components/UI"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useAlert, useDisclose } from "@hooks/index"
+import { body } from "@lib/fonts"
+import { randomBytes } from "crypto"
 import { useRouter } from "next/navigation"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
-import { Alert, Banner, Button, Logo, Navigator, PageTitle, TextField } from "@components/UI"
-import { useAlert, useDisclose } from "@hooks/index"
-import { body } from "@lib/fonts"
 import { ButtonType } from "../types/button"
 import { Errors } from "../types/errorsDictionary"
 import { Routes } from "../types/routes"
 import { TextFieldType } from "../types/textfield"
+import { Severity } from "../types/alert"
 
 const schema = yup.object({
   email: yup
@@ -31,11 +34,22 @@ export default function ResetPasswordPage() {
   } = useForm({ resolver: yupResolver(schema), defaultValues: { email: "" } })
   const { alert, handleOpen: handleOpenAlert, handleClose: handleCloseAlert } = useAlert()
   const { state: isLoading, handleOpen: startLoading, handleClose: stopLoading } = useDisclose()
+  const [sendResetPasswordLink] = useSendResetPasswordLinkMutation()
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+    const tokenToResetPassword = randomBytes(40).toString("hex")
     startLoading()
-
-    stopLoading()
+    sendResetPasswordLink({ email: data.email, tokenToResetPassword })
+      .unwrap()
+      .then((res) => {
+        console.log(res)
+        resetField("email")
+      })
+      .catch((error) => {
+        console.log(error)
+        handleOpenAlert({ severity: Severity.ERROR, data: error.data })
+      })
+      .finally(() => stopLoading())
   }
 
   return (

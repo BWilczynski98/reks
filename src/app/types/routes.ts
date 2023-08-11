@@ -1,6 +1,6 @@
 export enum Routes {
   LOGIN = "/login",
   REGISTER = "/register",
-  RESET_PASSWORD = "/reset-password",
+  FORGOT_PASSWORD = "/forgot-password",
   DASHBOARD = "/dashboard",
 }
