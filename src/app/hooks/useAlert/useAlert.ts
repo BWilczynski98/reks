@@ -27,6 +27,16 @@ export const useAlert = () => {
       case RequestErrors.INCORRECT_PASSWORD:
         message = "Podane hasło jest nieprawidłowe"
         break
+      case RequestErrors.PASSWORD_RESET_REQUEST_EXIST:
+        message =
+          "Na podany adres email została już wysłana prośba zresetowania hasła. Sprawdz skrzynkę email. Mail może przyjść po paru minutach i znajdować się w folderze spam."
+        break
+      case RequestErrors.OUTDATED_TOKEN:
+        message = "Twój link służący do zresetowania hasła stracił ważność."
+        break
+      case RequestErrors.IS_USED_TOKEN:
+        message = "Twój link służacy do zresetowania hasła został już wykorzystany."
+        break
       default:
         message = "Wystąpił problem, spróbuj jeszcze raz"
         break

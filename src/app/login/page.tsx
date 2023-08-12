@@ -1,19 +1,19 @@
 "use client"
+import { Alert, Banner, Button, Logo, PageTitle, TextField } from "@/app/components/UI"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
-import * as yup from "yup"
-import { Alert, Button, Logo, Navigator, PageTitle, TextField, Banner } from "@/app/components/UI"
+import { useAlert, useDisclose, useToggle } from "@hooks/index"
+import { body } from "@lib/fonts"
 import { signIn, useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useLayoutEffect } from "react"
-import { useAlert, useDisclose, useToggle } from "@hooks/index"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
+import * as yup from "yup"
 import { Severity } from "../types/alert"
 import { ButtonType } from "../types/button"
 import { Errors } from "../types/errorsDictionary"
 import { Routes } from "../types/routes"
 import { TextFieldType } from "../types/textfield"
-import { body } from "@lib/fonts"
 
 const schema = yup.object({
   email: yup
@@ -129,7 +129,7 @@ export default function LoginPage() {
             <div>
               <p
                 className={`${body.className} text-sm text-right cursor-pointer sm:text-base`}
-                onClick={() => router.push(Routes.RESET_PASSWORD)}
+                onClick={() => router.push(Routes.FORGOT_PASSWORD)}
               >
                 Zapomniałeś/aś hasło?
               </p>
@@ -143,13 +143,6 @@ export default function LoginPage() {
               </Button>
             </div>
           </form>
-          <div className="pt-5">
-            <Navigator
-              description={"Nie masz konta?"}
-              span={"Zarejestruj się"}
-              onClick={() => router.push(Routes.REGISTER)}
-            />
-          </div>
         </div>
       </div>
     </main>

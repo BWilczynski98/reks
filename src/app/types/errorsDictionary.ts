@@ -13,4 +13,7 @@ export enum RequestErrors {
   EMPTY_DATA = "Please enter an email and password",
   NO_USER_FOUND = "No user found",
   INCORRECT_PASSWORD = "Incorrect password",
+  PASSWORD_RESET_REQUEST_EXIST = "Password reset request already exists for this email address",
+  OUTDATED_TOKEN = "Token is after the deadline",
+  IS_USED_TOKEN = "Token is used up",
 }

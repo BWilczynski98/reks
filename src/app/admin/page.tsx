@@ -16,9 +16,8 @@ import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 type UserAccountProps = {
-  email: string | null
-  name: string | null
-  tokenToActivate: string | null
+  email: string
+  name: string
 }
 
 const schema = yup
@@ -52,14 +51,13 @@ export default function AdminPage() {
   const [createUser] = useCreateUserMutation()
   const { state: isLoading, handleOpen: startLoading, handleClose: stopLoading } = useDisclose()
   const [userAccountData, setUserAccountData] = useState<UserAccountProps>({
-    email: null,
-    name: null,
-    tokenToActivate: null,
+    email: "",
+    name: "",
   })
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     const tokenToActivate = randomBytes(40).toString("hex")
-    setUserAccountData({ ...data, tokenToActivate })
+    setUserAccountData({ ...data })
     handleOpenModal()
   }
 

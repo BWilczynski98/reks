@@ -1,9 +1,14 @@
 import { emptySplitApi as api } from "../emptyApi"
 
+type CreateUserProps = {
+  email: string
+  name: string
+}
+
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     createUser: build.mutation({
-      query: (user) => ({
+      query: (user: CreateUserProps) => ({
         url: "/user/register",
         method: "POST",
         body: user,
@@ -16,8 +21,27 @@ const injectedRtkApi = api.injectEndpoints({
         body: user,
       }),
     }),
+    sendResetPasswordLink: build.mutation({
+      query: (user: { email: string }) => ({
+        url: "/user/send-reset-password-link",
+        method: "POST",
+        body: user,
+      }),
+    }),
+    changeUserPassword: build.mutation({
+      query: (user) => ({
+        url: "/user/reset-password",
+        method: "POST",
+        body: user,
+      }),
+    }),
   }),
 })
 
-export const { useCreateUserMutation, useActivateUserAccountMutation } = injectedRtkApi
+export const {
+  useCreateUserMutation,
+  useActivateUserAccountMutation,
+  useSendResetPasswordLinkMutation,
+  useChangeUserPasswordMutation,
+} = injectedRtkApi
 export { injectedRtkApi as userApi }
