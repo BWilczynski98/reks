@@ -12,6 +12,7 @@ import { Severity } from "../../types/alert"
 import { ButtonType } from "../../types/button"
 import { Errors } from "../../types/errorsDictionary"
 import { TextFieldType } from "../../types/textfield"
+import Link from "next/link"
 
 const schema = yup.object({
   password: yup
@@ -79,7 +80,13 @@ export default function ResetPasswordPage({ params }: { params: { slug: string }
               open={alert.isOpen}
               onClose={handleCloseAlert}
             >
-              {alert.message}
+              {alert.message}{" "}
+              <Link
+                href={Routes.FORGOT_PASSWORD}
+                className="font-medium text-primary-700"
+              >
+                Zresetuj ponownie
+              </Link>
             </Alert>
           </div>
           <form

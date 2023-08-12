@@ -26,13 +26,17 @@ export async function POST(req: NextRequest) {
       userId: user?.id,
     },
   })
+
   const now = dayjs()
   const userTokenCreateDate = dayjs(userToken?.createAt)
   const timeDifference = now.diff(userTokenCreateDate)
 
-  if (timeDifference >= 86400000) {
+  if (timeDifference >= 1000 * 60 * 60 * 24) {
     return new NextResponse("Token is expired", { status: 400 })
   }
+
+  // check user active
+  // flag isUsed
 
   await prisma.user.update({
     where: {
@@ -44,6 +48,8 @@ export async function POST(req: NextRequest) {
       password: hashedPassword,
     },
   })
+
+  // update isUsed = true
 
   await prisma.activeToken.delete({
     where: {

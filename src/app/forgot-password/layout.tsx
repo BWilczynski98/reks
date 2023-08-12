@@ -2,11 +2,11 @@ import { Metadata } from "next"
 import React from "react"
 
 export const metadata: Metadata = {
-  title: "Reks - resetowanie hasła",
+  title: "Reks - przypominanie hasła",
 }
 
-const ResetPasswordLayout = ({ children }: { children: React.ReactNode }) => {
+const ForgotPasswordLayout = ({ children }: { children: React.ReactNode }) => {
   return <div>{children}</div>
 }
 
-export default ResetPasswordLayout
+export default ForgotPasswordLayout

@@ -2,52 +2,53 @@ import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 import { prisma } from "@lib/prisma"
 import bcrypt from "bcrypt"
+import { RequestErrors } from "@/app/types/errorsDictionary"
 
 const dayjs = require("dayjs")
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { tokenToResetPassword, password } = body
+  const { tokenToResetPassword: incomingTokenFromEmail, password } = body
   const newPassword = await bcrypt.hash(password, 10)
-  if (!tokenToResetPassword) {
-    return new NextResponse("Invalid token", { status: 400 })
+
+  if (!incomingTokenFromEmail) {
+    return new NextResponse("Invalid incoming token from email", { status: 400 })
   }
 
-  const user = await prisma.user.findFirst({
+  const token = await prisma.resetPasswordToken.findMany({
     where: {
-      tokenToResetPassword: {
-        token: tokenToResetPassword,
-      },
+      token: incomingTokenFromEmail,
     },
   })
 
-  const userToken = await prisma.resetPasswordToken.findUnique({
-    where: {
-      userId: user?.id,
-    },
-  })
+  const tokenIsOutdated = dayjs().isAfter(token[0].expirationDate)
+  const tokenIsUsed = token[0].used
+  const userId = token[0].userId
 
-  const now = dayjs()
-  const userTokenCreateDate = dayjs(userToken?.createAt)
-  const timeDifference = now.diff(userTokenCreateDate)
+  if (tokenIsOutdated) {
+    return new NextResponse(RequestErrors.OUTDATED_TOKEN, { status: 400 })
+  }
 
-  if (timeDifference >= 86400000) {
-    return new NextResponse("Token is expired", { status: 400 })
+  if (tokenIsUsed) {
+    return new NextResponse(RequestErrors.IS_USED_TOKEN, { status: 400 })
   }
 
   await prisma.user.update({
     where: {
-      email: user?.email,
-      id: user?.id,
+      id: userId,
     },
     data: {
       password: newPassword,
     },
   })
 
-  await prisma.resetPasswordToken.delete({
+  await prisma.resetPasswordToken.updateMany({
     where: {
-      userId: user?.id,
+      userId,
+      token: incomingTokenFromEmail,
+    },
+    data: {
+      used: true,
     },
   })
 
