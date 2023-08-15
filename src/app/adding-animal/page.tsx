@@ -7,7 +7,7 @@ import { Controller, useForm } from "react-hook-form"
 import * as yup from "yup"
 import { headline } from "../lib/fonts"
 import { Errors } from "../types/errorsDictionary"
-import { TextField } from "../components/UI"
+import { Dropzone, TextField } from "../components/UI"
 import { TextFieldType } from "../types/textfield"
 
 const schema = yup.object({
@@ -65,6 +65,7 @@ export default function CreateAnimalFormPage() {
           <h1 className="text-2xl font-medium">Informacje na temat zwierzęcia</h1>
         </div>
         <form>
+          <Dropzone />
           <Controller
             name="name"
             control={control}
