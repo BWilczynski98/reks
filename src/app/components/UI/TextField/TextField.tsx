@@ -37,7 +37,7 @@ export const TextField = ({
       <div>
         <label
           htmlFor={name}
-          className={cn("text-sm sm:text-base font-medium, text-neutral-950", {
+          className={cn("text-sm sm:text-base font-medium, text-neutral-500", {
             "text-red-500": error,
           })}
         >
