@@ -1,7 +1,7 @@
-import React from "react"
-import cx from "classnames"
+import { cn } from "@/app/lib/cn"
 import { headline } from "@/app/lib/fonts"
 import { Button } from "@components/UI"
+import React from "react"
 
 type Props = {
   open: boolean
@@ -14,7 +14,7 @@ type Props = {
 export const Modal = ({ open = true, onClose, onConfirm, title = "Tytuł", children }: Props) => {
   return (
     <div
-      className={cx(`fixed top-0 left-0 w-screen h-screen bg-neutral-300/40 z-10`, {
+      className={cn(`fixed top-0 left-0 w-screen h-screen bg-neutral-300/40 z-10`, {
         hidden: !open,
       })}
     >
