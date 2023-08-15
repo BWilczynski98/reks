@@ -16,12 +16,12 @@ export const Dropzone = () => {
   return (
     <div
       className={cn(
-        `${body.className} bg-neutral-100 border border-neutral-200 rounded-default px-4 py-10 flex flex-col justify-center items-center cursor-pointer gap-2 text-sm text-neutral-700`
+        `${body.className} bg-neutral-100 border border-neutral-200 rounded-default px-4 py-10 flex flex-col justify-center items-center cursor-pointer gap-2 text-sm text-neutral-700 text-center`
       )}
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      <div className="flex w-10 h-10 rounded-full bg-primary-700 place-items-center place-content-center text-[#fff] text-2xl ">
+      <div className="flex w-10 h-10 text-2xl rounded-full bg-primary-700 place-items-center place-content-center text-neutral-100 ">
         <AiOutlineCloudUpload />
       </div>
       {!error ? (
