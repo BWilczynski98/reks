@@ -17,6 +17,7 @@ model User {
   role                 Role                 @default(USER)
   updatedAt            DateTime             @updatedAt
   tokenToActivate      ActiveToken?
+  registeredAnimals    Animal[]
   tokenToResetPassword ResetPasswordToken[]
 }
 
@@ -40,7 +41,58 @@ model ResetPasswordToken {
   user           User     @relation(fields: [userId], references: [id])
 }
 
+model Animal {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  referenceNumber    Int       @default(autoincrement())
+  createAt           DateTime  @default(now())
+  updateAt           DateTime  @updatedAt
+  name               String
+  type               Type
+  gender             Gender
+  birthDate          DateTime
+  locationWhereFound String
+  timeWhenFound      DateTime
+  photoUrl           String?
+  residence          Residence
+  description        String?
+  status             Status    @default(UNADOPTABLE)
+  userId             String    @db.Uuid
+  user               User      @relation(fields: [userId], references: [id])
+  medications        Drug[]
+}
+
+model Drug {
+  id       Int    @id @default(autoincrement())
+  animalId String @db.Uuid
+  name     String
+  dose     String
+  hours    String
+  animal   Animal @relation(fields: [animalId], references: [id])
+}
+
 enum Role {
   USER
   ADMIN
+}
+
+enum Type {
+  DOG
+  CAT
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum Residence {
+  BASE
+  TEMPORARY_HOME
+}
+
+enum Status {
+  ADAPTED
+  FOR_ADOPTION
+  UNADOPTABLE
+  QUARANTINE
 }

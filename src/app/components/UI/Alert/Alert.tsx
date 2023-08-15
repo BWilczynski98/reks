@@ -1,7 +1,7 @@
+import { cn } from "@/app/lib/cn"
 import { body } from "@/app/lib/fonts"
 import type { Severity as SeverityType } from "@/app/types/alert"
 import { Severity } from "@/app/types/alert"
-import cx from "classnames"
 import React from "react"
 import { BiCheckCircle, BiErrorCircle, BiInfoCircle } from "react-icons/bi"
 import { MdClose } from "react-icons/md"
@@ -35,7 +35,7 @@ export const Alert = ({ children, severity = Severity.SUCCESS, open, onClose }: 
     <>
       {open ? (
         <div
-          className={cx(`${body.className} px-3 py-4 border-2 rounded-default w-full text-sm sm:text-base z-10`, {
+          className={cn(`${body.className} px-3 py-4 border-2 rounded-default w-full text-sm sm:text-base z-10`, {
             "bg-green-100": severity === Severity.SUCCESS,
             "border-green-300": severity === Severity.SUCCESS,
             "bg-red-100": severity === Severity.ERROR,
@@ -45,7 +45,7 @@ export const Alert = ({ children, severity = Severity.SUCCESS, open, onClose }: 
           <div className="flex items-center justify-between pb-2">
             <div className="flex items-center gap-2">
               <span
-                className={cx("text-xl", {
+                className={cn("text-xl", {
                   "text-green-300": severity === Severity.SUCCESS,
                   "text-red-300": severity === Severity.ERROR,
                 })}

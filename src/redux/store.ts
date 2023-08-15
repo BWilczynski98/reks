@@ -2,13 +2,15 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/dist/query"
 import counterReducer from "./features/counterSlice"
 import { userApi } from "./services/userApi"
+import { animalApi } from "./services/animalApi"
 
 export const rootReducer = combineReducers({
   counterReducer,
   [userApi.reducerPath]: userApi.reducer,
+  [animalApi.reducerPath]: animalApi.reducer,
 })
 
-export const rootMiddleware = [userApi.middleware]
+export const rootMiddleware = [animalApi.middleware]
 
 export const store = configureStore({
   reducer: rootReducer,

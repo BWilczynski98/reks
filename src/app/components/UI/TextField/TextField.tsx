@@ -1,6 +1,6 @@
+import { cn } from "@/app/lib/cn"
 import { body } from "@/app/lib/fonts"
 import { TextFieldType } from "@/app/types/textfield"
-import cx from "classnames"
 import React from "react"
 
 type Props = {
@@ -37,7 +37,7 @@ export const TextField = ({
       <div>
         <label
           htmlFor={name}
-          className={cx("text-sm sm:text-base font-medium, text-neutral-950", {
+          className={cn("text-sm sm:text-base font-medium, text-neutral-950", {
             "text-red-500": error,
           })}
         >
@@ -46,8 +46,8 @@ export const TextField = ({
       </div>
       <div className="relative">
         <input
-          className={cx(
-            "w-full px-3 py-4 text-sm sm:text-base outline-none ring-1 ring-neutral-400 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700",
+          className={cn(
+            "w-full p-3 text-sm sm:text-base outline-none ring-1 ring-neutral-200 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700 shadow-sm",
             {
               "pl-3": icon,
               "pr-12": icon,
@@ -67,7 +67,7 @@ export const TextField = ({
         />
         {icon ? (
           <span
-            className={cx(
+            className={cn(
               "text-[18px] sm:text-[24px] absolute top-1/2 right-5 transform -translate-y-1/2 cursor-pointer text-neutral-400",
               { "text-red-500": error }
             )}
