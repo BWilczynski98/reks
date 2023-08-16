@@ -1,28 +1,25 @@
 "use client"
 import { headline } from "@/app/lib/fonts"
+import { AnimalGender, AnimalType } from "@/app/types/animal"
+import { ButtonType } from "@/app/types/button"
 import { Errors } from "@/app/types/errorsDictionary"
+import { TextFieldType } from "@/app/types/textfield"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Gender, Residence, Type } from "@prisma/client"
-import React from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
-import { Button, Dropzone, Select, TextField } from "../UI"
-import { TextFieldType } from "@/app/types/textfield"
-import { ButtonType } from "@/app/types/button"
-import { AnimalGender, AnimalType } from "@/app/types/animal"
+import { Button, Calendar, Dropzone, Select, TextField } from "../UI"
 
 const schema = yup.object({
   name: yup.string().required(Errors.EMPTY_FIELD),
   type: yup.string().required(Errors.EMPTY_FIELD),
   gender: yup.string().required(Errors.EMPTY_FIELD),
-  // birthDate: yup.date().required(Errors.EMPTY_FIELD),
+  birthDate: yup.date().required(Errors.EMPTY_FIELD),
   // locationWhereFound: yup.string().required(Errors.EMPTY_FIELD),
   // residence: yup.string().required(Errors.EMPTY_FIELD),
 })
 type FormData = yup.InferType<typeof schema>
 
 export const AnimalCreationForm = () => {
-  const now = new Date()
   const {
     control,
     handleSubmit,
@@ -34,7 +31,7 @@ export const AnimalCreationForm = () => {
       name: "",
       type: "",
       gender: "",
-      // birthDate: now,
+      birthDate: undefined,
       // locationWhereFound: "",
       // residence: Residence.BASE,
     },
@@ -100,8 +97,21 @@ export const AnimalCreationForm = () => {
               value={value}
               options={[AnimalGender.MALE, AnimalGender.FEMALE]}
               onChange={onChange}
-              error={!!errors.type}
-              errorMessage={errors.type?.message}
+              error={!!errors.gender}
+              errorMessage={errors.gender?.message}
+            />
+          )}
+        />
+        <Controller
+          name="birthDate"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <Calendar
+              label="Data urodzenia"
+              onChange={onChange}
+              value={value}
+              error={!!errors.birthDate}
+              errorMessage={errors.birthDate?.message}
             />
           )}
         />

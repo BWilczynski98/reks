@@ -57,7 +57,7 @@ export const Select = ({ label, placeholder, name, id, value, options, onChange,
             id={id}
             value={value}
           />
-          <div className="absolute z-20 -translate-y-1/2 top-1/2 right-4 text-neutral-950">
+          <div className="absolute z-20 -translate-y-1/2 top-1/2 right-3 text-neutral-950">
             {isComponentVisible ? <BiChevronUp /> : <BiChevronDown />}
           </div>
         </div>
