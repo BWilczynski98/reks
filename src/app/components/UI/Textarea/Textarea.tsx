@@ -10,34 +10,25 @@ type Props = {
   name?: string
   id?: string
   type?: TextFieldType
-  required?: boolean
   error?: boolean
   errorMessage?: string
   value: string | number | undefined
   onChange: (e: string) => void
-  icon?: React.ReactNode
-  handleTogglePasswordVisbility?: () => void
-  minLength?: number
-  maxLength?: number
-  max?: number
+  rows?: number
+  cols?: number
 }
 
-export const TextField = ({
+export const Textarea = ({
   placeholder,
   label,
   name,
   id,
-  type = TextFieldType.TEXT,
-  required = false,
   error = false,
   errorMessage,
   value,
-  icon,
-  handleTogglePasswordVisbility,
+  rows,
+  cols,
   onChange,
-  minLength,
-  maxLength,
-  max,
 }: Props) => {
   return (
     <div className={`${body.className} flex gap-1 flex-col w-full`}>
@@ -50,12 +41,10 @@ export const TextField = ({
         </Label>
       </div>
       <div className="relative">
-        <input
+        <textarea
           className={cn(
             "w-full p-3 text-sm sm:text-base outline-none ring-1 ring-neutral-200 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700 shadow-sm",
             {
-              "pl-3": icon,
-              "pr-12": icon,
               "ring-red-500": error,
               "focus:ring-red-500": error,
               "placeholder:text-red-300": error,
@@ -63,26 +52,13 @@ export const TextField = ({
           )}
           name={name}
           id={id}
-          type={type}
-          required={required}
           placeholder={placeholder}
           autoComplete="off"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          maxLength={maxLength}
-          max={max}
+          rows={rows}
+          cols={cols}
         />
-        {icon ? (
-          <span
-            className={cn(
-              "text-[18px] sm:text-[24px] absolute top-1/2 right-5 transform -translate-y-1/2 cursor-pointer text-neutral-400",
-              { "text-red-500": error }
-            )}
-            onClick={handleTogglePasswordVisbility}
-          >
-            {icon}
-          </span>
-        ) : null}
       </div>
       {error ? (
         <div>

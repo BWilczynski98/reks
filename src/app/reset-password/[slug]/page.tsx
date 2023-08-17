@@ -13,13 +13,14 @@ import { ButtonType } from "../../types/button"
 import { Errors } from "../../types/errorsDictionary"
 import { TextFieldType } from "../../types/textfield"
 import Link from "next/link"
+import { regex } from "@/app/lib/regex"
 
 const schema = yup.object({
   password: yup
     .string()
     .required(Errors.EMPTY_FIELD)
     .min(6, Errors.MIN_LENGTH_PASSWORD)
-    .matches(/^(?!.*[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ])[a-zA-Z0-9!@#$%^&*()-_=+]+$/, Errors.INCORRECT_REGEX_PASSWORD),
+    .matches(regex.withoutSpecialAndPolishLanguageCharacters, Errors.INCORRECT_REGEX_PASSWORD),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), ""], Errors.INCORRECT_CONFIRM_PASSWORD)
@@ -68,7 +69,7 @@ export default function ResetPasswordPage({ params }: { params: { slug: string }
       <div className="hidden w-1/2 h-screen xl:block">
         <Banner />
       </div>
-      <div className="relative flex flex-col items-center justify-center w-full h-screen bg-background xl:w-1/2 ">
+      <div className="relative flex flex-col items-center justify-center w-full h-screen xl:w-1/2 ">
         <div className="absolute top-6 left-6 sm:left-14 sm:top-14 xl:left-20 xl:top-20">
           <Logo />
         </div>

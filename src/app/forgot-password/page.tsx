@@ -64,7 +64,7 @@ export default function ResetPasswordPage() {
       <div className="hidden w-1/2 h-screen xl:block">
         <Banner />
       </div>
-      <div className="relative flex flex-col items-center justify-center w-full h-screen bg-background xl:w-1/2">
+      <div className="relative flex flex-col items-center justify-center w-full h-screen xl:w-1/2">
         <div className="absolute top-6 left-6 sm:left-14 sm:top-14 xl:left-20 xl:top-20">
           <Logo />
         </div>
