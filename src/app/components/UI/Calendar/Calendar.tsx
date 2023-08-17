@@ -1,7 +1,7 @@
-//  https://react-day-picker.js.org/guides/input-fields
 import { cn } from "@/app/lib/cn"
 import { body } from "@/app/lib/fonts"
 import dayjs from "dayjs"
+import { Label } from ".."
 
 type Props = {
   label?: string
@@ -13,19 +13,22 @@ type Props = {
   id?: string
 }
 
-export const Calendar = ({ label, error, errorMessage, value, onChange }: Props) => {
+export const Calendar = ({ label, error, errorMessage, value, onChange, name, id }: Props) => {
   return (
-    <div className={body.className}>
-      <div
-        className={cn("text-sm sm:text-base font-medium, text-neutral-500", {
-          "text-red-500": error,
-        })}
-      >
-        <label>{label}</label>
+    <div className={`${body.className} flex gap-1 flex-col w-full`}>
+      <div>
+        <Label
+          name={name}
+          error={error}
+        >
+          {label}
+        </Label>
       </div>
       <div>
         <input
           type="date"
+          name={name}
+          id={id}
           value={value ? dayjs(value).format("YYYY-MM-DD") : ""}
           onChange={(e) => onChange(e.target.value)}
           className={cn(
@@ -33,7 +36,7 @@ export const Calendar = ({ label, error, errorMessage, value, onChange }: Props)
             {
               "ring-red-500": error,
               "focus:ring-red-500": error,
-              "placeholder:text-red-300": error,
+              "text-red-300": error,
             }
           )}
         />
