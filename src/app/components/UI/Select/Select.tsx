@@ -25,7 +25,7 @@ export const Select = ({ label, placeholder, name, id, value, options, onChange,
 
   useEffect(() => {
     if (ref.current != null) {
-      setHeight(ref.current.offsetHeight + 100)
+      setHeight(ref.current.offsetHeight)
     }
   }, [])
 
