@@ -1,11 +1,18 @@
 export enum Errors {
   EMPTY_FIELD = "To pole nie może być puste",
+  INCORRECT_NUMBER = "To pole może się składać tylko z cyfr",
   INCORRECT_EMAIL = "Podane adres email jest nie poprawny",
   LOWERCASE_EMAIL = "Adres email nie może składać się z wielkich liter",
   INCORRECT_PASSWORD = "Podane hasło jest nie poprawne",
+  INCORRECT_REGEX = "Pole zawiera niedozwolone znaki",
   INCORRECT_REGEX_PASSWORD = "Hasło zawiera niedozwolone znaki",
   INCORRECT_CONFIRM_PASSWORD = "Hasła muszą być takie same",
+  INCORRECT_DATE = "Podana data jest niepoprawna",
   MIN_LENGTH_PASSWORD = "Hasło musi się składać z conajmniej 6 znaków",
+  MIN_LENGTH_POSTAL_CODE = "Kod pocztowy jest za krótki. Powinien składać się z 5 znaków",
+  MAX_LENGTH_POSTAL_CODE = "Kod pocztowy jest za długi. Powinien składać się z 5 znaków",
+  MIN_LEGTH_PHONE_NUMBER = "Numer telefonu jest za krótki. Powinien składać się z 9 znaków",
+  MAX_LEGTH_PHONE_NUMBER = "Numer telefonu jest za długi. Powinien składać się z 9 znaków",
 }
 
 export enum RequestErrors {
