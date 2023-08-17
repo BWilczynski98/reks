@@ -25,9 +25,9 @@ export const Button = ({
   return (
     <button
       className={cn(
-        "w-full items-center py-[6px] rounded-default text-sm sm:text-base bg-primary-700  text-neutral-50  duration-150 ease-in-out enabled:hover:shadow-md hover:shadow-primary-200 0 disabled:bg-secondary-100 disabled:text-secondary-300 flex justify-center",
+        "w-full items-center py-[6px] rounded-default text-sm sm:text-base bg-primary-700  text-neutral-50  duration-150 ease-in-out enabled:hover:shadow-md hover:shadow-primary-200  disabled:bg-secondary-100 disabled:text-secondary-300 flex justify-center",
         {
-          "bg-background": outline,
+          "bg-color-none": outline,
           "text-neutral-700": outline,
           border: outline,
           "border-neutral-300": outline,
