@@ -14,6 +14,7 @@ import { ButtonType } from "../types/button"
 import { Errors } from "../types/errorsDictionary"
 import { Routes } from "../types/routes"
 import { TextFieldType } from "../types/textfield"
+import { regex } from "../lib/regex"
 
 const schema = yup.object({
   email: yup
@@ -25,7 +26,7 @@ const schema = yup.object({
   password: yup
     .string()
     .required(Errors.EMPTY_FIELD)
-    .matches(/^(?!.*[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ])[a-zA-Z0-9!@#$%^&*()-_=+]+$/, Errors.INCORRECT_REGEX_PASSWORD),
+    .matches(regex.withoutSpecialAndPolishLanguageCharacters, Errors.INCORRECT_REGEX_PASSWORD),
 })
 type FormData = yup.InferType<typeof schema>
 

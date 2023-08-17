@@ -13,13 +13,14 @@ import { ButtonType } from "../../types/button"
 import { Errors } from "../../types/errorsDictionary"
 import { TextFieldType } from "../../types/textfield"
 import Link from "next/link"
+import { regex } from "@/app/lib/regex"
 
 const schema = yup.object({
   password: yup
     .string()
     .required(Errors.EMPTY_FIELD)
     .min(6, Errors.MIN_LENGTH_PASSWORD)
-    .matches(/^(?!.*[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ])[a-zA-Z0-9!@#$%^&*()-_=+]+$/, Errors.INCORRECT_REGEX_PASSWORD),
+    .matches(regex.withoutSpecialAndPolishLanguageCharacters, Errors.INCORRECT_REGEX_PASSWORD),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), ""], Errors.INCORRECT_CONFIRM_PASSWORD)
