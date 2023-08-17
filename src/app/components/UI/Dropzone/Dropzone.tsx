@@ -1,3 +1,4 @@
+"use client"
 import { cn } from "@/app/lib/cn"
 import { body } from "@/app/lib/fonts"
 import React, { useCallback, useState } from "react"
