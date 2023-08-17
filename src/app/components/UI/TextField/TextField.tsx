@@ -2,6 +2,7 @@ import { cn } from "@/app/lib/cn"
 import { body } from "@/app/lib/fonts"
 import { TextFieldType } from "@/app/types/textfield"
 import React from "react"
+import { Label } from "../Label"
 
 type Props = {
   placeholder?: string
@@ -12,10 +13,13 @@ type Props = {
   required?: boolean
   error?: boolean
   errorMessage?: string
-  value: string | number
+  value: string | number | undefined
   onChange: (e: string) => void
   icon?: React.ReactNode
   handleTogglePasswordVisbility?: () => void
+  minLength?: number
+  maxLength?: number
+  max?: number
 }
 
 export const TextField = ({
@@ -31,18 +35,19 @@ export const TextField = ({
   icon,
   handleTogglePasswordVisbility,
   onChange,
+  minLength,
+  maxLength,
+  max,
 }: Props) => {
   return (
     <div className={`${body.className} flex gap-1 flex-col w-full`}>
       <div>
-        <label
-          htmlFor={name}
-          className={cn("text-sm sm:text-base font-medium, text-neutral-500", {
-            "text-red-500": error,
-          })}
+        <Label
+          name={name}
+          error={error}
         >
           {label}
-        </label>
+        </Label>
       </div>
       <div className="relative">
         <input
@@ -64,6 +69,8 @@ export const TextField = ({
           autoComplete="off"
           value={value}
           onChange={(e) => onChange(e.target.value)}
+          maxLength={maxLength}
+          max={max}
         />
         {icon ? (
           <span
