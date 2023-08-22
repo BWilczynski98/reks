@@ -1,17 +1,22 @@
 "use client"
 import { headline } from "@/app/lib/fonts"
+import { regex } from "@/app/lib/regex"
 import { AnimalGender, AnimalResidence, AnimalType } from "@/app/types/animal"
 import { ButtonType } from "@/app/types/button"
 import { Errors } from "@/app/types/errorsDictionary"
+import { Routes } from "@/app/types/routes"
 import { TextFieldType } from "@/app/types/textfield"
+import { useCreateAnimalMutation } from "@/redux/services/animalApi"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
 import { Button, Calendar, Chapter, Dropzone, Label, Select, TextField, Textarea } from "../UI"
-import { useState } from "react"
-import { regex } from "@/app/lib/regex"
-import { useRouter } from "next/navigation"
-import { Routes } from "@/app/types/routes"
+import dayjs from "dayjs"
+import { Gender, Residence, Type } from "@prisma/client"
+import { formatPhoneNumber } from "@/app/lib/formatPhoneNumber"
+import { formatPostalCode } from "@/app/lib/formatPostalCode"
 
 const schema = yup.object({
   name: yup.string().required(Errors.EMPTY_FIELD).matches(regex.names, Errors.INCORRECT_REGEX),
@@ -26,12 +31,16 @@ const schema = yup.object({
   postalCodeWhereFound: yup
     .string()
     .required(Errors.EMPTY_FIELD)
-    .min(5, Errors.MIN_LENGTH_POSTAL_CODE)
-    .max(5, Errors.MAX_LENGTH_POSTAL_CODE)
-    .matches(regex.numbersWithoutSigns, Errors.INCORRECT_REGEX),
+    .min(6, Errors.MIN_LENGTH_POSTAL_CODE)
+    .max(6, Errors.MAX_LENGTH_POSTAL_CODE)
+    .matches(regex.numbersWithDash, Errors.INCORRECT_REGEX),
   dateOfCaputer: yup.date().required(Errors.EMPTY_FIELD).typeError(Errors.INCORRECT_DATE),
   residence: yup.string().required(Errors.EMPTY_FIELD),
   firstNameTemporaryHome: yup.string().when("residence", {
+    is: AnimalResidence.TEMPORARY_HOME,
+    then: (schema) => schema.required(Errors.EMPTY_FIELD).matches(regex.names, Errors.INCORRECT_REGEX),
+  }),
+  lastNameTemporaryHome: yup.string().when("residence", {
     is: AnimalResidence.TEMPORARY_HOME,
     then: (schema) => schema.required(Errors.EMPTY_FIELD).matches(regex.names, Errors.INCORRECT_REGEX),
   }),
@@ -42,12 +51,19 @@ const schema = yup.object({
         .required(Errors.EMPTY_FIELD)
         .min(9, Errors.MIN_LEGTH_PHONE_NUMBER)
         .max(9, Errors.MAX_LEGTH_PHONE_NUMBER)
-        .matches(regex.numbersWithoutSigns, Errors.INCORRECT_REGEX),
+        .matches(regex.numbersWithDash, Errors.INCORRECT_REGEX),
   }),
-
   streetTemporaryHome: yup.string().when("residence", {
     is: AnimalResidence.TEMPORARY_HOME,
     then: (schema) => schema.required(Errors.EMPTY_FIELD).matches(regex.addresses, Errors.INCORRECT_REGEX),
+  }),
+  buildingNumberTemporaryHome: yup.string().when("residence", {
+    is: AnimalResidence.TEMPORARY_HOME,
+    then: (schema) => schema.required(Errors.EMPTY_FIELD).matches(regex.objectNumber, Errors.INCORRECT_REGEX),
+  }),
+  apartmentNumberTemporaryHome: yup.string().when("residence", {
+    is: AnimalResidence.TEMPORARY_HOME,
+    then: (schema) => schema.matches(/^(?:[a-zA-Z0-9]+)?$/, Errors.INCORRECT_REGEX),
   }),
   cityTemporaryHome: yup.string().when("residence", {
     is: AnimalResidence.TEMPORARY_HOME,
@@ -58,9 +74,9 @@ const schema = yup.object({
     then: (schema) =>
       schema
         .required(Errors.EMPTY_FIELD)
-        .min(5, Errors.MIN_LENGTH_POSTAL_CODE)
-        .max(5, Errors.MAX_LENGTH_POSTAL_CODE)
-        .matches(regex.numbersWithoutSigns, Errors.INCORRECT_REGEX),
+        .min(6, Errors.MIN_LENGTH_POSTAL_CODE)
+        .max(6, Errors.MAX_LENGTH_POSTAL_CODE)
+        .matches(regex.numbersWithDash, Errors.INCORRECT_REGEX),
   }),
 
   healthDescription: yup.string(),
@@ -89,17 +105,48 @@ export const AnimalCreationForm = () => {
       dateOfCaputer: undefined,
       residence: "",
       firstNameTemporaryHome: "",
+      lastNameTemporaryHome: "",
       phoneNumberTemporaryHome: "",
       streetTemporaryHome: "",
+      buildingNumberTemporaryHome: "",
+      apartmentNumberTemporaryHome: "",
       cityTemporaryHome: "",
       postalCodeTemporaryHome: "",
       healthDescription: "",
       notes: "",
     },
   })
+  const [createAnimal] = useCreateAnimalMutation()
+  const session = useSession()
+  const userId = session.data?.user.id
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+    const birthDate = dayjs(data.birthDate).format()
     console.log(data)
+    const animalData = {
+      name: data.name,
+      type: data.type === AnimalType.CAT ? Type.CAT : Type.DOG,
+      gender: data.gender === AnimalGender.MALE ? Gender.MALE : Gender.FEMALE,
+      birthDate: data.birthDate,
+      locationWhereFound: `${data.cityWhereFound} ${data.postalCodeWhereFound} ${data.streetWhereFound}`,
+      timeWhenFound: data.dateOfCaputer,
+      photoUrl: "https://utfs.io/f/ac62a196-7e86-4853-96f5-64d181a330d8_original-c3601ee90abd88ca72c2ff936183fa4a.png",
+      residence: data.residence === AnimalResidence.BASE ? Residence.BASE : Residence.TEMPORARY_HOME,
+      description: data.notes,
+      descriptionOfHealth: data.healthDescription,
+      temporaryHomeFirstName: data.firstNameTemporaryHome,
+      temporaryHomeLastName: data.lastNameTemporaryHome,
+      temporaryHomePhoneNumber: data.phoneNumberTemporaryHome,
+      temporaryHomeStreet: data.streetTemporaryHome,
+      temporaryHomeBuildingNumber: data.buildingNumberTemporaryHome,
+      temporaryHomeApartmentNumber: data.apartmentNumberTemporaryHome,
+      temporaryHomeCity: data.cityTemporaryHome,
+      temporaryHomePostalCode: data.postalCodeTemporaryHome,
+    }
+    createAnimal({ ...animalData, userId })
+      .unwrap()
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error))
   }
 
   return (
@@ -241,10 +288,10 @@ export const AnimalCreationForm = () => {
                         name="postalCodeWhereFound"
                         id="postalCodeWhereFound"
                         onChange={onChange}
-                        value={value}
+                        value={formatPostalCode(value as string)}
                         error={!!errors.postalCodeWhereFound}
                         errorMessage={errors.postalCodeWhereFound?.message}
-                        maxLength={5}
+                        maxLength={6}
                       />
                     )}
                   />
@@ -294,23 +341,43 @@ export const AnimalCreationForm = () => {
                   </Label>
                 </div>
                 <div className="flex flex-wrap justify-between gap-y-2">
-                  <div className="basis-full">
-                    <Controller
-                      name="firstNameTemporaryHome"
-                      control={control}
-                      render={({ field: { onChange, value } }) => (
-                        <TextField
-                          placeholder="Imię i nazwisko"
-                          type={TextFieldType.TEXT}
-                          name="firstNameTemporaryHome"
-                          id="firstNameTemporaryHome"
-                          onChange={onChange}
-                          value={value}
-                          error={!!errors.firstNameTemporaryHome}
-                          errorMessage={errors.firstNameTemporaryHome?.message}
-                        />
-                      )}
-                    />
+                  <div className="flex gap-2 basis-full">
+                    <div className="basis-full sm:basis-1/2">
+                      <Controller
+                        name="firstNameTemporaryHome"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <TextField
+                            placeholder="Imię"
+                            type={TextFieldType.TEXT}
+                            name="firstNameTemporaryHome"
+                            id="firstNameTemporaryHome"
+                            onChange={onChange}
+                            value={value}
+                            error={!!errors.firstNameTemporaryHome}
+                            errorMessage={errors.firstNameTemporaryHome?.message}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className="basis-full sm:basis-1/2">
+                      <Controller
+                        name="lastNameTemporaryHome"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <TextField
+                            placeholder="Nazwisko"
+                            type={TextFieldType.TEXT}
+                            name="surNameTemporaryHome"
+                            id="surNameTemporaryHome"
+                            onChange={onChange}
+                            value={value}
+                            error={!!errors.lastNameTemporaryHome}
+                            errorMessage={errors.lastNameTemporaryHome?.message}
+                          />
+                        )}
+                      />
+                    </div>
                   </div>
                   <div className="flex gap-2 basis-full">
                     <div className="basis-full sm:basis-1/2">
@@ -320,11 +387,11 @@ export const AnimalCreationForm = () => {
                         render={({ field: { onChange, value } }) => (
                           <TextField
                             placeholder="Numer telefonu"
-                            type={TextFieldType.TEL}
+                            type={TextFieldType.TEXT}
                             name="phoneNumberTemporaryHome"
                             id="phoneNumberTemporaryHome"
                             onChange={onChange}
-                            value={value}
+                            value={formatPhoneNumber(value as string)}
                             error={!!errors.phoneNumberTemporaryHome}
                             errorMessage={errors.phoneNumberTemporaryHome?.message}
                             maxLength={9}
@@ -347,6 +414,45 @@ export const AnimalCreationForm = () => {
                             value={value}
                             error={!!errors.streetTemporaryHome}
                             errorMessage={errors.streetTemporaryHome?.message}
+                          />
+                        )}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex gap-2 basis-full">
+                    <div className="basis-full sm:basis-1/2">
+                      <Controller
+                        name="buildingNumberTemporaryHome"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <TextField
+                            placeholder="Budynek"
+                            type={TextFieldType.TEXT}
+                            name="buildingNumberTemporaryHome"
+                            id="buildingNumberTemporaryHome"
+                            onChange={onChange}
+                            value={value}
+                            error={!!errors.buildingNumberTemporaryHome}
+                            errorMessage={errors.buildingNumberTemporaryHome?.message}
+                          />
+                        )}
+                      />
+                    </div>
+
+                    <div className="basis-full sm:basis-1/2">
+                      <Controller
+                        name="apartmentNumberTemporaryHome"
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                          <TextField
+                            placeholder="Lokal"
+                            type={TextFieldType.TEXT}
+                            name="apartmentNumberTemporaryHome"
+                            id="apartmentNumberTemporaryHome"
+                            onChange={onChange}
+                            value={value}
+                            error={!!errors.apartmentNumberTemporaryHome}
+                            errorMessage={errors.apartmentNumberTemporaryHome?.message}
                           />
                         )}
                       />
@@ -383,10 +489,10 @@ export const AnimalCreationForm = () => {
                             name="postalCodeTemporaryHome"
                             id="postalCodeTemporaryHome"
                             onChange={onChange}
-                            value={value}
+                            value={formatPostalCode(value as string)}
                             error={!!errors.postalCodeTemporaryHome}
                             errorMessage={errors.postalCodeTemporaryHome?.message}
-                            maxLength={5}
+                            maxLength={6}
                           />
                         )}
                       />
