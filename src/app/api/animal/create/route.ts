@@ -1,34 +1,86 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { prisma } from "@lib/prisma"
+import { Residence } from "@prisma/client"
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { name, type, gender, birthDate, locationWhereFound, timeWhenFound, residence, status, userEmail, userId } =
-    body
+  const {
+    name,
+    type,
+    gender,
+    birthDate,
+    locationWhereFound,
+    timeWhenFound,
+    residence,
+    photoUrl,
+    userId,
+    description,
+    descriptionOfHealth,
+    temporaryHomeFirstName,
+    temporaryHomeLastName,
+    temporaryHomePhoneNumber,
+    temporaryHomeStreet,
+    temporaryHomeBuildingNumber,
+    temporaryHomeApartmentNumber,
+    temporaryHomeCity,
+    temporaryHomePostalCode,
+  } = body
+  console.log(body)
 
-  if (
-    !name ||
-    !type ||
-    !gender ||
-    !birthDate ||
-    !locationWhereFound ||
-    !timeWhenFound ||
-    !residence ||
-    !status ||
-    !userId
-  ) {
+  if (!name || !type || !gender || !birthDate || !locationWhereFound || !timeWhenFound || !residence || !userId) {
     return new NextResponse("Missing fields", { status: 400 })
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  })
+  let home
+  if (residence === Residence.TEMPORARY_HOME) {
+    if (
+      !temporaryHomeFirstName ||
+      !temporaryHomeLastName ||
+      !temporaryHomePhoneNumber ||
+      !temporaryHomeStreet ||
+      !temporaryHomeBuildingNumber ||
+      !temporaryHomeCity ||
+      !temporaryHomePostalCode
+    ) {
+      return new NextResponse("Missing fields in if", { status: 400 })
+    }
 
-  const pr = await prisma.animal.create({
+    const address = temporaryHomeApartmentNumber
+      ? `${temporaryHomeStreet.toUpperCase()} ${temporaryHomeBuildingNumber
+          .trim()
+          .toUpperCase()}/${temporaryHomeApartmentNumber.trim().toUpperCase()}`
+      : `${temporaryHomeStreet.toUpperCase()} ${temporaryHomeBuildingNumber.trim().toUpperCase()}`
+
+    const temporaryHomeInformation = {
+      owner: `${temporaryHomeFirstName.trim().toUpperCase()} ${temporaryHomeLastName.trim().toUpperCase()}`,
+      street: address,
+      phoneNumber: temporaryHomePhoneNumber.trim(),
+      city: temporaryHomeCity.toUpperCase(),
+      postalCode: temporaryHomePostalCode.trim(),
+    }
+
+    home = await prisma.home.findFirst({
+      where: {
+        ...temporaryHomeInformation,
+      },
+      select: {
+        id: true,
+      },
+    })
+
+    if (!home) {
+      home = await prisma.home.create({
+        data: {
+          ...temporaryHomeInformation,
+        },
+      })
+    }
+  }
+
+  await prisma.animal.create({
     data: {
+      photoUrl,
       name,
       type,
       gender,
@@ -36,12 +88,11 @@ export async function POST(req: NextRequest) {
       locationWhereFound,
       timeWhenFound,
       residence,
-      status,
-      user: { connect: { id: userId } },
+      description,
+      descriptionOfHealth,
+      userId: userId,
+      homeId: home ? home?.id : null,
     },
   })
-
-  console.log(pr)
-
   return NextResponse.json("Adding the animal has been successful", { status: 201 })
 }
