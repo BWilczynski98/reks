@@ -24,7 +24,7 @@ export const Sidebar = () => {
           Panel główny
         </SidebarButton>
         <SidebarButton
-          href={Routes.ADMIN}
+          href={"/"}
           icon={<RiHome4Fill />}
         >
           Dom tymczasowy

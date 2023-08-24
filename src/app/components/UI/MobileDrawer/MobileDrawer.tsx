@@ -8,11 +8,13 @@ import { SignOutButton } from "../SignOutButton"
 import { BiMenuAltRight } from "react-icons/bi"
 import { Logo } from ".."
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import { toggleSidebar } from "@/redux/features/uiSlice"
+import { closeSidebar, toggleSidebar } from "@/redux/features/uiSlice"
 
 export const MobileDrawer = () => {
   const isOpen = useAppSelector((state) => state.uiReducer.sidebarIsOpen)
   const dispatch = useAppDispatch()
+
+  const handlerCloseSidebar = () => dispatch(closeSidebar())
 
   return (
     <div>
@@ -34,26 +36,31 @@ export const MobileDrawer = () => {
         )}
       >
         <div className="h-[80%]">
-          <SidebarButton
-            href={Routes.ADMIN}
-            icon={<RiAdminFill />}
-          >
-            Panel administratora
-          </SidebarButton>
-          <SidebarButton
-            href={Routes.DASHBOARD}
-            icon={<RiDashboardFill />}
-          >
-            Panel główny
-          </SidebarButton>
-          <SidebarButton
-            href={Routes.ADMIN}
-            icon={<RiHome4Fill />}
-          >
-            Dom tymczasowy
-          </SidebarButton>
+          <div onClick={handlerCloseSidebar}>
+            <SidebarButton
+              href={Routes.ADMIN}
+              icon={<RiAdminFill />}
+            >
+              Panel administratora
+            </SidebarButton>
+            <SidebarButton
+              href={Routes.DASHBOARD}
+              icon={<RiDashboardFill />}
+            >
+              Panel główny
+            </SidebarButton>
+            <SidebarButton
+              href={Routes.ADMIN}
+              icon={<RiHome4Fill />}
+            >
+              Dom tymczasowy
+            </SidebarButton>
+          </div>
         </div>
-        <div className="h-[10%]">
+        <div
+          className="h-[10%]"
+          onClick={handlerCloseSidebar}
+        >
           <SignOutButton />
         </div>
       </div>

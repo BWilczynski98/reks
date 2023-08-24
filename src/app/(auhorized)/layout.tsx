@@ -11,9 +11,12 @@ export const metadata: Metadata = {
 
 const ForgotPasswordLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className={`flex ${body.className} max-sm:flex-col`}>
-      <Sidebar />
-      <MobileDrawer />
+    <div className={`flex ${body.className} max-sm:flex-col w-full`}>
+      <div>
+        <Sidebar />
+        <MobileDrawer />
+      </div>
+
       <div className={cn("w-full h-screen py-20 sm:py-10 sm:overflow-auto")}>{children}</div>
     </div>
   )
