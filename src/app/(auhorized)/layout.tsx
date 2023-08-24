@@ -8,8 +8,11 @@ export const metadata: Metadata = {
 
 const ForgotPasswordLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
-      <Sidebar>{children}</Sidebar>
+    <div className="flex">
+      <div className="max-sm:hidden">
+        <Sidebar />
+      </div>
+      <div className="w-full h-screen overflow-auto">{children}</div>
     </div>
   )
 }
