@@ -1,5 +1,6 @@
 "use client"
-import { useActivateUserAccountMutation } from "@/redux/services/userApi"
+import { Routes } from "@/app/types/routes"
+import { useChangeUserPasswordMutation } from "@/redux/services/userApi"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useRouter } from "next/navigation"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
@@ -7,17 +8,19 @@ import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
 import * as yup from "yup"
 import { Alert, Banner, Button, Logo, PageTitle, TextField } from "@components/UI"
 import { useAlert, useDisclose, useToggle } from "@hooks/index"
-import { Severity } from "../../types/alert"
-import { ButtonType } from "../../types/button"
-import { Errors } from "../../types/errorsDictionary"
-import { TextFieldType } from "../../types/textfield"
+import { Severity } from "../../../types/alert"
+import { ButtonType } from "../../../types/button"
+import { Errors } from "../../../types/errorsDictionary"
+import { TextFieldType } from "../../../types/textfield"
+import Link from "next/link"
+import { regex } from "@/app/lib/regex"
 
 const schema = yup.object({
   password: yup
     .string()
     .required(Errors.EMPTY_FIELD)
     .min(6, Errors.MIN_LENGTH_PASSWORD)
-    .matches(/^(?!.*[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ])[a-zA-Z0-9!@#$%^&*()-_=+]+$/, Errors.INCORRECT_REGEX_PASSWORD),
+    .matches(regex.withoutSpecialAndPolishLanguageCharacters, Errors.INCORRECT_REGEX_PASSWORD),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), ""], Errors.INCORRECT_CONFIRM_PASSWORD)
@@ -25,7 +28,7 @@ const schema = yup.object({
 })
 type FormData = yup.InferType<typeof schema>
 
-export default function ActivatePage({ params }: { params: { slug: string } }) {
+export default function ResetPasswordPage({ params }: { params: { slug: string } }) {
   const {
     control,
     handleSubmit,
@@ -41,17 +44,18 @@ export default function ActivatePage({ params }: { params: { slug: string } }) {
   const router = useRouter()
   const { toggle: passwordVisibility, handleToggle: handleTogglePasswordVisbility } = useToggle()
   const { alert, handleOpen: handleOpenAlert, handleClose: handleCloseAlert } = useAlert()
-  const [activateUserAccount] = useActivateUserAccountMutation()
+  const [changeUserPassword] = useChangeUserPasswordMutation()
   const { state: isLoading, handleOpen: startLoading, handleClose: stopLoading } = useDisclose()
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     startLoading()
-    activateUserAccount({ password: data.password, tokenToActivate: params.slug })
+    changeUserPassword({ password: data.password, tokenToResetPassword: params.slug })
       .unwrap()
       .then((res) => {
         console.log(res)
         resetField("password")
         resetField("confirmPassword")
+        router.push(Routes.LOGIN)
       })
       .catch((error) => {
         console.log(error)
@@ -71,13 +75,19 @@ export default function ActivatePage({ params }: { params: { slug: string } }) {
         </div>
         <div className="w-[80vh] max-[320px]:max-w-[254px] max-[360px]:max-w-[324px] max-w-[354px] sm:max-w-[400px]">
           <div className="flex flex-col gap-2 py-5">
-            <PageTitle>Ustaw hasło</PageTitle>
+            <PageTitle>Ustaw nowe hasło</PageTitle>
             <Alert
               severity={alert.severity}
               open={alert.isOpen}
               onClose={handleCloseAlert}
             >
-              {alert.message}
+              {alert.message}{" "}
+              <Link
+                href={Routes.FORGOT_PASSWORD}
+                className="font-medium text-primary-700"
+              >
+                Zresetuj ponownie
+              </Link>
             </Alert>
           </div>
           <form
@@ -126,7 +136,7 @@ export default function ActivatePage({ params }: { params: { slug: string } }) {
                 type={ButtonType.SUBMIT}
                 loading={isLoading}
               >
-                Aktywuj konto
+                Zresetuj hasło
               </Button>
             </div>
           </form>
