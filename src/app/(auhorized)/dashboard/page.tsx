@@ -1,43 +1,58 @@
 "use client"
+import { PageTitle } from "@/app/components/UI"
+import { headline } from "@/app/lib/fonts"
 import { useRouter } from "next/navigation"
 
 const DashboardPage = () => {
   const router = useRouter()
   return (
-    <div className="flex flex-col justify-between w-full gap-2">
-      {/* <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div>
-      <div className="bg-red-300 w-96 h-52"></div> */}
+    <div className="container flex flex-col gap-5 mx-auto">
+      <div className={headline.className}>
+        <h1 className="text-2xl font-semibold text-neutral-800">Panel główny</h1>
+      </div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
+      <div className="bg-white h-60 w-60"></div>
     </div>
   )
 }

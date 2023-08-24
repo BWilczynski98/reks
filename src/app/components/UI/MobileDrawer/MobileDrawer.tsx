@@ -1,15 +1,20 @@
+import React from "react"
+import { SidebarButton } from "../Sidebar/SidebarButton"
 import { Routes } from "@/app/types/routes"
+import { cn } from "@/app/lib/cn"
 import { RiAdminFill, RiDashboardFill, RiHome4Fill } from "react-icons/ri"
 import { SignOutButton } from "../SignOutButton"
-import { SidebarButton } from "./SidebarButton"
-import { Logo } from ".."
 
-export const Sidebar = () => {
+export const MobileDrawer = ({ isOpen }: { isOpen: boolean }) => {
   return (
-    <div className="flex flex-col justify-between w-64 h-screen p-4 bg-white border-r border-neutral-100">
-      <div className="h-[10%]">
-        <Logo />
-      </div>
+    <div
+      className={cn(
+        "fixed w-full h-full bg-white top-16 -right-full duration-200 ease-in-out z-20 p-4 max-sm:flex flex-col justify-evenly hidden",
+        {
+          "right-0": isOpen,
+        }
+      )}
+    >
       <div className="h-[80%]">
         <SidebarButton
           href={Routes.ADMIN}
@@ -30,7 +35,7 @@ export const Sidebar = () => {
           Dom tymczasowy
         </SidebarButton>
       </div>
-      <div className="h-[10%]flex flex-col justify-center">
+      <div className="h-[10%]">
         <SignOutButton />
       </div>
     </div>
