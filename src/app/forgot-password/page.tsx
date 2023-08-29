@@ -9,11 +9,11 @@ import { useState } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
 import { cn } from "@lib/cn"
-import { Severity } from "../../types/alert"
-import { ButtonType } from "../../types/button"
-import { Errors } from "../../types/errorsDictionary"
-import { Routes } from "../../types/routes"
-import { TextFieldType } from "../../types/textfield"
+import { Severity } from "../types/alert"
+import { ButtonType } from "../types/button"
+import { Errors } from "../types/errorsDictionary"
+import { Routes } from "../types/routes"
+import { TextFieldType } from "../types/textfield"
 
 const schema = yup.object({
   email: yup

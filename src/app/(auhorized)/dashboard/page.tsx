@@ -10,49 +10,6 @@ const DashboardPage = () => {
       <div className={headline.className}>
         <h1 className="text-2xl font-semibold text-neutral-800">Panel główny</h1>
       </div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
-      <div className="bg-white h-60 w-60"></div>
     </div>
   )
 }
