@@ -11,6 +11,7 @@ type Props = {
   loading?: boolean
   outline?: boolean
   action?: "confirm" | "deny"
+  fullWidth?: boolean
 }
 
 export const Button = ({
@@ -21,12 +22,14 @@ export const Button = ({
   loading = false,
   outline = false,
   action = "confirm",
+  fullWidth = false,
 }: Props) => {
   return (
     <button
       className={cn(
-        "w-full items-center py-[6px] rounded-default text-sm sm:text-base bg-primary-700  text-neutral-50  duration-150 ease-in-out enabled:hover:shadow-md hover:shadow-primary-200  disabled:bg-secondary-100 disabled:text-secondary-300 flex justify-center",
+        "items-center py-[6px] px-4 rounded-default text-sm sm:text-base bg-primary-700  text-neutral-50  duration-150 ease-in-out enabled:hover:shadow-md hover:shadow-primary-200  disabled:bg-secondary-100 disabled:text-secondary-300 flex justify-center",
         {
+          "w-full": fullWidth,
           "bg-color-none": outline,
           "text-neutral-700": outline,
           border: outline,

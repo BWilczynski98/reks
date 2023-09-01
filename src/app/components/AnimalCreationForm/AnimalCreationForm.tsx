@@ -1,5 +1,7 @@
 "use client"
 import { headline } from "@/app/lib/fonts"
+import { formatPhoneNumber } from "@/app/lib/formatPhoneNumber"
+import { formatPostalCode } from "@/app/lib/formatPostalCode"
 import { regex } from "@/app/lib/regex"
 import { AnimalGender, AnimalResidence, AnimalType } from "@/app/types/animal"
 import { ButtonType } from "@/app/types/button"
@@ -7,16 +9,15 @@ import { Errors } from "@/app/types/errorsDictionary"
 import { Routes } from "@/app/types/routes"
 import { TextFieldType } from "@/app/types/textfield"
 import { useCreateAnimalMutation } from "@/redux/services/animalApi"
+import { Button, Calendar, Chapter, Dropzone, Label, TextField, Textarea } from "@components/UI"
+import { Select } from "../UI/Select"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { Gender, Residence, Type } from "@prisma/client"
+import dayjs from "dayjs"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
-import { Button, Calendar, Chapter, Dropzone, Label, Select, TextField, Textarea } from "@components/UI"
-import dayjs from "dayjs"
-import { Gender, Residence, Type } from "@prisma/client"
-import { formatPhoneNumber } from "@/app/lib/formatPhoneNumber"
-import { formatPostalCode } from "@/app/lib/formatPostalCode"
 
 const schema = yup.object({
   name: yup.string().required(Errors.EMPTY_FIELD).matches(regex.names, Errors.INCORRECT_REGEX),
@@ -31,8 +32,8 @@ const schema = yup.object({
   postalCodeWhereFound: yup
     .string()
     .required(Errors.EMPTY_FIELD)
-    .min(6, Errors.MIN_LENGTH_POSTAL_CODE)
-    .max(6, Errors.MAX_LENGTH_POSTAL_CODE)
+    .min(5, Errors.MIN_LENGTH_POSTAL_CODE)
+    .max(5, Errors.MAX_LENGTH_POSTAL_CODE)
     .matches(regex.numbersWithDash, Errors.INCORRECT_REGEX),
   dateOfCaputer: yup.date().required(Errors.EMPTY_FIELD).typeError(Errors.INCORRECT_DATE),
   residence: yup.string().required(Errors.EMPTY_FIELD),

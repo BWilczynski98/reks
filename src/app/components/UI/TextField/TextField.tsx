@@ -20,6 +20,7 @@ type Props = {
   minLength?: number
   maxLength?: number
   max?: number
+  size?: "normal" | "small"
 }
 
 export const TextField = ({
@@ -38,6 +39,7 @@ export const TextField = ({
   minLength,
   maxLength,
   max,
+  size = "normal",
 }: Props) => {
   return (
     <div className={`${body.className} flex gap-1 flex-col w-full`}>
@@ -54,6 +56,7 @@ export const TextField = ({
           className={cn(
             "w-full p-3 text-sm sm:text-base outline-none ring-1 ring-neutral-200 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700 shadow-sm",
             {
+              "py-2": size === "small",
               "pl-3": icon,
               "pr-12": icon,
               "ring-red-500": error,
