@@ -135,6 +135,7 @@ export default function ResetPasswordPage({ params }: { params: { slug: string }
               <Button
                 type={ButtonType.SUBMIT}
                 loading={isLoading}
+                fullWidth
               >
                 Zresetuj hasło
               </Button>

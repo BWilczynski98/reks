@@ -9,7 +9,7 @@ import { useGetAllAnimalQuery } from "@/redux/services/animalApi"
 import { AnimalGender, AnimalResidence, AnimalStatus, AnimalType } from "@/app/types/animal"
 import { Gender, Residence, Status, Type } from "@prisma/client"
 import { TableRow } from "../UI/Table/TableRow"
-import { Filter, TextField } from "../UI"
+import { Button, Filter, TextField } from "../UI"
 import { TextFieldType } from "@/app/types/textfield"
 import { SlOptionsVertical } from "react-icons/sl"
 import { Card } from "../UI/Card/Card"
@@ -65,12 +65,13 @@ export const TableOfAnimal = () => {
 
   return (
     <Card>
-      <section className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <div>
-            <h2 className="text-base font-semibold">Tabela zwierząt</h2>
+          <div className="flex justify-between">
+            <h2 className="text-base font-semibold text-neutral-800">Tabela zwierząt</h2>
+            <Button>Stwórz nowy wpis</Button>
           </div>
-          <div className="w-full flex justify-between gap-2 h-10 border">
+          <div className="w-full flex gap-2">
             <div className="w-64 h-full">
               <TextField
                 type={TextFieldType.TEXT}
@@ -120,7 +121,7 @@ export const TableOfAnimal = () => {
               ))}
           </TableBody>
         </Table>
-      </section>
+      </div>
     </Card>
   )
 }

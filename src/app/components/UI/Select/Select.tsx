@@ -27,7 +27,7 @@ export const Select = ({ label, placeholder, name, id, value, options, onChange,
     if (ref.current != null) {
       setHeight(ref.current.offsetHeight)
     }
-  }, [])
+  }, [ref])
 
   return (
     <div className={`${body.className} flex gap-1 flex-col w-full`}>

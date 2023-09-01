@@ -43,14 +43,17 @@ export const TextField = ({
 }: Props) => {
   return (
     <div className={`${body.className} flex gap-1 flex-col w-full`}>
-      <div>
-        <Label
-          name={name}
-          error={error}
-        >
-          {label}
-        </Label>
-      </div>
+      {label ? (
+        <div>
+          <Label
+            name={name}
+            error={error}
+          >
+            {label}
+          </Label>
+        </div>
+      ) : null}
+
       <div className="relative">
         <input
           className={cn(

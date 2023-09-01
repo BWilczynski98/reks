@@ -10,7 +10,7 @@ export const SignOutButton = () => {
       className={body.className}
       onClick={() => signOut()}
     >
-      <div className="flex items-center gap-2 p-2 font-medium cursor-pointer text-neutral-600 hover:bg-neutral-100 rounded-default">
+      <div className="flex items-center gap-2 p-2 font-medium cursor-pointer text-neutral-800 hover:bg-neutral-100 rounded-default">
         <CgLogOut />
         Wyloguj
       </div>

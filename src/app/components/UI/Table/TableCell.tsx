@@ -9,7 +9,7 @@ type Props = {
 export const TableCell = ({ children, align = "left" }: Props) => {
   return (
     <td
-      className={cn("px-2 py-4 max-w-[284px] text-left", {
+      className={cn("px-2 py-4 max-w-[284px] text-left text-neutral-800", {
         "text-center": align === "center",
         "text-right": align === "right",
       })}

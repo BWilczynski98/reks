@@ -120,6 +120,7 @@ export default function ResetPasswordPage() {
                 <Button
                   type={ButtonType.SUBMIT}
                   loading={isLoading}
+                  fullWidth
                 >
                   Wyślij
                 </Button>

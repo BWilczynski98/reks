@@ -19,7 +19,7 @@ export const SidebarButton = ({ children, href = "/", icon }: Props) => {
       <Link href={href}>
         <div
           className={cn(
-            "flex items-center w-full gap-2 p-2 text-base font-medium duration-75 ease-in-out text-neutral-600 hover:bg-primary-500 hover:text-neutral-50 rounded-default",
+            "flex items-center w-full gap-2 p-2 text-base font-medium duration-75 ease-in-out text-neutral-800 hover:bg-primary-500 hover:text-neutral-50 rounded-default",
             {
               "text-primary-700": isActive,
             }

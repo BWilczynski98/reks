@@ -11,8 +11,6 @@ const DashboardPage = () => {
     <div className="container flex flex-col gap-5 mx-auto">
       <div className={`${headline.className} flex justify-between`}>
         <h1 className="text-2xl font-semibold text-neutral-800">Panel główny</h1>
-
-        <Button onClick={() => router.push("/adding-animal")}>Nowy wpis</Button>
       </div>
       <div>
         <TableOfAnimal />
