@@ -4,14 +4,16 @@ import React from "react"
 type Props = {
   children: React.ReactNode
   align?: "left" | "center" | "right"
+  visible?: boolean
 }
 
-export const TableCell = ({ children, align = "left" }: Props) => {
+export const TableCell = ({ children, align = "left", visible = true }: Props) => {
   return (
     <td
-      className={cn("px-2 py-4 max-w-[284px] text-left text-neutral-800", {
+      className={cn("p-2 max-w-[284px] text-left text-neutral-800", {
         "text-center": align === "center",
         "text-right": align === "right",
+        hidden: !visible,
       })}
     >
       {children}

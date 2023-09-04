@@ -17,3 +17,9 @@ type Animal = {
   descriptionOfHealth: string
   homeId?: string
 }
+
+type TableFilter = {
+  label: string
+  value: string
+  active: boolean
+}

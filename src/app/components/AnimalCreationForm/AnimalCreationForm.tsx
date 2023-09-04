@@ -546,19 +546,16 @@ export const AnimalCreationForm = () => {
         </Chapter>
 
         <div className="flex justify-end gap-4 my-4">
-          <div className="w-36">
-            <Button
-              type={ButtonType.RESET}
-              outline
-              action={"deny"}
-              onClick={() => router.push(Routes.DASHBOARD)}
-            >
-              Anuluj
-            </Button>
-          </div>
-          <div className="w-36">
-            <Button type={ButtonType.SUBMIT}>Dodaj</Button>
-          </div>
+          <Button
+            type={ButtonType.RESET}
+            outline
+            action={"deny"}
+            onClick={() => router.push(Routes.DASHBOARD)}
+          >
+            Anuluj
+          </Button>
+
+          <Button type={ButtonType.SUBMIT}>Dodaj</Button>
         </div>
       </form>
     </>
