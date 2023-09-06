@@ -18,7 +18,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
-
+// FIXME: In the yup validation scheme, the postal code of the location found and the postal code of the temporary house does not work correctly displaying a message about the inadequate number of characters
 const schema = yup.object({
   name: yup.string().required(Errors.EMPTY_FIELD).matches(regex.names, Errors.INCORRECT_REGEX),
   type: yup.string().required(Errors.EMPTY_FIELD),
@@ -32,8 +32,8 @@ const schema = yup.object({
   postalCodeWhereFound: yup
     .string()
     .required(Errors.EMPTY_FIELD)
-    .min(5, Errors.MIN_LENGTH_POSTAL_CODE)
-    .max(5, Errors.MAX_LENGTH_POSTAL_CODE)
+    // .min(5, Errors.MIN_LENGTH_POSTAL_CODE)
+    // .max(5, Errors.MAX_LENGTH_POSTAL_CODE)
     .matches(regex.numbersWithDash, Errors.INCORRECT_REGEX),
   dateOfCaputer: yup.date().required(Errors.EMPTY_FIELD).typeError(Errors.INCORRECT_DATE),
   residence: yup.string().required(Errors.EMPTY_FIELD),
@@ -75,8 +75,8 @@ const schema = yup.object({
     then: (schema) =>
       schema
         .required(Errors.EMPTY_FIELD)
-        .min(6, Errors.MIN_LENGTH_POSTAL_CODE)
-        .max(6, Errors.MAX_LENGTH_POSTAL_CODE)
+        // .min(6, Errors.MIN_LENGTH_POSTAL_CODE)
+        // .max(6, Errors.MAX_LENGTH_POSTAL_CODE)
         .matches(regex.numbersWithDash, Errors.INCORRECT_REGEX),
   }),
 
@@ -131,7 +131,7 @@ export const AnimalCreationForm = () => {
       birthDate: data.birthDate,
       locationWhereFound: `${data.cityWhereFound} ${data.postalCodeWhereFound} ${data.streetWhereFound}`,
       timeWhenFound: data.dateOfCaputer,
-      photoUrl: "https://utfs.io/f/ac62a196-7e86-4853-96f5-64d181a330d8_original-c3601ee90abd88ca72c2ff936183fa4a.png",
+      photoUrl: "",
       residence: data.residence === AnimalResidence.BASE ? Residence.BASE : Residence.TEMPORARY_HOME,
       description: data.notes,
       descriptionOfHealth: data.healthDescription,
