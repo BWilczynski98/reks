@@ -139,6 +139,7 @@ export default function LoginPage() {
               <Button
                 type={ButtonType.SUBMIT}
                 loading={isLoading}
+                fullWidth
               >
                 Zaloguj się
               </Button>

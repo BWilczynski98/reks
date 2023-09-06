@@ -125,6 +125,7 @@ export default function ActivatePage({ params }: { params: { slug: string } }) {
               <Button
                 type={ButtonType.SUBMIT}
                 loading={isLoading}
+                fullWidth
               >
                 Aktywuj konto
               </Button>

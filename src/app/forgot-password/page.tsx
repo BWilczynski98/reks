@@ -93,7 +93,12 @@ export default function ResetPasswordPage() {
             )}
           </div>
           {isSubmitted ? (
-            <Button onClick={() => router.push(Routes.LOGIN)}>Powrót do logowania</Button>
+            <Button
+              onClick={() => router.push(Routes.LOGIN)}
+              fullWidth
+            >
+              Powrót do logowania
+            </Button>
           ) : (
             <form
               onSubmit={handleSubmit(onSubmit)}
@@ -120,6 +125,7 @@ export default function ResetPasswordPage() {
                 <Button
                   type={ButtonType.SUBMIT}
                   loading={isLoading}
+                  fullWidth
                 >
                   Wyślij
                 </Button>

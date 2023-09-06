@@ -1,3 +1,4 @@
+//FIXME: In devmode "Cannot access 'Select' before initialization"
 "use client"
 import { useComponentVisible } from "@/app/hooks"
 import { cn } from "@/app/lib/cn"
@@ -14,12 +15,24 @@ type Props = {
   id?: string
   value: string | number
   options: string[]
-  onChange: (e: string) => void
+  onChange: (args: any) => void
   error?: boolean
   errorMessage?: string
+  size?: "small" | "standard"
 }
 
-export const Select = ({ label, placeholder, name, id, value, options, onChange, error, errorMessage }: Props) => {
+export const Select = ({
+  label,
+  placeholder,
+  name,
+  id,
+  value,
+  options,
+  onChange,
+  error,
+  errorMessage,
+  size = "standard",
+}: Props) => {
   const [height, setHeight] = useState(0)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
@@ -27,30 +40,43 @@ export const Select = ({ label, placeholder, name, id, value, options, onChange,
     if (ref.current != null) {
       setHeight(ref.current.offsetHeight)
     }
-  }, [])
+  }, [ref])
 
+  const smallSize = size === "small"
+  const standardSize = size === "standard"
+
+  const handleToggleComponentVisible = () => {
+    setIsComponentVisible((prev: boolean) => !prev)
+  }
+  //FIXME: When click Chevron icon is clicked, the ring does not change state to focused and thus does not change to the primary color
   return (
     <div className={`${body.className} flex gap-1 flex-col w-full`}>
-      <div>
-        <Label
-          name={name}
-          error={error}
-        >
-          {label}
-        </Label>
-      </div>
+      {label ? (
+        <div>
+          <Label
+            name={name}
+            error={error}
+          >
+            {label}
+          </Label>
+        </div>
+      ) : null}
+
       <div className="relative">
         <div className="cursor-pointer">
           <input
             ref={ref}
-            onClick={() => setIsComponentVisible((prev: boolean) => !prev)}
+            onClick={handleToggleComponentVisible}
             readOnly
             className={cn(
-              "w-full p-3 text-sm sm:text-base outline-none ring-1 ring-neutral-200 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700 shadow-sm relative cursor-pointer",
+              "group w-full p-3 text-sm sm:text-base outline-none ring-1 ring-neutral-200 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700 shadow-sm relative cursor-pointer peer",
               {
                 "ring-red-500": error,
                 "focus:ring-red-500": error,
                 "placeholder:text-red-300": error,
+                "p-3": standardSize,
+                "py-1": smallSize,
+                "px-2": smallSize,
               }
             )}
             placeholder={placeholder}
@@ -58,7 +84,10 @@ export const Select = ({ label, placeholder, name, id, value, options, onChange,
             id={id}
             value={value}
           />
-          <div className="absolute z-20 -translate-y-1/2 top-1/2 right-3 text-neutral-950">
+          <div
+            className="absolute z-20 -translate-y-1/2 top-1/2 right-3 text-neutral-950 peer-[.is-focus]:"
+            onClick={handleToggleComponentVisible}
+          >
             {isComponentVisible ? <BiChevronUp /> : <BiChevronDown />}
           </div>
         </div>
@@ -83,7 +112,6 @@ export const Select = ({ label, placeholder, name, id, value, options, onChange,
           })}
         </div>
       </div>
-
       {error ? (
         <div>
           <p className="text-sm text-red-500">{errorMessage}</p>

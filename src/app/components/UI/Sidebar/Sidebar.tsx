@@ -6,7 +6,7 @@ import { Logo } from ".."
 
 export const Sidebar = () => {
   return (
-    <div className="flex flex-col justify-between w-64 h-screen p-4 bg-white border-r border-neutral-100 max-sm:hidden">
+    <aside className="flex flex-col justify-between w-64 h-screen p-4 bg-white border-r border-neutral-100 max-sm:hidden">
       <div className="h-[10%]">
         <Logo />
       </div>
@@ -33,6 +33,6 @@ export const Sidebar = () => {
       <div className="h-[10%]flex flex-col justify-center">
         <SignOutButton />
       </div>
-    </div>
+    </aside>
   )
 }
