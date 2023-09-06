@@ -1,4 +1,4 @@
-import { AnimalCreationForm } from "../../components/AnimalCreationForm"
+import { AnimalCreationForm } from "../components/AnimalCreationForm"
 
 export default function CreateAnimalFormPage() {
   return (
