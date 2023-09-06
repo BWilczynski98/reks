@@ -1,6 +1,6 @@
 import React from "react"
 import { MdNavigateBefore, MdNavigateNext } from "react-icons/md"
-import { Select } from "../Select"
+import { Select } from "../Select/Select"
 
 type PaginationProps = {
   rowPerPage: number

@@ -1,12 +1,7 @@
-"use client"
 import { TableOfAnimal } from "@/app/components/TableOfAnimal/TableOfAnimal"
-import { Button } from "@/app/components/UI"
 import { headline } from "@/app/lib/fonts"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
 
 const DashboardPage = () => {
-  const router = useRouter()
   return (
     <div className="container flex flex-col gap-5 mx-auto">
       <div className={`${headline.className} flex justify-between`}>

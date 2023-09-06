@@ -1,4 +1,5 @@
 "use client"
+import { usePagination } from "@/app/hooks/usePagination/usePagination"
 import { AnimalGender, AnimalResidence, AnimalStatus, AnimalType } from "@/app/types/animal"
 import { TextFieldType } from "@/app/types/textfield"
 import { useGetAllAnimalQuery } from "@/redux/services/animalApi"
@@ -15,8 +16,8 @@ import { TableCell } from "../UI/Table/TableCell"
 import { TableHead } from "../UI/Table/TableHead"
 import { TableHeaderCell } from "../UI/Table/TableHeaderCell"
 import { TableRow } from "../UI/Table/TableRow"
-import { TableFooter } from "../UI/Table/TableFooter"
-import { usePagination } from "@/app/hooks/usePagination/usePagination"
+import { useRouter } from "next/navigation"
+import { Routes } from "@/app/types/routes"
 
 require("dayjs/locale/pl")
 
@@ -26,6 +27,7 @@ enum RegisterTimeSort {
 }
 
 export const TableOfAnimal = () => {
+  const router = useRouter()
   const relativeTime = require("dayjs/plugin/relativeTime")
   dayjs.extend(relativeTime)
 
@@ -100,7 +102,7 @@ export const TableOfAnimal = () => {
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
             <h2 className="text-base font-semibold text-neutral-800">Tabela zwierząt</h2>
-            <Button>Nowy wpis</Button>
+            <Button onClick={() => router.push(Routes.ADDING_ANIMAL)}>Nowy wpis</Button>
           </div>
           <div className="w-full flex gap-2 justify-between items-center">
             <div>

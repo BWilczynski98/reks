@@ -4,4 +4,5 @@ export enum Routes {
   FORGOT_PASSWORD = "/forgot-password",
   DASHBOARD = "/dashboard",
   ADMIN = "/admin",
+  ADDING_ANIMAL = "/adding-animal",
 }
