@@ -74,24 +74,36 @@ export const TableOfAnimal = () => {
   })
   const [visible, setVisible] = useState(true)
   const { data } = useGetAllAnimalQuery()
-  const animals = data?.map((animal) => ({
-    ...animal,
-    type: animal.type === Type.DOG ? AnimalType.DOG : AnimalType.CAT,
-    gender: animal.gender === Gender.MALE ? AnimalGender.MALE : AnimalGender.FEMALE,
-    residence: animal.residence === Residence.BASE ? AnimalResidence.BASE : AnimalResidence.TEMPORARY_HOME,
-    residencePeriod: dayjs(animal.createAt).locale("pl").toNow(true),
-    registration: dayjs(animal.createAt).format("DD/MM/YYYY"),
-    age: dayjs(animal.birthDate).locale("pl").toNow(true),
-    status: describeStatus(animal.status as Status),
-  }))
+
+  const animals = data
+    ?.map((animal) => ({
+      ...animal,
+      type: animal.type === Type.DOG ? AnimalType.DOG : AnimalType.CAT,
+      gender: animal.gender === Gender.MALE ? AnimalGender.MALE : AnimalGender.FEMALE,
+      residence: animal.residence === Residence.BASE ? AnimalResidence.BASE : AnimalResidence.TEMPORARY_HOME,
+      residencePeriod: dayjs(animal.createAt).locale("pl").toNow(true),
+      registration: dayjs(animal.createAt).format("DD/MM/YYYY"),
+      age: dayjs(animal.birthDate).locale("pl").toNow(true),
+      status: describeStatus(animal.status as Status),
+    }))
+    .sort((a, b) => sortByRegisterTime(a.createAt, b.createAt, sorting.registerTime))
+    .filter((animal) => animal.name.toUpperCase().includes(search.toUpperCase()))
+
   const [rowPerPage, setRowPerPage] = useState(5)
-  const { page: animalPage, next, previous } = usePagination(animals, rowPerPage)
+  const { page: animalsPerSide, next, previous } = usePagination(animals, rowPerPage)
 
   const handleRowPerPage = (rowPerPage: number) => setRowPerPage(rowPerPage)
 
   const handleChangeFilterCriteria = (criteria: TableFilter) => {
-    // Jeśli np w criteria przychodzi obiekt {label: "Samiec", value: AnimalGender.MALE, active: true}
-    // to w moim state filters wartość odpowiadająca za Samiec zmienia się na taką jaką przesyłam w argumencie
+    const updatedFilters = [...filters]
+    const index = updatedFilters.findIndex(
+      (filter) => filter.label === criteria.label && filter.value === criteria.value
+    )
+
+    if (index !== -1) {
+      updatedFilters[index].active = criteria.active
+      setFilters(updatedFilters)
+    }
   }
 
   const handleChangeSearchValue = (searchValue: string) => setSearch(searchValue)
@@ -111,10 +123,12 @@ export const TableOfAnimal = () => {
                 placeholder="Szukaj"
                 value={search}
                 onChange={handleChangeSearchValue}
-                // size="small"
               />
             </div>
-            <FilterList kindOfFiltering={filters}>
+            <FilterList
+              kindOfFiltering={filters}
+              handleFilter={handleChangeFilterCriteria}
+            >
               <BiFilter />
             </FilterList>
           </div>
@@ -134,35 +148,28 @@ export const TableOfAnimal = () => {
             </tr>
           </TableHead>
           <TableBody>
-            {animalPage
-              ?.filter((animal) => animal.name.toUpperCase().includes(search.toUpperCase()))
-              // .filter(({ gender }) => gender.includes(filters.gender))
-              // .filter(({ type }) => type.includes(filters.type))
-              // .filter(({ residence }) => residence.includes(filters.residence))
-              // .filter(({ status }) => status.includes(filters.status))
-              .sort((a, b) => sortByRegisterTime(a.createAt, b.createAt, sorting.registerTime))
-              .map((animal) => (
-                <TableRow key={animal.id}>
-                  <TableCell align="center">{animal.name}</TableCell>
-                  <TableCell align="center">{animal.type}</TableCell>
-                  <TableCell align="center">{animal.gender}</TableCell>
-                  <TableCell align="center">{animal.residence}</TableCell>
-                  <TableCell align="center">{animal.age}</TableCell>
-                  <TableCell align="center">{animal.residencePeriod}</TableCell>
-                  <TableCell align="center">{animal.registration}</TableCell>
-                  <TableCell
-                    align="center"
-                    visible={visible}
-                  >
-                    <StatusBadge severity={animal.status}>{animal.status}</StatusBadge>
-                  </TableCell>
-                  <TableCell align="right">
-                    <button className="rounded-full hover:bg-background p-2 text-neutral-500">
-                      <SlOptionsVertical />
-                    </button>
-                  </TableCell>
-                </TableRow>
-              ))}
+            {animalsPerSide?.map((animal) => (
+              <TableRow key={animal.id}>
+                <TableCell align="center">{animal.name}</TableCell>
+                <TableCell align="center">{animal.type}</TableCell>
+                <TableCell align="center">{animal.gender}</TableCell>
+                <TableCell align="center">{animal.residence}</TableCell>
+                <TableCell align="center">{animal.age}</TableCell>
+                <TableCell align="center">{animal.residencePeriod}</TableCell>
+                <TableCell align="center">{animal.registration}</TableCell>
+                <TableCell
+                  align="center"
+                  visible={visible}
+                >
+                  <StatusBadge severity={animal.status}>{animal.status}</StatusBadge>
+                </TableCell>
+                <TableCell align="right">
+                  <button className="rounded-full hover:bg-background p-2 text-neutral-500">
+                    <SlOptionsVertical />
+                  </button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
         <div className="w-full flex justify-between">

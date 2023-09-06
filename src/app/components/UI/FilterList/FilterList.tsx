@@ -3,30 +3,40 @@ import { useComponentVisible } from "@/app/hooks"
 import { cn } from "@/app/lib/cn"
 import { body } from "@/app/lib/fonts"
 
-type DropdownProps = {
+type FilterList = {
   children: React.ReactNode
   kindOfFiltering: TableFilter[]
+  handleFilter: (criteria: TableFilter) => void
 }
 
 type FilterItemProps = {
   label: string
+  value: string
+  active: boolean
+  handleFilter: (criteria: TableFilter) => void
 }
 
-const FilterItem = ({ label }: FilterItemProps) => {
+const FilterItem = ({ label, value, active, handleFilter }: FilterItemProps) => {
+  const onToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleFilter({ label, value, active: e.target.checked })
+  }
+
   return (
     <div className="flex items-center gap-2 p-1">
       <input
         id={label}
         type="checkbox"
-        value=""
+        value={value}
         name="bordered-checkbox"
+        onChange={(e) => onToggle(e)}
+        checked={active}
       />
       <label className="w-full text-sm font-medium text-gray-900 dark:text-gray-300">{label}</label>
     </div>
   )
 }
 
-export const FilterList = ({ children, kindOfFiltering }: DropdownProps) => {
+export const FilterList = ({ children, kindOfFiltering, handleFilter }: FilterList) => {
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
 
   return (
@@ -56,6 +66,9 @@ export const FilterList = ({ children, kindOfFiltering }: DropdownProps) => {
             <FilterItem
               key={filter.label + Math.random()}
               label={filter.label}
+              value={filter.value}
+              active={filter.active}
+              handleFilter={handleFilter}
             />
           ))}
         </div>
