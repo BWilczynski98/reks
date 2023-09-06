@@ -9,7 +9,7 @@ type PaginationResult<T> = {
 export const usePagination = <T>(array: T[] | undefined, itemsPerPage: number): PaginationResult<T> => {
   const [startOfCoverage, setStartOfCoverage] = useState(0)
   const [endOfCoverage, setEndOfCoverage] = useState(itemsPerPage)
-  console.log("pagination")
+
   const nextPage = () => {
     if (!!array && endOfCoverage >= array?.length) {
       return
