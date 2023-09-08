@@ -16,7 +16,7 @@ export const TableCell = ({ children, align = "left", visible = true }: Props) =
         hidden: !visible,
       })}
     >
-      {children}
+      <p className="line-clamp-1">{children}</p>
     </td>
   )
 }
