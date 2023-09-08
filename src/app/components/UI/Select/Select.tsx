@@ -14,11 +14,13 @@ type Props = {
   name?: string
   id?: string
   value: string | number
-  options: string[]
+  options: string[] | number[]
   onChange: (args: any) => void
   error?: boolean
   errorMessage?: string
   size?: "small" | "standard"
+  fullWidth?: boolean
+  tickOff?: boolean
 }
 
 export const Select = ({
@@ -32,6 +34,8 @@ export const Select = ({
   error,
   errorMessage,
   size = "standard",
+  fullWidth,
+  tickOff,
 }: Props) => {
   const [height, setHeight] = useState(0)
   const { ref, isComponentVisible, setIsComponentVisible } = useComponentVisible(false)
@@ -50,7 +54,7 @@ export const Select = ({
   }
   //FIXME: When click Chevron icon is clicked, the ring does not change state to focused and thus does not change to the primary color
   return (
-    <div className={`${body.className} flex gap-1 flex-col w-full`}>
+    <div className={cn(`${body.className} flex gap-1 flex-col`, { "w-full": fullWidth })}>
       {label ? (
         <div>
           <Label
@@ -69,7 +73,7 @@ export const Select = ({
             onClick={handleToggleComponentVisible}
             readOnly
             className={cn(
-              "group w-full p-3 text-sm sm:text-base outline-none ring-1 ring-neutral-200 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700 shadow-sm relative cursor-pointer peer",
+              "group w-full p-3 text-sm sm:text-base outline-none ring-1 ring-neutral-200 ring-inset rounded-default focus:ring-2 focus:ring-primary-700 shadow-sm relative cursor-pointer peer",
               {
                 "ring-red-500": error,
                 "focus:ring-red-500": error,
@@ -99,17 +103,28 @@ export const Select = ({
             }
           )}
         >
-          {options.map((item) => {
-            return (
-              <div
-                key={item}
-                className="px-3 py-1 cursor-pointer hover:bg-primary-700 hover:text-neutral-100"
-                onClick={() => onChange(item)}
-              >
-                {item}
-              </div>
-            )
-          })}
+          <ul>
+            {options.map((item) => {
+              return (
+                <li
+                  key={item}
+                  className={cn("px-3 py-1 cursor-pointer hover:bg-primary-700 hover:text-neutral-100", {
+                    "text-primary-700": item === value,
+                    "font-medium": item === value,
+                  })}
+                  onClick={() => {
+                    if (tickOff && item === value) {
+                      return onChange("")
+                    }
+
+                    return onChange(item)
+                  }}
+                >
+                  {item}
+                </li>
+              )
+            })}
+          </ul>
         </div>
       </div>
       {error ? (

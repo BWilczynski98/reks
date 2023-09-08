@@ -17,8 +17,8 @@ export const MobileDrawer = () => {
   const handlerCloseSidebar = () => dispatch(closeSidebar())
 
   return (
-    <div>
-      <div className="fixed top-0 flex items-center justify-between w-full h-16 p-2 bg-white border-b sm:hidden border-neutral-200">
+    <>
+      <div className="fixed top-0 flex items-center justify-between w-full h-16 p-2 bg-white border-b sm:hidden border-neutral-200 z-50">
         <Logo />
         <div
           className="p-2 text-xl rounded-full hover:bg-neutral-100"
@@ -64,6 +64,6 @@ export const MobileDrawer = () => {
           <SignOutButton />
         </div>
       </div>
-    </div>
+    </>
   )
 }

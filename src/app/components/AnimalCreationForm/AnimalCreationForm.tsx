@@ -193,6 +193,7 @@ export const AnimalCreationForm = () => {
                   onChange={onChange}
                   error={!!errors.type}
                   errorMessage={errors.type?.message}
+                  fullWidth
                 />
               )}
             />
@@ -210,6 +211,7 @@ export const AnimalCreationForm = () => {
                   onChange={onChange}
                   error={!!errors.gender}
                   errorMessage={errors.gender?.message}
+                  fullWidth
                 />
               )}
             />
@@ -304,7 +306,7 @@ export const AnimalCreationForm = () => {
               control={control}
               render={({ field: { onChange, value } }) => (
                 <Calendar
-                  label="Data złapania"
+                  label="Data zabezpieczenia"
                   name="dateOfCaputer"
                   id="dateOfCaputer"
                   onChange={onChange}
@@ -328,6 +330,7 @@ export const AnimalCreationForm = () => {
                   onChange={onChange}
                   error={!!errors.residence}
                   errorMessage={errors.residence?.message}
+                  fullWidth
                 />
               )}
             />

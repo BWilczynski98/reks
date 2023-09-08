@@ -1,3 +1,3 @@
 export const Table = ({ children }: { children: React.ReactNode }) => {
-  return <table className="w-full">{children}</table>
+  return <table className="relative">{children}</table>
 }
