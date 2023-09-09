@@ -14,6 +14,7 @@ import { Errors } from "@/app/types/errorsDictionary"
 import { TextFieldType } from "@/app/types/textfield"
 import { toast, ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import { Card } from "../UI/Card/Card"
 
 type UserAccountProps = {
   email: string
@@ -82,7 +83,7 @@ export const UserCreationForm = () => {
   }
 
   return (
-    <>
+    <Card>
       <Modal
         title="Rejestracja użytkownika"
         open={modalIsOpen}
@@ -106,7 +107,7 @@ export const UserCreationForm = () => {
 
       <section className="w-full">
         <div>
-          <h3 className={`${headline.className} text-xl`}>Dodaj nowego użytkownika</h3>
+          <h3 className={`${headline.className} text-xl mb-2`}>Dodaj nowego użytkownika</h3>
         </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -151,6 +152,7 @@ export const UserCreationForm = () => {
             <Button
               type={ButtonType.SUBMIT}
               loading={isLoading}
+              fullWidth
             >
               Dodaj
             </Button>
@@ -158,6 +160,6 @@ export const UserCreationForm = () => {
         </form>
       </section>
       <ToastContainer autoClose={3000} />
-    </>
+    </Card>
   )
 }
