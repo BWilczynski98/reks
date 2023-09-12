@@ -31,7 +31,7 @@ export const TableOfUsers = () => {
               <TableHeaderCell>Status konta</TableHeaderCell>
               <TableHeaderCell>Rola konta</TableHeaderCell>
               <TableHeaderCell>Data rejestracji</TableHeaderCell>
-              <TableHeaderCell></TableHeaderCell>
+              {/* <TableHeaderCell></TableHeaderCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -43,16 +43,16 @@ export const TableOfUsers = () => {
                   {user.active ? (
                     <Badge severity={Severity.SUCCESS}>Aktywne</Badge>
                   ) : (
-                    <Badge severity={Severity.ERROR}>Nie aktywne</Badge>
+                    <Badge severity={Severity.ERROR}>Nieaktywne</Badge>
                   )}
                 </TableCell>
                 <TableCell>{user.role === Role.ADMIN ? "Administrator" : "Użytkownik"}</TableCell>
                 <TableCell>{dayjs(user.createdAt).format("DD/MM/YYYY")}</TableCell>
-                <TableCell align="right">
+                {/* <TableCell align="right">
                   <button className="rounded-full hover:bg-background p-2 text-neutral-500">
                     <SlOptionsVertical />
                   </button>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
