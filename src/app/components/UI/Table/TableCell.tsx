@@ -7,7 +7,7 @@ type Props = {
   visible?: boolean
 }
 
-export const TableCell = ({ children, align = "left", visible = true }: Props) => {
+export const TableCell = ({ children, align = "center", visible = true }: Props) => {
   return (
     <td
       className={cn("p-2 max-w-[284px] text-left text-neutral-800", {

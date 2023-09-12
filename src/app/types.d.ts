@@ -23,3 +23,14 @@ type TableFilter = {
   value: string
   active: boolean
 }
+
+type User = {
+  email: string
+  password: string
+  id: string
+  active: boolean
+  createdAt: string
+  name: string
+  role: string
+  updatedAt: string
+}

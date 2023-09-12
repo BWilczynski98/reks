@@ -35,6 +35,9 @@ const injectedRtkApi = api.injectEndpoints({
         body: user,
       }),
     }),
+    getListOfUsers: build.query<User[], void>({
+      query: () => "user/get",
+    }),
   }),
 })
 
@@ -43,5 +46,6 @@ export const {
   useActivateUserAccountMutation,
   useSendResetPasswordLinkMutation,
   useChangeUserPasswordMutation,
+  useGetListOfUsersQuery,
 } = injectedRtkApi
 export { injectedRtkApi as userApi }
