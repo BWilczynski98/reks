@@ -236,7 +236,13 @@ export const TableOfAnimal = () => {
             <TableBody>
               {animalsPerSide?.map((animal) => (
                 <TableRow key={animal.id + Math.random()}>
-                  <TableCell align="center">{animal.name}</TableCell>
+                  <TableCell
+                    align="center"
+                    link={true}
+                    id={animal.id}
+                  >
+                    {animal.name}
+                  </TableCell>
                   <TableCell align="center">{animal.type}</TableCell>
                   <TableCell align="center">{animal.gender}</TableCell>
                   <TableCell align="center">{animal.residence}</TableCell>
