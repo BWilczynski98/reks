@@ -30,6 +30,7 @@
     "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-prettier": "^5.0.0",
     "hoist-non-react-statics": "^3.3.2",
+    "nanoid": "^5.0.1",
     "next": "13.4.12",
     "next-auth": "^4.22.3",
     "postcss": "8.4.27",
