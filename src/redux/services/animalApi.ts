@@ -12,8 +12,13 @@ const injectedRtkApi = api.injectEndpoints({
     getAllAnimal: build.query<Animal[], void>({
       query: () => "animal/get",
     }),
+    getAnimalById: build.query<Animal, string>({
+      query: (petId) => ({
+        url: `/animal/getById?id=${petId}`,
+      }),
+    }),
   }),
 })
 
-export const { useCreateAnimalMutation, useGetAllAnimalQuery } = injectedRtkApi
+export const { useCreateAnimalMutation, useGetAllAnimalQuery, useGetAnimalByIdQuery } = injectedRtkApi
 export { injectedRtkApi as animalApi }
