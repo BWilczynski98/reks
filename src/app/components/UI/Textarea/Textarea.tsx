@@ -1,7 +1,6 @@
 import { cn } from "@/app/lib/cn"
 import { body } from "@/app/lib/fonts"
-import { TextFieldType } from "@/app/types/textfield"
-import React from "react"
+import type { TextFieldType } from "@/app/types/textfield"
 import { Label } from "../Label"
 
 type Props = {
@@ -43,7 +42,7 @@ export const Textarea = ({
       <div className="relative">
         <textarea
           className={cn(
-            "w-full p-3 text-sm sm:text-base outline-none ring-1 ring-neutral-200 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700 shadow-sm",
+            "w-full p-3 text-sm sm:text-base outline-none ring-1 ring-neutral-200 ring-inset rounded-default  focus:ring-2 focus:ring-primary-700 shadow-sm max-h-[350px]",
             {
               "ring-red-500": error,
               "focus:ring-red-500": error,
@@ -68,5 +67,3 @@ export const Textarea = ({
     </div>
   )
 }
-
-/*  */

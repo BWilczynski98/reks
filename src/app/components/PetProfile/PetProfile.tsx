@@ -1,32 +1,22 @@
 "use client"
 import { body, headline } from "@/app/lib/fonts"
+import { AllergyCategory } from "@/app/types/health"
 import { useGetAnimalByIdQuery } from "@/redux/services/animalApi"
 import { Card } from "../UI/Card/Card"
 import { BasicInformation } from "./components/BasicInformation"
 import { HealthCard } from "./components/HealthCard"
-import { AllergyCategory } from "@/app/types/health"
 
 type Props = {
   id: string
 }
 
 export const PetProfile = ({ id }: Props) => {
+  const today = new Date()
   const { data: pet } = useGetAnimalByIdQuery(id)
   const healthRecords = {
-    allergies: [
-      {
-        category: AllergyCategory.FOOD,
-        allergen: "Kurczak",
-        symptoms: "Biegunka",
-      },
-      {
-        category: AllergyCategory.CONTACT,
-        allergen: "Pyłki traw",
-        symptoms: "Zaczerwienienie i podrażnienie w łapach przednich poduszek przez co nerwowo wylizuje i wygryza.",
-      },
-    ],
-    drugs: [{}],
-    vaccination: [{}],
+    allergies: [],
+    drugs: [],
+    vaccination: [],
   }
 
   return (

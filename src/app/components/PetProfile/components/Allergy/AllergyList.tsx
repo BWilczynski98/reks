@@ -1,6 +1,6 @@
 import type { Allergy } from "@/app/types/health"
-import { AllergyItem } from "./AllergyItem"
 import { nanoid } from "@reduxjs/toolkit"
+import { AllergyItem } from "./AllergyItem"
 
 type Props = {
   allergies: Allergy[]

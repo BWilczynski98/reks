@@ -10,6 +10,30 @@ export type Allergy = {
   symptoms: string
 }
 
+export type Drug = {
+  name: string
+  dose: string
+  interval: string
+  until: Date
+  comments?: string
+}
+
+export type Vaccination = {
+  name: string
+  date: Date
+  term: Date
+  comments?: string
+}
+
 export type HealthRecords = {
-  allergies: Allergy[]
+  allergies: Allergy[] | []
+  drugs: Drug[] | []
+  vaccination: Vaccination[] | []
+}
+
+export type HealthRecordsForms = {
+  formIsOpen: boolean
+  formOnClose: () => void
+  formOnSubmit: () => void
+  formTitle: string
 }

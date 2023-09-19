@@ -1,12 +1,17 @@
+import { useDisclose } from "@/app/hooks"
+import type { HealthRecords } from "@/app/types/health"
+import { GiMedicines } from "react-icons/gi"
+import { MdMedicalInformation, MdModeEdit } from "react-icons/md"
+import { SiMoleculer } from "react-icons/si"
+import { TbVaccine } from "react-icons/tb"
 import { Button } from "../../UI"
 import { Card } from "../../UI/Card/Card"
-import { MdModeEdit, MdMedicalInformation } from "react-icons/md"
-import { SiMoleculer } from "react-icons/si"
-import { GiMedicines } from "react-icons/gi"
-import { TbVaccine } from "react-icons/tb"
+import { AllergyForm, AllergyList } from "./Allergy"
+import { DrugList } from "./Drug/DrugList"
 import { Row } from "./Row"
-import type { HealthRecords } from "@/app/types/health"
-import { AllergyList } from "./Allergy"
+import { VaccinationList } from "./Vaccination/VaccinationList"
+import { DrugForm } from "./Drug/DrugForm"
+import { VaccinationForm } from "./Vaccination/VaccinationForm"
 
 type Props = {
   healthRecords: HealthRecords
@@ -17,9 +22,10 @@ type HealthTileProps = {
   icon?: React.ReactNode
   title: string
   disabledButton?: boolean
+  onClick?: () => void
 }
 
-const HealthTile = ({ children, icon, title, disabledButton }: HealthTileProps) => {
+const HealthTile = ({ children, icon, title, disabledButton, onClick }: HealthTileProps) => {
   return (
     <Card
       elevation="md"
@@ -33,12 +39,12 @@ const HealthTile = ({ children, icon, title, disabledButton }: HealthTileProps) 
               <p className="text-lg font-medium">{title}</p>
             </div>
             {/* <div className="flex items-center justify-center text-neutral-400 px-[6px] hover:bg-neutral-100 cursor-pointer rounded-full duration-100 ease-in-out">
-            <MdModeEdit className="w-4 h-4" />
-          </div> */}
+              <MdModeEdit className="w-4 h-4" />
+            </div> */}
           </div>
           <div>{children}</div>
 
-          <div className="flex justify-center">{disabledButton ? null : <Button>Dodaj</Button>}</div>
+          <div className="flex justify-center">{disabledButton ? null : <Button onClick={onClick}>Dodaj</Button>}</div>
         </div>
       </div>
     </Card>
@@ -46,6 +52,18 @@ const HealthTile = ({ children, icon, title, disabledButton }: HealthTileProps) 
 }
 
 export const HealthCard = ({ healthRecords }: Props) => {
+  const {
+    state: allergyFormIsOpen,
+    handleOpen: allergyFormHandleOpen,
+    handleClose: allergyFormHandleClose,
+  } = useDisclose()
+  const { state: drugFormIsOpen, handleOpen: drugFormHandleOpen, handleClose: drugFormHandleClose } = useDisclose()
+  const {
+    state: vaccinationFormIsOpen,
+    handleOpen: vaccinationFormHandleOpen,
+    handleClose: vaccinationFormHandleClose,
+  } = useDisclose()
+
   return (
     <section className="flex flex-col gap-x-5 gap-y-10">
       <div className="w-full">
@@ -78,10 +96,32 @@ export const HealthCard = ({ healthRecords }: Props) => {
         </HealthTile>
       </div>
       <div className="flex gap-5">
+        {/* Forms to complete a pet's health record broken down by allergies, medications taken and vaccinations */}
+        <AllergyForm
+          formIsOpen={allergyFormIsOpen}
+          formOnClose={allergyFormHandleClose}
+          formOnSubmit={allergyFormHandleClose}
+          formTitle="Formularz alergii"
+        />
+        <DrugForm
+          formIsOpen={drugFormIsOpen}
+          formOnClose={drugFormHandleClose}
+          formOnSubmit={drugFormHandleClose}
+          formTitle="Formularz leku"
+        />
+        <VaccinationForm
+          formIsOpen={vaccinationFormIsOpen}
+          formOnClose={vaccinationFormHandleClose}
+          formOnSubmit={vaccinationFormHandleOpen}
+          formTitle="Formularz szczepienia"
+        />
+        {/* */}
+        {/* Allergy, medication and vaccination cards */}
         <div className="w-full">
           <HealthTile
             icon={<SiMoleculer />}
             title="Alergie"
+            onClick={allergyFormHandleOpen}
           >
             <div>
               {healthRecords.allergies.length > 0 ? (
@@ -96,22 +136,33 @@ export const HealthCard = ({ healthRecords }: Props) => {
           <HealthTile
             icon={<GiMedicines />}
             title="Leki"
+            onClick={drugFormHandleOpen}
           >
-            <div className="text-neutral-400 text-center">
-              <p>Brak informacji na temat leków</p>
-            </div>
+            {healthRecords.drugs.length > 0 ? (
+              <DrugList drugs={healthRecords.drugs} />
+            ) : (
+              <div className="text-neutral-400 text-center">
+                <p>Brak informacji na temat leków</p>
+              </div>
+            )}
           </HealthTile>
         </div>
         <div className="w-full">
           <HealthTile
             icon={<TbVaccine />}
             title="Szczepienia"
+            onClick={vaccinationFormHandleOpen}
           >
-            <div className="text-neutral-400 text-center">
-              <p>Brak informacji na temat szczepień</p>
-            </div>
+            {healthRecords.vaccination.length > 0 ? (
+              <VaccinationList vaccinations={healthRecords.vaccination} />
+            ) : (
+              <div className="text-neutral-400 text-center">
+                <p>Brak informacji na temat szczepień</p>
+              </div>
+            )}
           </HealthTile>
         </div>
+        {/*  */}
       </div>
     </section>
   )
