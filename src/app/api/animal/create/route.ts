@@ -26,7 +26,6 @@ export async function POST(req: NextRequest) {
     temporaryHomeCity,
     temporaryHomePostalCode,
   } = body
-  console.log(body)
 
   if (!name || !type || !gender || !birthDate || !locationWhereFound || !timeWhenFound || !residence || !userId) {
     return new NextResponse("Missing fields", { status: 400 })
@@ -43,7 +42,7 @@ export async function POST(req: NextRequest) {
       !temporaryHomeCity ||
       !temporaryHomePostalCode
     ) {
-      return new NextResponse("Missing fields in if", { status: 400 })
+      return new NextResponse("Missing fields", { status: 400 })
     }
 
     const address = temporaryHomeApartmentNumber
@@ -78,7 +77,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  await prisma.animal.create({
+  const animal = await prisma.animal.create({
     data: {
       photoUrl,
       name,
@@ -94,5 +93,7 @@ export async function POST(req: NextRequest) {
       homeId: home ? home?.id : null,
     },
   })
+  await prisma.healthCard.create({ data: { animalId: animal.id } })
+
   return NextResponse.json("Adding the animal has been successful", { status: 201 })
 }
