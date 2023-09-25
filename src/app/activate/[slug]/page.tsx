@@ -1,17 +1,17 @@
 "use client"
+import { Routes } from "@/app/types/routes"
 import { useActivateUserAccountMutation } from "@/redux/services/userApi"
+import { Alert, Banner, Button, Logo, PageTitle, TextField } from "@components/UI"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useAlert, useDisclose, useToggle } from "@hooks/index"
 import { useRouter } from "next/navigation"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"
 import * as yup from "yup"
-import { Alert, Banner, Button, Logo, PageTitle, TextField } from "@components/UI"
-import { useAlert, useDisclose, useToggle } from "@hooks/index"
 import { Severity } from "../../types/alert"
 import { ButtonType } from "../../types/button"
 import { Errors } from "../../types/errorsDictionary"
 import { TextFieldType } from "../../types/textfield"
-import { Routes } from "@/app/types/routes"
 
 const schema = yup.object({
   password: yup
