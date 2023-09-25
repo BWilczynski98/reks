@@ -6,7 +6,7 @@ import { FormData } from "../../components/PetProfile/components/Allergy/Allergy
 
 export async function addAllergy(formData: FormData, animalId: string) {
   const allergyId = randomBytes(20).toString("hex")
-  await fetch("http://localhost:3000/api/animal/healthCard/allergies/create", {
+  await fetch("/api/animal/healthCard/allergies/create", {
     headers: {
       "Content-Type": "application/json",
     },

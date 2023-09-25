@@ -1,23 +1,19 @@
 import { PetProfile } from "@/app/components/PetProfile"
+import { server } from "@/app/config"
 
 const getData = async (id: string) => {
-  const pet = await fetch(
-    `https://reks-git-reks-40-animal-profile-bwilczynski98.vercel.app/api/animal/getById?id=${id}`,
-    {
-      next: { tags: ["animal"] },
-    }
-  )
+  const pet = await fetch(`${server}/api/animal/getById?id=${id}`, {
+    next: { tags: ["animal"] },
+  })
 
   return pet.json()
 }
 
 const getHealthCard = async (id: string) => {
-  const healthCard = await fetch(
-    `https://reks-git-reks-40-animal-profile-bwilczynski98.vercel.app/api/animal/healthCard/get?id=${id}`,
-    {
-      next: { tags: ["healthCard"] },
-    }
-  )
+  const healthCard = await fetch(`${server}/api/animal/healthCard/get?id=${id}`, {
+    next: { tags: ["healthCard"] },
+    cache: "no-store",
+  })
 
   return healthCard.json()
 }

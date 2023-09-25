@@ -1,7 +1,9 @@
 import { TableOfAnimal } from "@/app/components/TableOfAnimal/TableOfAnimal"
+import { server } from "@/app/config"
 import { headline } from "@/app/lib/fonts"
 
 const DashboardPage = () => {
+  console.log(server)
   return (
     <div className="container flex flex-col p-2 gap-5 mx-auto">
       <header className={`${headline.className} flex justify-between`}>
