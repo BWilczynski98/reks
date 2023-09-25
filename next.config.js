@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+  experimental: {
+    serverActions: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -8,7 +11,11 @@ module.exports = {
       },
       {
         protocol: "https",
-        hostname: "modkat.com",
+        hostname: "i.natgeofe.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.hindustantimes.com",
       },
     ],
   },
