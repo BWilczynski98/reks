@@ -54,9 +54,9 @@ model Home {
 }
 
 model Animal {
-  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  createAt            DateTime  @default(now())
-  updateAt            DateTime  @updatedAt
+  id                  String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createAt            DateTime    @default(now())
+  updateAt            DateTime    @updatedAt
   name                String
   type                Type
   gender              Gender
@@ -66,23 +66,26 @@ model Animal {
   photoUrl            String?
   residence           Residence
   description         String?
-  status              Status?   @default(UNADOPTABLE)
-  userId              String    @db.Uuid
-  referenceNumber     Int       @default(autoincrement())
+  status              Status?     @default(UNADOPTABLE)
+  userId              String      @db.Uuid
+  referenceNumber     Int         @default(autoincrement())
   descriptionOfHealth String?
-  homeId              String?   @db.Uuid
-  Home                Home?     @relation(fields: [homeId], references: [id])
-  user                User      @relation(fields: [userId], references: [id])
-  medications         Drug[]
+  homeId              String?     @db.Uuid
+  HealthCard          HealthCard?
+  Home                Home?       @relation(fields: [homeId], references: [id])
+  user                User        @relation(fields: [userId], references: [id])
+  healthCardId        String?     @db.Uuid
 }
 
-model Drug {
-  id       Int    @id @default(autoincrement())
-  animalId String @db.Uuid
-  name     String
-  dose     String
-  hours    String
-  animal   Animal @relation(fields: [animalId], references: [id])
+model HealthCard {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createAt     DateTime @default(now())
+  updateAt     DateTime @updatedAt
+  allergies    Json[]
+  drugs        Json[]
+  vaccinations Json[]
+  animal       Animal   @relation(fields: [animalId], references: [id])
+  animalId     String   @unique @db.Uuid
 }
 
 enum Role {
@@ -110,4 +113,10 @@ enum Status {
   FOR_ADOPTION
   UNADOPTABLE
   QUARANTINE
+}
+
+enum AllergyCategory {
+  FOOD
+  CONTACT
+  INHALATION
 }
