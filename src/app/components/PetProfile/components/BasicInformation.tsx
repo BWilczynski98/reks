@@ -16,8 +16,8 @@ export const BasicInformation = ({ pet }: BasicInformationProps) => {
   dayjs.extend(relativeTime)
   return (
     <section className="flex flex-wrap w-full gap-5 md:gap-0">
-      <div className="basis-full md:basis-1/4 max-md:flex max-md:justify-center max-md:items-center">
-        <div className="relative w-40 h-40">
+      <div className="basis-full lg:basis-1/4 max-lg:flex max-lg:justify-center max-lg:items-center">
+        <div className="relative w-52 h-52">
           {pet && pet.photoUrl ? (
             <Image
               src={pet.photoUrl}
@@ -36,7 +36,7 @@ export const BasicInformation = ({ pet }: BasicInformationProps) => {
           )}
         </div>
       </div>
-      <div className="flex flex-col gap-2 basis-full md:basis-3/4">
+      <div className="flex flex-col gap-2 basis-full lg:basis-3/4">
         <div className="flex gap-2">
           <p className="text-xl font-semibold text-primary-700">{pet.name}</p>
           {/* <div className="flex items-center justify-center text-neutral-400 px-[6px] hover:bg-neutral-100 cursor-pointer rounded-full duration-100 ease-in-out">
