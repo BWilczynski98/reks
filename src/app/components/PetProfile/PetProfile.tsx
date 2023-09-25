@@ -1,24 +1,15 @@
-"use client"
 import { body, headline } from "@/app/lib/fonts"
-import { AllergyCategory } from "@/app/types/health"
-import { useGetAnimalByIdQuery } from "@/redux/services/animalApi"
+import { HealthRecords } from "@/app/types/health"
 import { Card } from "../UI/Card/Card"
 import { BasicInformation } from "./components/BasicInformation"
 import { HealthCard } from "./components/HealthCard"
 
 type Props = {
-  id: string
+  pet: Animal
+  healthRecords?: HealthRecords
 }
 
-export const PetProfile = ({ id }: Props) => {
-  const today = new Date()
-  const { data: pet } = useGetAnimalByIdQuery(id)
-  const healthRecords = {
-    allergies: [],
-    drugs: [],
-    vaccination: [],
-  }
-
+export const PetProfile = ({ pet, healthRecords }: Props) => {
   return (
     <Card>
       {pet ? (
@@ -28,7 +19,7 @@ export const PetProfile = ({ id }: Props) => {
           </header>
           <main className="flex flex-col gap-10">
             <BasicInformation pet={pet} />
-            <HealthCard healthRecords={healthRecords} />
+            {healthRecords ? <HealthCard healthRecords={healthRecords} /> : null}
           </main>
         </div>
       ) : (
