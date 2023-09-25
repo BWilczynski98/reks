@@ -11,6 +11,7 @@ import { Severity } from "../../types/alert"
 import { ButtonType } from "../../types/button"
 import { Errors } from "../../types/errorsDictionary"
 import { TextFieldType } from "../../types/textfield"
+import { Routes } from "@/app/types/routes"
 
 const schema = yup.object({
   password: yup
@@ -49,7 +50,7 @@ export default function ActivatePage({ params }: { params: { slug: string } }) {
     activateUserAccount({ password: data.password, tokenToActivate: params.slug })
       .unwrap()
       .then((res) => {
-        console.log(res)
+        router.push(Routes.LOGIN)
         resetField("password")
         resetField("confirmPassword")
       })
