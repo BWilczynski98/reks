@@ -1,8 +1,10 @@
+import { addAllergy } from "@/app/actions/allergy/addAllergy"
 import { Button, Modal, TextField, Textarea } from "@/app/components/UI"
 import { Select } from "@/app/components/UI/Select"
 import { Errors } from "@/app/types/errorsDictionary"
 import { AllergyCategory, HealthRecordsForms } from "@/app/types/health"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useRef } from "react"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
 
@@ -12,9 +14,10 @@ const schema = yup.object({
   symptoms: yup.string().required(Errors.EMPTY_FIELD),
 })
 
-type FormData = yup.InferType<typeof schema>
+export type FormData = yup.InferType<typeof schema>
 
-export const AllergyForm = ({ formIsOpen, formOnClose, formOnSubmit, formTitle }: HealthRecordsForms) => {
+export const AllergyForm = ({ formIsOpen, formOnClose, formOnSubmit, formTitle, animalId }: HealthRecordsForms) => {
+  const ref = useRef<HTMLFormElement>(null)
   const {
     control,
     handleSubmit,
@@ -31,10 +34,11 @@ export const AllergyForm = ({ formIsOpen, formOnClose, formOnSubmit, formTitle }
   })
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
-    resetField("category")
-    resetField("allergen")
-    resetField("symptoms")
-    formOnSubmit()
+    await addAllergy(data, animalId)
+    await formOnSubmit()
+    await resetField("category")
+    await resetField("allergen")
+    await resetField("symptoms")
   }
 
   const handleCloseForm = () => {
@@ -53,6 +57,7 @@ export const AllergyForm = ({ formIsOpen, formOnClose, formOnSubmit, formTitle }
       disabledButtons
     >
       <form
+        ref={ref}
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-8"
       >
@@ -87,6 +92,7 @@ export const AllergyForm = ({ formIsOpen, formOnClose, formOnSubmit, formTitle }
                 onChange={onChange}
                 error={!!errors.allergen}
                 errorMessage={errors.allergen?.message}
+                required
               />
             )}
           />
@@ -111,7 +117,6 @@ export const AllergyForm = ({ formIsOpen, formOnClose, formOnSubmit, formTitle }
         <div>
           <Button
             loading={false}
-            type="submit"
             fullWidth
           >
             Dodaj alergie

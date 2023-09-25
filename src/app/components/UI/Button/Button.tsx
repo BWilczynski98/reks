@@ -1,7 +1,7 @@
+import { cn } from "@/app/lib/cn"
 import { body } from "@/app/lib/fonts"
 import React from "react"
 import { LoadingIndicator } from "../LoadingIndicator"
-import { cn } from "@/app/lib/cn"
 
 type Props = {
   children: React.ReactNode
@@ -18,7 +18,7 @@ export const Button = ({
   children,
   onClick,
   disabled,
-  type = "button",
+  type,
   loading = false,
   outline = false,
   action = "confirm",

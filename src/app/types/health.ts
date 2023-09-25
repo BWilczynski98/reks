@@ -26,9 +26,13 @@ export type Vaccination = {
 }
 
 export type HealthRecords = {
+  id: string
+  createAt: string
+  updateAt: string
+  animalId: string
   allergies: Allergy[] | []
   drugs: Drug[] | []
-  vaccination: Vaccination[] | []
+  vaccinations: Vaccination[] | []
 }
 
 export type HealthRecordsForms = {
@@ -36,4 +40,5 @@ export type HealthRecordsForms = {
   formOnClose: () => void
   formOnSubmit: () => void
   formTitle: string
+  animalId: string
 }

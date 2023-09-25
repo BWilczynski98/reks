@@ -3,8 +3,7 @@
 import { useComponentVisible } from "@/app/hooks"
 import { cn } from "@/app/lib/cn"
 import { body } from "@/app/lib/fonts"
-import { Type } from "@prisma/client"
-import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { BiChevronDown, BiChevronUp } from "react-icons/bi"
 import { Label } from ".."
 
@@ -89,7 +88,7 @@ export const Select = ({
             value={value}
           />
           <div
-            className="absolute z-20 -translate-y-1/2 top-1/2 right-3 text-neutral-950 peer-[.is-focus]:"
+            className="absolute -translate-y-1/2 top-1/2 right-3 text-neutral-950 peer-[.is-focus]"
             onClick={handleToggleComponentVisible}
           >
             {isComponentVisible ? <BiChevronUp /> : <BiChevronDown />}
