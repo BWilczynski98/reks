@@ -1,10 +1,9 @@
+import { AnimalGender, AnimalResidence, AnimalType } from "@/app/types/animal"
 import { Gender, Residence, Type } from "@prisma/client"
-import { Row } from "./Row"
+import dayjs from "dayjs"
 import Image from "next/image"
 import { LuDog } from "react-icons/lu"
-import { MdModeEdit } from "react-icons/md"
-import { AnimalGender, AnimalResidence, AnimalType } from "@/app/types/animal"
-import dayjs from "dayjs"
+import { Row } from "./Row"
 require("dayjs/locale/pl")
 
 type BasicInformationProps = {

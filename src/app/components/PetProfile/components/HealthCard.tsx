@@ -1,3 +1,4 @@
+"use client"
 import { useDisclose } from "@/app/hooks"
 import type { HealthRecords } from "@/app/types/health"
 import { GiMedicines } from "react-icons/gi"
