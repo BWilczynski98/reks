@@ -1,17 +1,17 @@
 import { useDisclose } from "@/app/hooks"
 import type { HealthRecords } from "@/app/types/health"
 import { GiMedicines } from "react-icons/gi"
-import { MdMedicalInformation, MdModeEdit } from "react-icons/md"
+import { MdMedicalInformation } from "react-icons/md"
 import { SiMoleculer } from "react-icons/si"
 import { TbVaccine } from "react-icons/tb"
 import { Button } from "../../UI"
 import { Card } from "../../UI/Card/Card"
 import { AllergyForm, AllergyList } from "./Allergy"
+import { DrugForm } from "./Drug/DrugForm"
 import { DrugList } from "./Drug/DrugList"
 import { Row } from "./Row"
-import { VaccinationList } from "./Vaccination/VaccinationList"
-import { DrugForm } from "./Drug/DrugForm"
 import { VaccinationForm } from "./Vaccination/VaccinationForm"
+import { VaccinationList } from "./Vaccination/VaccinationList"
 
 type Props = {
   healthRecords: HealthRecords
@@ -95,25 +95,28 @@ export const HealthCard = ({ healthRecords }: Props) => {
           </div>
         </HealthTile>
       </div>
-      <div className="flex gap-5">
+      <div className="flex gap-5 flex-wrap xl:flex-nowrap">
         {/* Forms to complete a pet's health record broken down by allergies, medications taken and vaccinations */}
         <AllergyForm
           formIsOpen={allergyFormIsOpen}
           formOnClose={allergyFormHandleClose}
           formOnSubmit={allergyFormHandleClose}
           formTitle="Formularz alergii"
+          animalId={healthRecords.animalId}
         />
         <DrugForm
           formIsOpen={drugFormIsOpen}
           formOnClose={drugFormHandleClose}
           formOnSubmit={drugFormHandleClose}
           formTitle="Formularz leku"
+          animalId={healthRecords.animalId}
         />
         <VaccinationForm
           formIsOpen={vaccinationFormIsOpen}
           formOnClose={vaccinationFormHandleClose}
           formOnSubmit={vaccinationFormHandleOpen}
           formTitle="Formularz szczepienia"
+          animalId={healthRecords.animalId}
         />
         {/* */}
         {/* Allergy, medication and vaccination cards */}
@@ -124,7 +127,7 @@ export const HealthCard = ({ healthRecords }: Props) => {
             onClick={allergyFormHandleOpen}
           >
             <div>
-              {healthRecords.allergies.length > 0 ? (
+              {!!healthRecords && healthRecords.allergies.length > 0 ? (
                 <AllergyList allergies={healthRecords.allergies} />
               ) : (
                 <p className="text-neutral-400 text-center">Brak informacji na temat alergi</p>
@@ -138,7 +141,7 @@ export const HealthCard = ({ healthRecords }: Props) => {
             title="Leki"
             onClick={drugFormHandleOpen}
           >
-            {healthRecords.drugs.length > 0 ? (
+            {!!healthRecords && healthRecords.drugs.length > 0 ? (
               <DrugList drugs={healthRecords.drugs} />
             ) : (
               <div className="text-neutral-400 text-center">
@@ -153,8 +156,8 @@ export const HealthCard = ({ healthRecords }: Props) => {
             title="Szczepienia"
             onClick={vaccinationFormHandleOpen}
           >
-            {healthRecords.vaccination.length > 0 ? (
-              <VaccinationList vaccinations={healthRecords.vaccination} />
+            {!!healthRecords && healthRecords?.vaccinations.length > 0 ? (
+              <VaccinationList vaccinations={healthRecords.vaccinations} />
             ) : (
               <div className="text-neutral-400 text-center">
                 <p>Brak informacji na temat szczepień</p>
