@@ -131,7 +131,10 @@ export const AnimalCreationForm = () => {
       birthDate: data.birthDate,
       locationWhereFound: `${data.cityWhereFound} ${data.postalCodeWhereFound} ${data.streetWhereFound}`,
       timeWhenFound: data.dateOfCaputer,
-      photoUrl: "",
+      photoUrl:
+        data.type === AnimalType.CAT
+          ? "https://i.natgeofe.com/k/ad9b542e-c4a0-4d0b-9147-da17121b4c98/MOmeow1_square.png"
+          : "https://www.hindustantimes.com/ht-img/img/2023/08/25/1600x900/international_dog_day_1692974397743_1692974414085.jpg",
       residence: data.residence === AnimalResidence.BASE ? Residence.BASE : Residence.TEMPORARY_HOME,
       description: data.notes,
       descriptionOfHealth: data.healthDescription,
