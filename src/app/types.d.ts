@@ -16,6 +16,7 @@ type Animal = {
   referenceNumber: number
   descriptionOfHealth: string
   homeId?: string
+  healthCardId: string
 }
 
 type TableFilter = {

@@ -18,6 +18,8 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import * as yup from "yup"
+import { addAnimal } from "@/app/actions/animal/addAnimal"
+
 // FIXME: In the yup validation scheme, the postal code of the location found and the postal code of the temporary house does not work correctly displaying a message about the inadequate number of characters
 const schema = yup.object({
   name: yup.string().required(Errors.EMPTY_FIELD).matches(regex.names, Errors.INCORRECT_REGEX),
@@ -83,7 +85,7 @@ const schema = yup.object({
   healthDescription: yup.string(),
   notes: yup.string(),
 })
-type FormData = yup.InferType<typeof schema>
+export type AnimalData = yup.InferType<typeof schema>
 
 export const AnimalCreationForm = () => {
   const router = useRouter()
@@ -121,17 +123,20 @@ export const AnimalCreationForm = () => {
   const session = useSession()
   const userId = session.data?.user.id
 
-  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+  const onSubmit: SubmitHandler<AnimalData> = async (data: AnimalData) => {
     const birthDate = dayjs(data.birthDate).format()
     console.log(data)
-    const animalData = {
+    const animal = {
       name: data.name,
       type: data.type === AnimalType.CAT ? Type.CAT : Type.DOG,
       gender: data.gender === AnimalGender.MALE ? Gender.MALE : Gender.FEMALE,
       birthDate: data.birthDate,
       locationWhereFound: `${data.cityWhereFound} ${data.postalCodeWhereFound} ${data.streetWhereFound}`,
       timeWhenFound: data.dateOfCaputer,
-      photoUrl: "",
+      photoUrl:
+        data.type === AnimalType.CAT
+          ? "https://i.natgeofe.com/k/ad9b542e-c4a0-4d0b-9147-da17121b4c98/MOmeow1_square.png"
+          : "https://www.hindustantimes.com/ht-img/img/2023/08/25/1600x900/international_dog_day_1692974397743_1692974414085.jpg",
       residence: data.residence === AnimalResidence.BASE ? Residence.BASE : Residence.TEMPORARY_HOME,
       description: data.notes,
       descriptionOfHealth: data.healthDescription,
@@ -144,10 +149,9 @@ export const AnimalCreationForm = () => {
       temporaryHomeCity: data.cityTemporaryHome,
       temporaryHomePostalCode: data.postalCodeTemporaryHome,
     }
-    createAnimal({ ...animalData, userId })
-      .unwrap()
+    await addAnimal(animal)
       .then((res) => console.log(res))
-      .catch((error) => console.log(error))
+      .catch((err) => console.log(err))
   }
 
   return (
