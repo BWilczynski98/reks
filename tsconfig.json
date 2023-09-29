@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -21,11 +19,7 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/app/components/*"],
-      "@hooks/*": ["./src/app/hooks/*"],
-      "@lib/*": ["./src/app/lib/*"],
-      "@types/*": ["./src/app/types/"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

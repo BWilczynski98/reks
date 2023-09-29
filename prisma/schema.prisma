@@ -71,10 +71,10 @@ model Animal {
   referenceNumber     Int         @default(autoincrement())
   descriptionOfHealth String?
   homeId              String?     @db.Uuid
-  HealthCard          HealthCard?
+  healthCardId        String?     @db.Uuid
   Home                Home?       @relation(fields: [homeId], references: [id])
   user                User        @relation(fields: [userId], references: [id])
-  healthCardId        String?     @db.Uuid
+  HealthCard          HealthCard?
 }
 
 model HealthCard {
@@ -84,8 +84,8 @@ model HealthCard {
   allergies    Json[]
   drugs        Json[]
   vaccinations Json[]
-  animal       Animal   @relation(fields: [animalId], references: [id])
   animalId     String   @unique @db.Uuid
+  animal       Animal   @relation(fields: [animalId], references: [id])
 }
 
 enum Role {

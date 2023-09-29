@@ -1,12 +1,10 @@
-import { Metadata } from "next"
-import React from "react"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Reks - logowanie",
+  title: "Reks manager - logowanie",
+  description: "Reks manager strona logowania użytkownika",
 }
 
-const LoginLayout = ({ children }: { children: React.ReactNode }) => {
-  return <div>{children}</div>
+export default function LoginLayout({ children }: { children: React.ReactNode }) {
+  return <section>{children}</section>
 }
-
-export default LoginLayout
