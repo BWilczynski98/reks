@@ -18,10 +18,14 @@ import { pl } from "date-fns/locale"
 import { CalendarIcon, Loader2 } from "lucide-react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { AnimalFormData, animalFormSchema } from "./schema"
+import { useCreateAnimalMutation, useGetAllAnimalQuery } from "@/redux/services/animalApi"
+import { AnimalGender, AnimalResidence, AnimalType } from "@/types/animal"
+import { Gender, Residence, Type } from "@prisma/client"
+import { Routes } from "@/types/routes"
 
 export function AnimalForm() {
   const form = useForm<AnimalFormData>({
@@ -45,12 +49,27 @@ export function AnimalForm() {
   const router = useRouter()
   const session = useSession()
   const userId = session.data?.user.id
+  const [createAnimal] = useCreateAnimalMutation()
+  const { refetch } = useGetAllAnimalQuery()
 
   async function onSubmit(formData: AnimalFormData) {
     await handleStartLoading()
-    await addAnimal(formData, userId as string)
+    await createAnimal({
+      photoUrl: formData.photo,
+      name: formData.name,
+      type: formData.genre === AnimalType.CAT ? Type.CAT : Type.DOG,
+      gender: formData.gender === AnimalGender.MALE ? Gender.MALE : Gender.FEMALE,
+      birthDate: formData.birthDate,
+      locationWhereFound: `${formData.cityWhereFound} ${formData.postalCodeWhereFound} ${formData.streetWhereFound}`,
+      timeWhenFound: formData.dateOfSecurity,
+      residence: formData.residence === AnimalResidence.BASE ? Residence.BASE : Residence.TEMPORARY_HOME,
+      descriptionOfHealth: formData.stateOfHealth,
+      userId: userId,
+    })
+      .unwrap()
       .then(() => {
-        // router.push(Routes.DASHBOARD)
+        refetch()
+        router.push(Routes.DASHBOARD)
       })
       .catch((err) => console.log(err))
       .finally(() => handleStopLoading())
@@ -325,8 +344,8 @@ export function AnimalForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="base">Siedziba</SelectItem>
-                      <SelectItem value="temporary home">Dom tymczasowy</SelectItem>
+                      <SelectItem value={AnimalResidence.BASE}>Siedziba</SelectItem>
+                      <SelectItem value={AnimalResidence.TEMPORARY_HOME}>Dom tymczasowy</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />

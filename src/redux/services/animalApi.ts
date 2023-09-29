@@ -5,13 +5,13 @@ const injectedRtkApi = api.injectEndpoints({
     getAllAnimal: build.query<[], void>({
       query: () => "animal/get",
     }),
-    // createAnimal: build.mutation({
-    //   query: (animal) => ({
-    //     url: "animal/create",
-    //     method: "POST",
-    //     body: animal,
-    //   }),
-    // }),
+    createAnimal: build.mutation({
+      query: (animal) => ({
+        url: "animal/post",
+        method: "POST",
+        body: animal,
+      }),
+    }),
     // getAnimalById: build.query<Animal, string>({
     //   query: (petId) => ({
     //     url: `/animal/getById?id=${petId}`,
@@ -35,7 +35,7 @@ const injectedRtkApi = api.injectEndpoints({
 export const {
   useGetAllAnimalQuery,
   // useGetAllAnimalQuery,
-  // useCreateAnimalMutation,
+  useCreateAnimalMutation,
   // useGetAnimalByIdQuery,
   // useGetAnimalHealthCardQuery,
   // useCreateAllergyRecordInHealthCardMutation,
