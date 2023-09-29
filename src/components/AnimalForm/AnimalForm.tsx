@@ -1,6 +1,4 @@
 "use client"
-
-import { addAnimal } from "@/actions/addAnimal"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -12,20 +10,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { useDisclose } from "@/hooks"
 import { cn, formatPostalCode } from "@/lib/utils"
+import { useCreateAnimalMutation, useGetAllAnimalQuery } from "@/redux/services/animalApi"
+import { AnimalGender, AnimalResidence, AnimalType } from "@/types/animal"
+import { Routes } from "@/types/routes"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { Gender, Residence, Type } from "@prisma/client"
 import { format } from "date-fns"
 import { pl } from "date-fns/locale"
 import { CalendarIcon, Loader2 } from "lucide-react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
-import { redirect, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { AnimalFormData, animalFormSchema } from "./schema"
-import { useCreateAnimalMutation, useGetAllAnimalQuery } from "@/redux/services/animalApi"
-import { AnimalGender, AnimalResidence, AnimalType } from "@/types/animal"
-import { Gender, Residence, Type } from "@prisma/client"
-import { Routes } from "@/types/routes"
 
 export function AnimalForm() {
   const form = useForm<AnimalFormData>({
