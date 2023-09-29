@@ -2,7 +2,6 @@ import { ThemeProvider } from "@/components/theme-provider"
 import AuthProvider from "@/context/AuthProvider"
 import type { Metadata } from "next"
 import "./globals.css"
-import useSWR, { SWRConfig } from "swr"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,9 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             enableSystem
             disableTransitionOnChange
           >
-            <AuthProvider>
-              <SWRConfig>{children}</SWRConfig>
-            </AuthProvider>
+            <AuthProvider>{children}</AuthProvider>
           </ThemeProvider>
         </body>
       </html>
