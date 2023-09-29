@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     temporaryHomeCity,
     temporaryHomePostalCode,
   } = body
-
+  console.log(body)
   if (!name || !type || !gender || !birthDate || !locationWhereFound || !timeWhenFound || !residence || !userId) {
     return new NextResponse("Missing fields", { status: 400 })
   }
