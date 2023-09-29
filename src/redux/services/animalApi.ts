@@ -2,7 +2,7 @@ import { emptySplitApi as api } from "../emptyApi"
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getAllAnimal: build.query<[], void>({
+    getAllAnimal: build.query<Animal[], void>({
       query: () => "animal/get",
     }),
     createAnimal: build.mutation({

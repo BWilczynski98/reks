@@ -5,15 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useAlert, useDisclose } from "@/hooks"
+import { useSendResetPasswordLinkMutation } from "@/redux/services/userApi"
+import { Severity } from "@/types/alert"
+import { Routes } from "@/types/routes"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Loader2 } from "lucide-react"
+import Link from "next/link"
+import { useState } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { UserForgotPasswordFormData, userForgotPasswordFormSchema } from "./schema"
-import { forgotPassword } from "@/actions/forgotPassword"
-import { Severity } from "@/types/alert"
-import Link from "next/link"
-import { Routes } from "@/types/routes"
-import { useState } from "react"
 
 export const UserForgotPasswordForm = () => {
   const form = useForm<UserForgotPasswordFormData>({
@@ -23,12 +23,17 @@ export const UserForgotPasswordForm = () => {
   const { state: isLoading, handleOpen: handleStartLoading, handleClose: handleStopLoading } = useDisclose()
   const { alert, handleOpen: handleOpenAlert } = useAlert()
   const [isSubmitted, setIsSubmitted] = useState(false)
-  const [userEmail, setUserEmail] = useState<string>("wilczek3698@gmail.com")
+  const [userEmail, setUserEmail] = useState<string>()
+  const [sendResetPasswordLink] = useSendResetPasswordLinkMutation()
 
   const onSubmit: SubmitHandler<UserForgotPasswordFormData> = async (formData: UserForgotPasswordFormData) => {
     await handleStartLoading()
-    await forgotPassword(formData)
-      .then(() => setIsSubmitted(true))
+    await sendResetPasswordLink(formData)
+      .unwrap()
+      .then(() => {
+        setUserEmail(formData.email)
+        setIsSubmitted(true)
+      })
       .catch((error) => {
         handleOpenAlert({ severity: Severity.DESTRUCTIVE, data: error.message })
       })

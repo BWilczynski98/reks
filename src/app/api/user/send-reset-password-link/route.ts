@@ -1,24 +1,36 @@
-"use server"
+import { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 
-import { UserForgotPasswordFormData } from "@/app/forgot-password/components/schema"
-import prisma from "@/lib/prisma"
-import { RequestErrors } from "@/types/errorsDictionary"
 import { randomBytes } from "crypto"
-const dayjs = require("dayjs")
+import { RequestErrors } from "@/types/errorsDictionary"
+import prisma from "@/lib/prisma"
 import { resend } from "@/lib/resend"
 import { EmailTemplate } from "@/components"
 
-export async function forgotPassword(formData: UserForgotPasswordFormData) {
-  const { email } = formData
+const dayjs = require("dayjs")
+
+type Props = {
+  id: number
+  userId: string
+  createAt: string
+  token: string
+  updatedAt: string
+  expirationDate: string
+  used: boolean
+}
+
+export async function POST(req: NextRequest) {
+  const body = await req.json()
+  const { email } = body
   const token = randomBytes(40).toString("hex")
 
   // check if the email address has been forwarded
   if (!email) {
-    throw Error("Missing fields")
+    return new NextResponse("Missing fields", { status: 400 })
   }
   // check if the token has been forwarded
   if (!token) {
-    throw Error("Missing token")
+    return new NextResponse("Missing token", { status: 400 })
   }
   // find user account based on email address
   const user = await prisma.user.findUnique({
@@ -28,7 +40,7 @@ export async function forgotPassword(formData: UserForgotPasswordFormData) {
   })
   // check if there is an account
   if (!user) {
-    throw Error(RequestErrors.NO_USER_FOUND)
+    return new NextResponse(RequestErrors.NO_USER_FOUND, { status: 400 })
   }
   // find all password reset tokens for this user based on user id
   const userPasswordResetTokens = await prisma.resetPasswordToken.findMany({
@@ -40,7 +52,7 @@ export async function forgotPassword(formData: UserForgotPasswordFormData) {
   })
 
   if (hasValidAndNotUsedToken) {
-    throw Error(RequestErrors.PASSWORD_RESET_REQUEST_EXIST)
+    return new NextResponse(RequestErrors.PASSWORD_RESET_REQUEST_EXIST, { status: 400 })
   }
 
   await prisma.resetPasswordToken.create({
@@ -61,8 +73,8 @@ export async function forgotPassword(formData: UserForgotPasswordFormData) {
       subject: "Resetowanie hasła",
       react: EmailTemplate({ firstName: firstNameCapitalize, description, notice, link, buttonTitle }),
     })
-    return { message: "Send email" }
+    return NextResponse.json("Send email", { status: 201 })
   } catch (error) {
-    return { message: error }
+    return NextResponse.json({ error })
   }
 }
