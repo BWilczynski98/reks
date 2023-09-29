@@ -1,26 +1,12 @@
-export const dynamic = "force-dynamic"
-
 import { AnimalTable, NavigationBar } from "@/components"
 import { Button } from "@/components/ui/button"
 
+import { Suspense } from "react"
+
 import Link from "next/link"
-import { baseUrl } from "./api/baseUrl"
-import useSWR from "swr"
+import { SkeletonDemo } from "@/components/Skeleton/Skeleton"
 
-async function getData() {
-  const res = await fetch(`${baseUrl}/api/animal/get`, {
-    next: { tags: ["animal-collection"] },
-  }).then((res) => res.json())
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data")
-  }
-  return res
-}
-
-export default async function Home() {
-  const data = await getData()
-  // const {} = useSWR("api")
+export default function Home() {
   return (
     <main className="container space-y-5 pb-5">
       <NavigationBar />
@@ -30,7 +16,9 @@ export default async function Home() {
         </Link>
       </div>
       <section>
-        <AnimalTable data={data} />
+        <Suspense fallback={<SkeletonDemo />}>
+          <AnimalTable />
+        </Suspense>
       </section>
     </main>
   )

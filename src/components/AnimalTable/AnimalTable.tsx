@@ -1,12 +1,9 @@
-import { baseUrl } from "@/app/api/baseUrl"
+"use client"
 
-export const AnimalTable = async ({ data }: { data: any }) => {
-  console.log(data)
-  return (
-    <div>
-      {data.map((animal: any) => (
-        <p key={animal.id}>{animal.name}</p>
-      ))}
-    </div>
-  )
+import { useGetAllAnimalQuery } from "@/redux/services/animalApi"
+
+export const AnimalTable = () => {
+  const { data } = useGetAllAnimalQuery()
+
+  return <div>{data?.map((animal: any) => <p key={animal.id}>{animal.name}</p>)}</div>
 }
