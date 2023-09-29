@@ -5,15 +5,18 @@ import { Button } from "@/components/ui/button"
 
 import Link from "next/link"
 import { baseUrl } from "./api/baseUrl"
+import { error } from "console"
 
 async function getData() {
   const res = await fetch(`${baseUrl}/animal/get`, {
     next: { tags: ["animal-collection"] },
   })
+    .then((res) => res.json())
+    .catch(error)
   if (!res.ok) {
     throw new Error("Failed to fetch data")
   }
-  return res.json()
+  return res
 }
 
 export default async function Home() {
