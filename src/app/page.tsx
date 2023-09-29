@@ -1,9 +1,23 @@
+export const dynamic = "force-dynamic"
+
 import { AnimalTable, NavigationBar } from "@/components"
 import { Button } from "@/components/ui/button"
 
 import Link from "next/link"
+import { baseUrl } from "./api/baseUrl"
 
-export default function Home() {
+async function getData() {
+  const res = await fetch(`${baseUrl}/animal/get`, {
+    next: { tags: ["animal-collection"] },
+  })
+  if (!res.ok) {
+    throw new Error("Failed to fetch data")
+  }
+  return res.json()
+}
+
+export default async function Home() {
+  const data = await getData()
   return (
     <main className="container space-y-5 pb-5">
       <NavigationBar />
@@ -13,7 +27,7 @@ export default function Home() {
         </Link>
       </div>
       <section>
-        <AnimalTable />
+        <AnimalTable data={data} />
       </section>
     </main>
   )

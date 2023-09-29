@@ -1,17 +1,6 @@
 import { baseUrl } from "@/app/api/baseUrl"
 
-async function getData() {
-  const res = await fetch(`${baseUrl}/animal/get`, {
-    next: { tags: ["animal-collection"] },
-  })
-  if (!res.ok) {
-    throw new Error("Failed to fetch data")
-  }
-  return res.json()
-}
-
-export const AnimalTable = async () => {
-  const data = await getData()
+export const AnimalTable = async ({ data }: { data: any }) => {
   console.log(data)
   return (
     <div>
