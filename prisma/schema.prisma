@@ -63,7 +63,6 @@ model Animal {
   birthDate           DateTime
   locationWhereFound  String
   timeWhenFound       DateTime
-  photoUrl            String?
   residence           Residence
   description         String?
   status              Status?     @default(UNADOPTABLE)
@@ -72,6 +71,7 @@ model Animal {
   descriptionOfHealth String?
   homeId              String?     @db.Uuid
   healthCardId        String?     @db.Uuid
+  photoUrl            Json[]
   Home                Home?       @relation(fields: [homeId], references: [id])
   user                User        @relation(fields: [userId], references: [id])
   HealthCard          HealthCard?
