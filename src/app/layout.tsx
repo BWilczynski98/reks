@@ -1,9 +1,9 @@
 import { ThemeProvider } from "@/components/theme-provider"
 import AuthProvider from "@/context/AuthProvider"
+import { Providers } from "@/redux/provider"
 import type { Metadata } from "next"
 import "./globals.css"
-import { Providers } from "@/redux/provider"
-import { store } from "@/redux/store"
+import { EdgeStoreProvider } from "@/lib/edgestore"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,7 +26,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             disableTransitionOnChange
           >
             <AuthProvider>
-              <Providers>{children}</Providers>
+              <Providers>
+                <EdgeStoreProvider>{children}</EdgeStoreProvider>
+              </Providers>
             </AuthProvider>
           </ThemeProvider>
         </body>

@@ -1,4 +1,5 @@
 "use client"
+import { MultiFileDropzone, type FileState } from "@/components/MultiFileDropzone/MultiFileDropzone"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -9,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useDisclose } from "@/hooks"
+import { useEdgeStore } from "@/lib/edgestore"
 import { cn, formatPostalCode } from "@/lib/utils"
 import { useCreateAnimalMutation, useGetAllAnimalQuery } from "@/redux/services/animalApi"
 import { AnimalGender, AnimalResidence, AnimalType } from "@/types/animal"
@@ -21,15 +23,15 @@ import { CalendarIcon, Loader2 } from "lucide-react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card"
 import { AnimalFormData, animalFormSchema } from "./schema"
 
 export function AnimalForm() {
   const form = useForm<AnimalFormData>({
     resolver: yupResolver(animalFormSchema),
     defaultValues: {
-      photo: "",
       name: "",
       genre: "",
       gender: "",
@@ -49,11 +51,25 @@ export function AnimalForm() {
   const userId = session.data?.user.id
   const [createAnimal] = useCreateAnimalMutation()
   const { refetch } = useGetAllAnimalQuery()
+  const [fileStates, setFileStates] = useState<FileState[]>([])
+  const { edgestore } = useEdgeStore()
+  const [urls, setUrls] = useState<string[]>([])
+
+  function updateFileProgress(key: string, progress: FileState["progress"]) {
+    setFileStates((fileStates) => {
+      const newFileStates = structuredClone(fileStates)
+      const fileState = newFileStates.find((fileState) => fileState.key === key)
+      if (fileState) {
+        fileState.progress = progress
+      }
+      return newFileStates
+    })
+  }
 
   async function onSubmit(formData: AnimalFormData) {
     await handleStartLoading()
     await createAnimal({
-      photoUrl: formData.photo,
+      photoUrl: urls,
       name: formData.name,
       type: formData.genre === AnimalType.CAT ? Type.CAT : Type.DOG,
       gender: formData.gender === AnimalGender.MALE ? Gender.MALE : Gender.FEMALE,
@@ -66,6 +82,11 @@ export function AnimalForm() {
     })
       .unwrap()
       .then(() => {
+        for (const url of urls) {
+          edgestore.publicFiles.confirmUpload({
+            url,
+          })
+        }
         refetch()
         router.push(Routes.DASHBOARD)
       })
@@ -85,23 +106,40 @@ export function AnimalForm() {
             className="space-y-8"
             autoComplete="off"
           >
-            <FormField
-              control={form.control}
-              name="photo"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Zdjęcie</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="file"
-                      placeholder="Reks"
-                      {...field}
-                    />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
+            <MultiFileDropzone
+              className="w-full h-40"
+              value={fileStates}
+              onChange={(files) => {
+                setFileStates(files)
+              }}
+              onFilesAdded={async (addedFiles) => {
+                setFileStates([...fileStates, ...addedFiles])
+                await Promise.all(
+                  addedFiles.map(async (addedFileState) => {
+                    try {
+                      const res = await edgestore.publicFiles.upload({
+                        file: addedFileState.file,
+                        options: {
+                          temporary: true,
+                        },
+                        onProgressChange: async (progress) => {
+                          updateFileProgress(addedFileState.key, progress)
+                          if (progress === 100) {
+                            // wait 1 second to set it to complete
+                            // so that the user can see the progress bar at 100%
+                            await new Promise((resolve) => setTimeout(resolve, 1000))
+                            updateFileProgress(addedFileState.key, "COMPLETE")
+                          }
+                        },
+                      })
+                      console.log(res)
+                      setUrls((prev) => [...prev, res.url])
+                    } catch (err) {
+                      updateFileProgress(addedFileState.key, "ERROR")
+                    }
+                  })
+                )
+              }}
             />
             <FormField
               control={form.control}
@@ -213,7 +251,11 @@ export function AnimalForm() {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                        disabled={(date) =>
+                          date > new Date() ||
+                          new Date(form.getValues("dateOfSecurity")) < date ||
+                          date < new Date("1900-01-01")
+                        }
                         initialFocus
                       />
                     </PopoverContent>
@@ -275,7 +317,7 @@ export function AnimalForm() {
                             placeholder="Kod pocztowy"
                             value={formatPostalCode(field.value)}
                             onChange={field.onChange}
-                            // {...field}
+                            maxLength={5}
                           />
                         </FormControl>
 
@@ -315,7 +357,11 @@ export function AnimalForm() {
                         mode="single"
                         selected={field.value}
                         onSelect={field.onChange}
-                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                        disabled={(date) =>
+                          date > new Date() ||
+                          new Date(form.getValues("birthDate")) > date ||
+                          date < new Date("1900-01-01")
+                        }
                         initialFocus
                       />
                     </PopoverContent>

@@ -14,7 +14,11 @@ export const animalFormSchema = yup.object({
     .matches(regex.addressesWithoutNumber, Errors.INCORRECT_REGEX),
   streetWhereFound: yup.string().required(Errors.EMPTY_FIELD).matches(regex.addresses, Errors.INCORRECT_REGEX),
   postalCodeWhereFound: yup.string().length(5, Errors.POSTAL_CODE).matches(regex.postalCode).required(),
-  dateOfSecurity: yup.date().required(Errors.EMPTY_FIELD).typeError(Errors.INCORRECT_DATE),
+  dateOfSecurity: yup
+    .date()
+    .min(yup.ref("birthDate"), "Data zabezpieczenia nie może być przed datą urodzenia")
+    .required(Errors.EMPTY_FIELD)
+    .typeError(Errors.INCORRECT_DATE),
   residence: yup.string().required(Errors.EMPTY_FIELD),
   stateOfHealth: yup.string(),
 })

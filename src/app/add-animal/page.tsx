@@ -1,4 +1,4 @@
-import { AnimalForm } from "@/components"
+import { AnimalForm } from "./components/AnimalForm"
 
 export default function AddAnimalPage() {
   return (

@@ -1,10 +1,8 @@
 import { AnimalTable, NavigationBar } from "@/components"
 import { Button } from "@/components/ui/button"
-
 import { Suspense } from "react"
-
-import Link from "next/link"
 import { SkeletonDemo } from "@/components/Skeleton/Skeleton"
+import Link from "next/link"
 
 export default function Home() {
   return (

@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
 
   const animal = await prisma.animal.create({
     data: {
-      photoUrl,
+      photoUrl: [...photoUrl],
       name,
       type,
       gender,
