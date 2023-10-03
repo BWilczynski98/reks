@@ -107,6 +107,11 @@ export function AnimalForm() {
             autoComplete="off"
           >
             <MultiFileDropzone
+              dropzoneOptions={{
+                accept: { "image/png": [".png"], "image/jpg": [".jpg"] },
+                maxFiles: 4,
+                maxSize: 1024 * 1024 * 2,
+              }}
               className="w-full h-40"
               value={fileStates}
               onChange={(files) => {
