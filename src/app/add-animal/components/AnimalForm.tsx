@@ -11,8 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea"
 import { useDisclose } from "@/hooks"
 import { useEdgeStore } from "@/lib/edgestore"
-import { cn, formatPostalCode } from "@/lib/utils"
-import { useCreateAnimalMutation, useGetAllAnimalQuery } from "@/redux/services/animalApi"
+import { cn, formatPhoneNumber, formatPostalCode } from "@/lib/utils"
+import { useCreateAnimalMutation, useGetAllAnimalQuery, useGetAllTemporaryHomesQuery } from "@/redux/services/animalApi"
 import { AnimalGender, AnimalResidence, AnimalType } from "@/types/animal"
 import { Routes } from "@/types/routes"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -23,7 +23,7 @@ import { CalendarIcon, Loader2 } from "lucide-react"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card"
 import { AnimalFormData, animalFormSchema } from "./schema"
@@ -33,14 +33,24 @@ export function AnimalForm() {
     resolver: yupResolver(animalFormSchema),
     defaultValues: {
       name: "",
-      genre: "",
+      type: "",
       gender: "",
+      race: "",
+      size: "",
       birthDate: undefined,
       streetWhereFound: "",
       cityWhereFound: "",
       postalCodeWhereFound: "",
       dateOfSecurity: undefined,
       residence: "",
+      firstNameTemporaryHome: "",
+      lastNameTemporaryHome: "",
+      phoneNumberTemporaryHome: "",
+      streetTemporaryHome: "",
+      buildingNumberTemporaryHome: "",
+      apartmentNumberTemporaryHome: "",
+      cityTemporaryHome: "",
+      postalCodeTemporaryHome: "",
       stateOfHealth: "",
     },
   })
@@ -50,10 +60,12 @@ export function AnimalForm() {
   const session = useSession()
   const userId = session.data?.user.id
   const [createAnimal] = useCreateAnimalMutation()
-  const { refetch } = useGetAllAnimalQuery()
+  const { data: temporaryHomes, refetch: refetchTemporaryHomes } = useGetAllTemporaryHomesQuery()
+  const { refetch: refetchAnimal } = useGetAllAnimalQuery()
   const [fileStates, setFileStates] = useState<FileState[]>([])
   const { edgestore } = useEdgeStore()
   const [urls, setUrls] = useState<string[]>([])
+  const [temporaryHomeListDisabled, setTemporaryHomeListDisabled] = useState(false)
 
   function updateFileProgress(key: string, progress: FileState["progress"]) {
     setFileStates((fileStates) => {
@@ -67,16 +79,25 @@ export function AnimalForm() {
   }
 
   async function onSubmit(formData: AnimalFormData) {
+    console.log(formData)
     await handleStartLoading()
     await createAnimal({
       photoUrl: urls,
       name: formData.name,
-      type: formData.genre === AnimalType.CAT ? Type.CAT : Type.DOG,
+      type: formData.type === AnimalType.CAT ? Type.CAT : Type.DOG,
       gender: formData.gender === AnimalGender.MALE ? Gender.MALE : Gender.FEMALE,
       birthDate: formData.birthDate,
       locationWhereFound: `${formData.cityWhereFound} ${formData.postalCodeWhereFound} ${formData.streetWhereFound}`,
       timeWhenFound: formData.dateOfSecurity,
       residence: formData.residence === AnimalResidence.BASE ? Residence.BASE : Residence.TEMPORARY_HOME,
+      temporaryHomeFirstName: formData.firstNameTemporaryHome,
+      temporaryHomeLastName: formData.lastNameTemporaryHome,
+      temporaryHomePhoneNumber: formData.phoneNumberTemporaryHome,
+      temporaryHomeStreet: formData.streetTemporaryHome,
+      temporaryHomeBuildingNumber: formData.buildingNumberTemporaryHome,
+      temporaryHomeApartmentNumber: formData.apartmentNumberTemporaryHome,
+      temporaryHomeCity: formData.cityTemporaryHome,
+      temporaryHomePostalCode: formData.postalCodeTemporaryHome,
       descriptionOfHealth: formData.stateOfHealth,
       userId: userId,
     })
@@ -87,12 +108,24 @@ export function AnimalForm() {
             url,
           })
         }
-        refetch()
+        refetchAnimal()
+        refetchTemporaryHomes()
         router.push(Routes.DASHBOARD)
       })
       .catch((err) => console.log(err))
       .finally(() => handleStopLoading())
   }
+
+  useEffect(() => {
+    form.resetField("lastNameTemporaryHome")
+    form.resetField("firstNameTemporaryHome")
+    form.resetField("phoneNumberTemporaryHome")
+    form.resetField("streetTemporaryHome")
+    form.resetField("buildingNumberTemporaryHome")
+    form.resetField("apartmentNumberTemporaryHome")
+    form.resetField("cityTemporaryHome")
+    form.resetField("postalCodeTemporaryHome")
+  }, [temporaryHomeListDisabled])
 
   return (
     <Card>
@@ -168,7 +201,7 @@ export function AnimalForm() {
 
             <FormField
               control={form.control}
-              name="genre"
+              name="type"
               render={({ field }) => (
                 <FormItem className="space-y-3">
                   <FormLabel>Gatunek *</FormLabel>
@@ -181,13 +214,13 @@ export function AnimalForm() {
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="cat" />
+                          <RadioGroupItem value={AnimalType.CAT} />
                         </FormControl>
                         <FormLabel className="font-normal">Kot</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="dog" />
+                          <RadioGroupItem value={AnimalType.DOG} />
                         </FormControl>
                         <FormLabel className="font-normal">Pies</FormLabel>
                       </FormItem>
@@ -232,7 +265,7 @@ export function AnimalForm() {
               name="birthDate"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Data urodzenia *</FormLabel>
+                  <FormLabel>Szacowana data urodzenia *</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -265,7 +298,6 @@ export function AnimalForm() {
                       />
                     </PopoverContent>
                   </Popover>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -318,10 +350,11 @@ export function AnimalForm() {
                       <FormItem className="w-1/3">
                         <FormControl>
                           <Input
+                            autoComplete="new-off"
                             required
                             placeholder="Kod pocztowy"
-                            value={formatPostalCode(field.value)}
-                            onChange={field.onChange}
+                            {...field}
+                            value={formatPostalCode(field.value as string)}
                             maxLength={5}
                           />
                         </FormControl>
@@ -393,14 +426,269 @@ export function AnimalForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value={AnimalResidence.BASE}>Siedziba</SelectItem>
-                      <SelectItem value={AnimalResidence.TEMPORARY_HOME}>Dom tymczasowy</SelectItem>
+                      <SelectItem value={AnimalResidence.BASE}>{AnimalResidence.BASE}</SelectItem>
+                      <SelectItem value={AnimalResidence.TEMPORARY_HOME}>{AnimalResidence.TEMPORARY_HOME}</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            {/* Temporary home section */}
+            {form.watch("residence") === AnimalResidence.TEMPORARY_HOME ? (
+              <div className="bg-zinc-50/50 dark:bg-zinc-900 rounded-xl p-4 space-y-4">
+                <p className="text-lg font-semibold">Dane domu tymczasowego</p>
+                {temporaryHomeListDisabled ? (
+                  <>
+                    <div className="flex justify-between space-x-2">
+                      <FormField
+                        control={form.control}
+                        name="firstNameTemporaryHome"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Imię *</FormLabel>
+                            <FormControl>
+                              <Input
+                                autoComplete="new-off"
+                                required
+                                placeholder="Jan"
+                                {...field}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="lastNameTemporaryHome"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Nazwisko *</FormLabel>
+                            <FormControl>
+                              <Input
+                                autoComplete="new-off"
+                                required
+                                placeholder="Nowak"
+                                {...field}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="flex space-x-2">
+                      <FormField
+                        control={form.control}
+                        name="phoneNumberTemporaryHome"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Numer telefonu *</FormLabel>
+                            <FormControl>
+                              <Input
+                                autoComplete="new-off"
+                                required
+                                placeholder="555-444-333"
+                                maxLength={9}
+                                {...field}
+                                value={formatPhoneNumber(field.value as string)}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="streetTemporaryHome"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Ulica *</FormLabel>
+                            <FormControl>
+                              <Input
+                                autoComplete="new-off"
+                                required
+                                placeholder="Głowna"
+                                {...field}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="flex space-x-2">
+                      <FormField
+                        control={form.control}
+                        name="buildingNumberTemporaryHome"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Numer budynku *</FormLabel>
+                            <FormControl>
+                              <Input
+                                required
+                                placeholder="10"
+                                autoComplete="new-off"
+                                maxLength={4}
+                                {...field}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="apartmentNumberTemporaryHome"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Numer mieszkania</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="1"
+                                autoComplete="new-off"
+                                maxLength={4}
+                                {...field}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    <div className="flex space-x-2">
+                      <FormField
+                        control={form.control}
+                        name="cityTemporaryHome"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Miasto *</FormLabel>
+                            <FormControl>
+                              <Input
+                                required
+                                placeholder="Gdańsk"
+                                autoComplete="new-off"
+                                {...field}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="postalCodeTemporaryHome"
+                        render={({ field }) => (
+                          <FormItem className="w-full">
+                            <FormLabel>Kod pocztowy *</FormLabel>
+                            <FormControl>
+                              <Input
+                                required
+                                placeholder="00-000"
+                                autoComplete="new-off"
+                                maxLength={6}
+                                {...field}
+                                value={formatPostalCode(field.value ? field.value : "")}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {!!temporaryHomes?.length ? (
+                      <FormField
+                        control={form.control}
+                        name="firstNameTemporaryHome"
+                        render={({ field }) => (
+                          <FormItem>
+                            {/* <FormLabel>Domy tymczasowe</FormLabel> */}
+                            <Select
+                              defaultValue={field.value}
+                              disabled={temporaryHomeListDisabled}
+                              onValueChange={(value) => {
+                                // selectTemporaryHomeById(value)
+                                const home = temporaryHomes?.find((home) => home.id === value)
+
+                                if (home) {
+                                  const nameplate = home.owner.split(" ")
+                                  const addressSplit = home.street.split(" ")
+                                  const numberOfAddressSplit = addressSplit[1].split("/")
+                                  const firstName = nameplate[0]
+                                  const lastName = nameplate[1]
+                                  const streetName = addressSplit[0]
+                                  const buildNumber = numberOfAddressSplit[0]
+                                  const apartmentNumber = numberOfAddressSplit[1]
+
+                                  form.setValue("firstNameTemporaryHome", firstName)
+                                  form.setValue("lastNameTemporaryHome", lastName)
+                                  form.setValue("phoneNumberTemporaryHome", home.phoneNumber)
+                                  form.setValue("streetTemporaryHome", streetName)
+                                  form.setValue("buildingNumberTemporaryHome", buildNumber)
+                                  form.setValue("apartmentNumberTemporaryHome", apartmentNumber)
+                                  form.setValue("cityTemporaryHome", home?.city)
+                                  form.setValue("postalCodeTemporaryHome", home?.postalCode)
+                                }
+                              }}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Wybierz z listy dom tymczasowy" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {temporaryHomes?.map((house, i) => {
+                                  return (
+                                    <SelectItem
+                                      value={house.id.toString()}
+                                      key={i}
+                                    >
+                                      <div>
+                                        <div className="font-semibold">{house.owner}</div>
+                                        <div>{house.street}</div>
+                                        <div>
+                                          {formatPostalCode(house.postalCode)}&nbsp;{house.city}
+                                        </div>
+                                      </div>
+                                    </SelectItem>
+                                  )
+                                })}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    ) : null}
+                  </>
+                )}
+                <div className="flex justify-center">
+                  <Button
+                    // className="w-full"
+                    variant={"secondary"}
+                    type="button"
+                    onClick={() => {
+                      setTemporaryHomeListDisabled((prev) => !prev)
+                    }}
+                  >
+                    {temporaryHomeListDisabled ? "Wybierz z listy" : "Stwórz nowy"}
+                  </Button>
+                </div>
+              </div>
+            ) : null}
+            {/* Additional information: Health status*/}
             <FormField
               control={form.control}
               name="stateOfHealth"

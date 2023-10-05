@@ -35,3 +35,14 @@ type User = {
   role: string
   updatedAt: string
 }
+
+type TemporaryHomeType = {
+  id: string
+  createAt: string
+  updateAt: string
+  owner: string
+  street: string
+  phoneNumber: string
+  city: string
+  postalCode: string
+}

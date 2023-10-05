@@ -12,6 +12,9 @@ const injectedRtkApi = api.injectEndpoints({
         body: animal,
       }),
     }),
+    getAllTemporaryHomes: build.query<TemporaryHomeType[], void>({
+      query: () => "temporaryHome/get",
+    }),
     // getAnimalById: build.query<Animal, string>({
     //   query: (petId) => ({
     //     url: `/animal/getById?id=${petId}`,
@@ -36,6 +39,7 @@ export const {
   useGetAllAnimalQuery,
   // useGetAllAnimalQuery,
   useCreateAnimalMutation,
+  useGetAllTemporaryHomesQuery,
   // useGetAnimalByIdQuery,
   // useGetAnimalHealthCardQuery,
   // useCreateAllergyRecordInHealthCardMutation,

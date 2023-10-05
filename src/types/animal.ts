@@ -19,3 +19,9 @@ export enum AnimalStatus {
   UNADOPTABLE = "Nie do adopcji",
   QUARANTINE = "Kwarantanna",
 }
+
+export enum AnimalSize {
+  SMALL = "Mały",
+  MEDIUM = "Średni",
+  BIG = "Duży",
+}
