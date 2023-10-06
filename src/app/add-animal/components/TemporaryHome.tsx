@@ -253,6 +253,9 @@ export const TemporaryHomeForm = ({ form }: TypeTemporaryHomeForm) => {
                   required
                   autoComplete="new-off"
                   maxLength={6}
+                  inputMode="numeric"
+                  pattern="[-0-9]*"
+                  type="text"
                   {...field}
                   value={formatPostalCode(field.value ? field.value : "")}
                 />

@@ -71,6 +71,9 @@ export const LocationInformation = ({ form }: TypeLocationInformation) => {
                       autoComplete="new-off"
                       required
                       placeholder="Kod pocztowy"
+                      inputMode="numeric"
+                      pattern="[-0-9]*"
+                      type="text"
                       {...field}
                       value={formatPostalCode(field.value as string)}
                       maxLength={5}
