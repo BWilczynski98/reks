@@ -4,6 +4,7 @@ const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
     getAllAnimal: build.query<Animal[], void>({
       query: () => "animal/get",
+      transformResponse: (response: Animal[]) => response.reverse(),
     }),
     createAnimal: build.mutation({
       query: (animal) => ({

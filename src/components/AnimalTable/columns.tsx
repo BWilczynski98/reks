@@ -11,12 +11,7 @@ import { DataTableColumnHeader } from "./data-table-column-header"
 export const columns: ColumnDef<Animal>[] = [
   {
     accessorKey: "name",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title="Imię"
-      />
-    ),
+    header: "Imię",
     cell: ({ row }) => {
       const { id } = row.original
       return (
@@ -36,6 +31,9 @@ export const columns: ColumnDef<Animal>[] = [
       const type = row.getValue("type")
       const formatted = type === Type.CAT ? AnimalType.CAT : AnimalType.DOG
       return formatted
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
     },
   },
   {
@@ -57,10 +55,18 @@ export const columns: ColumnDef<Animal>[] = [
       const formatted = residence === Residence.BASE ? AnimalResidence.BASE : AnimalResidence.TEMPORARY_HOME
       return formatted
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
   },
   {
     accessorKey: "birthDate",
-    header: "Wiek",
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        title="Wiek"
+      />
+    ),
     cell: ({ row }) => {
       const dateToCompare = new Date(row.getValue("birthDate"))
       const formatted = formatDistanceToNow(dateToCompare, { locale: pl })
@@ -107,6 +113,9 @@ export const columns: ColumnDef<Animal>[] = [
           break
       }
       return formatted
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
     },
   },
 ]

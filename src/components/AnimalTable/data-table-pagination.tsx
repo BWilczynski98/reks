@@ -14,7 +14,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
       <div className="flex-1 text-sm text-muted-foreground">
         {/* {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s) selected. */}
       </div>
-      <div className="flex flex-col items-end space-y-2 md:flex-row md:items-center lg:space-x-8 lg:space-y-0">
+      <div className="flex flex-col items-end space-y-2 md:flex-row md:space-y-0 md:items-center lg:space-x-8">
         <div className="flex items-center space-x-2">
           <p className="text-sm font-medium">Wiersze na strone</p>
           <Select
