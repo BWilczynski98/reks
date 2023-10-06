@@ -1,21 +1,12 @@
 "use client"
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-
 import { useGetAllAnimalQuery } from "@/redux/services/animalApi"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Button } from "../ui/button"
+import { Plus } from "lucide-react"
 import Link from "next/link"
-import { Cat, Dog, Plus, PlusSquare } from "lucide-react"
+import { Button } from "../ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import { columns } from "./columns"
+import { DataTable } from "./data-table"
 
 export const AnimalTable = () => {
   const { data } = useGetAllAnimalQuery()
@@ -40,33 +31,10 @@ export const AnimalTable = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <Table>
-          {/* <TableCaption>Tabela przedstawia listę podopiecznych stowarzyszenia Reks.</TableCaption> */}
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">Imię</TableHead>
-              <TableHead>Gatunek</TableHead>
-              <TableHead>Płeć</TableHead>
-              <TableHead>Gdzie przebywa</TableHead>
-              <TableHead>Wiek</TableHead>
-              <TableHead>Czas w schronisku</TableHead>
-              <TableHead className="text-right">Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data?.map((animal, i) => (
-              <TableRow key={i}>
-                <TableCell className="font-medium">{animal.name}</TableCell>
-                <TableCell>{animal.type}</TableCell>
-                <TableCell>{animal.gender}</TableCell>
-                <TableCell>{animal.residence}</TableCell>
-                <TableCell>{animal.birthDate}</TableCell>
-                <TableCell>{animal.timeWhenFound}</TableCell>
-                <TableCell className="text-right">{animal.status}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <DataTable
+          columns={columns}
+          data={data ? data : []}
+        />
       </CardContent>
     </Card>
   )

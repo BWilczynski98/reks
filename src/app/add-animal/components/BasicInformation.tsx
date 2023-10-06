@@ -3,9 +3,9 @@ import { Calendar } from "@/components/ui/calendar"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { AnimalType } from "@/types/animal"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { cn } from "@/lib/utils"
+import { AnimalGender, AnimalType } from "@/types/animal"
 import format from "date-fns/format"
 import pl from "date-fns/locale/pl"
 import { CalendarIcon } from "lucide-react"
@@ -53,13 +53,13 @@ export const BasicInformation = ({ form }: TypeBasicInformation) => {
                   <FormControl>
                     <RadioGroupItem value={AnimalType.CAT} />
                   </FormControl>
-                  <FormLabel className="font-normal">Kot</FormLabel>
+                  <FormLabel className="font-normal">{AnimalType.CAT}</FormLabel>
                 </FormItem>
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
                     <RadioGroupItem value={AnimalType.DOG} />
                   </FormControl>
-                  <FormLabel className="font-normal">Pies</FormLabel>
+                  <FormLabel className="font-normal">{AnimalType.DOG}</FormLabel>
                 </FormItem>
               </RadioGroup>
             </FormControl>
@@ -81,15 +81,15 @@ export const BasicInformation = ({ form }: TypeBasicInformation) => {
               >
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
-                    <RadioGroupItem value="female" />
+                    <RadioGroupItem value={AnimalGender.FEMALE} />
                   </FormControl>
-                  <FormLabel className="font-normal">Samica</FormLabel>
+                  <FormLabel className="font-normal">{AnimalGender.FEMALE}</FormLabel>
                 </FormItem>
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
-                    <RadioGroupItem value="male" />
+                    <RadioGroupItem value={AnimalGender.MALE} />
                   </FormControl>
-                  <FormLabel className="font-normal">Samiec</FormLabel>
+                  <FormLabel className="font-normal">{AnimalGender.MALE}</FormLabel>
                 </FormItem>
               </RadioGroup>
             </FormControl>
