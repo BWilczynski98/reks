@@ -7,6 +7,7 @@ import { formatDistanceToNow } from "date-fns"
 import { pl } from "date-fns/locale"
 import Link from "next/link"
 import { DataTableColumnHeader } from "./data-table-column-header"
+import { DataTableRowActions } from "./date-table-actions"
 
 export const columns: ColumnDef<Animal>[] = [
   {
@@ -117,5 +118,9 @@ export const columns: ColumnDef<Animal>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <DataTableRowActions animalId={row.original.id} />,
   },
 ]
