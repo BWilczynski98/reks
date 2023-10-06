@@ -121,6 +121,12 @@ export const columns: ColumnDef<Animal>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions animalId={row.original.id} />,
+    cell: ({ row }) => (
+      <DataTableRowActions
+        animalId={row.original.id}
+        animalName={row.original.name}
+        animalPhotoUrls={row.original.photoUrl}
+      />
+    ),
   },
 ]

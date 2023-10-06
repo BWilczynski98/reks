@@ -1,3 +1,4 @@
+import type { NextResponse } from "next/server"
 import { emptySplitApi as api } from "../emptyApi"
 
 const injectedRtkApi = api.injectEndpoints({
@@ -16,7 +17,14 @@ const injectedRtkApi = api.injectEndpoints({
     getAllTemporaryHomes: build.query<TemporaryHomeType[], void>({
       query: () => "temporaryHome/get",
     }),
-    // getAnimalById: build.query<Animal, string>({
+    deleteAnimal: build.mutation<NextResponse, { id: string }>({
+      query: (id) => ({
+        url: "animal/delete",
+        method: "DELETE",
+        body: id,
+      }),
+      // getAnimalById: build.query<Animal, string>({
+    }),
     //   query: (petId) => ({
     //     url: `/animal/getById?id=${petId}`,
     //   }),
@@ -41,6 +49,7 @@ export const {
   // useGetAllAnimalQuery,
   useCreateAnimalMutation,
   useGetAllTemporaryHomesQuery,
+  useDeleteAnimalMutation,
   // useGetAnimalByIdQuery,
   // useGetAnimalHealthCardQuery,
   // useCreateAllergyRecordInHealthCardMutation,

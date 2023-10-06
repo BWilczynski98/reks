@@ -154,7 +154,7 @@ export const TemporaryHomeForm = ({ form }: TypeTemporaryHomeForm) => {
                   required
                   maxLength={9}
                   inputMode="numeric"
-                  pattern="[-0-9]*"
+                  pattern="[0-9]*"
                   type="text"
                   {...field}
                   value={formatPhoneNumber(field.value as string)}
@@ -254,7 +254,7 @@ export const TemporaryHomeForm = ({ form }: TypeTemporaryHomeForm) => {
                   autoComplete="new-off"
                   maxLength={6}
                   inputMode="numeric"
-                  pattern="[-0-9]*"
+                  pattern="[0-9]*"
                   type="text"
                   {...field}
                   value={formatPostalCode(field.value ? field.value : "")}
