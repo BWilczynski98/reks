@@ -85,7 +85,6 @@ export function AnimalForm() {
 
   // Form submit function
   async function onSubmit(formData: AnimalFormData) {
-    console.log(formData)
     await handleStartLoading()
     await createAnimal({
       photoUrl: urls,
@@ -205,7 +204,7 @@ export function AnimalForm() {
               )}
             />
             {/* Approval buttons */}
-            <div className="w-full flex justify-end space-x-6">
+            <div className="w-full flex flex-col md:flex-row justify-end gap-2 md:gap-6">
               <Button
                 variant={"outline"}
                 type="button"
@@ -214,6 +213,7 @@ export function AnimalForm() {
                 <Link href="/">Anuluj</Link>
               </Button>
               <Button
+                className="order-first md:order-last"
                 type="submit"
                 disabled={isLoading}
               >
