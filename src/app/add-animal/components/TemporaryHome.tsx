@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { formatPhoneNumber, formatPostalCode } from "@/lib/utils"
+import { formatPostalCode } from "@/lib/utils"
 import React, { useEffect, useState } from "react"
 import type { UseFormReturn } from "react-hook-form"
 import type { AnimalFormData } from "./schema"
@@ -157,7 +157,6 @@ export const TemporaryHomeForm = ({ form }: TypeTemporaryHomeForm) => {
                   pattern="[0-9]*"
                   type="text"
                   {...field}
-                  value={formatPhoneNumber(field.value as string)}
                 />
               </FormControl>
 
@@ -257,7 +256,6 @@ export const TemporaryHomeForm = ({ form }: TypeTemporaryHomeForm) => {
                   pattern="[0-9]*"
                   type="text"
                   {...field}
-                  value={formatPostalCode(field.value ? field.value : "")}
                 />
               </FormControl>
 

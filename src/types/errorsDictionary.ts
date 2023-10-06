@@ -8,7 +8,7 @@ export enum Errors {
   INCORRECT_REGEX_PASSWORD = "Hasło zawiera niedozwolone znaki",
   INCORRECT_CONFIRM_PASSWORD = "Hasła muszą być takie same",
   INCORRECT_DATE = "Podana data jest niepoprawna",
-  POSTAL_CODE = "Kod pocztowy jest nieprawidłowy, powinien się składać z 5 cyfr (00-000)",
+  POSTAL_CODE = "Kod pocztowy jest nieprawidłowy, powinien się składać z 5 cyfr",
   MIN_LENGTH_PASSWORD = "Hasło musi się składać z conajmniej 6 znaków",
   MIN_LENGTH_POSTAL_CODE = "Kod pocztowy jest za krótki. Powinien składać się z 5 znaków",
   MAX_LENGTH_POSTAL_CODE = "Kod pocztowy jest za długi. Powinien składać się z 5 znaków",

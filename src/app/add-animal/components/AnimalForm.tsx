@@ -165,7 +165,6 @@ export function AnimalForm() {
                           }
                         },
                       })
-                      console.log(res)
                       setUrls((prev) => [...prev, res.url])
                     } catch (err) {
                       updateFileProgress(addedFileState.key, "ERROR")

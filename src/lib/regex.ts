@@ -5,5 +5,5 @@ export const regex = {
   objectNumber: /^[a-zA-Z0-9]+$/,
   numbersWithDash: /^[-0-9]+$/,
   withoutSpecialAndPolishLanguageCharacters: /^(?!.*[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ])[a-zA-Z0-9!@#$%^&*()-_=+]+$/,
-  postalCode: /^[0-9]{5}/,
+  postalCode: /^[-0-9]{5}/,
 }

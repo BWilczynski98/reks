@@ -1,17 +1,17 @@
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import type { UseFormReturn } from "react-hook-form"
+import type { AnimalFormData } from "./schema"
+import { Input } from "@/components/ui/input"
 import { cn, formatPostalCode } from "@/lib/utils"
-import { AnimalResidence } from "@/types/animal"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Button } from "@/components/ui/button"
 import format from "date-fns/format"
 import pl from "date-fns/locale/pl"
 import { CalendarIcon } from "lucide-react"
-import type { UseFormReturn } from "react-hook-form"
-import type { AnimalFormData } from "./schema"
+import { Calendar } from "@/components/ui/calendar"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { AnimalResidence } from "@/types/animal"
 
 type TypeLocationInformation = {
   form: UseFormReturn<AnimalFormData>
@@ -75,7 +75,7 @@ export const LocationInformation = ({ form }: TypeLocationInformation) => {
                       pattern="[0-9]*"
                       type="text"
                       {...field}
-                      value={formatPostalCode(field.value as string)}
+                      // value={formatPostalCode(field.value as string)}
                       maxLength={5}
                     />
                   </FormControl>
