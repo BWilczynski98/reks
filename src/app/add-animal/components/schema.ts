@@ -8,14 +8,6 @@ export const animalFormSchema = yup.object({
   name: yup.string().required(Errors.EMPTY_FIELD).matches(regex.names, Errors.INCORRECT_REGEX),
   type: yup.string().required(Errors.EMPTY_FIELD),
   gender: yup.string().required(Errors.EMPTY_FIELD),
-  race: yup.string().when("genre", {
-    is: AnimalType.DOG,
-    then: (schema) => schema.required(Errors.EMPTY_FIELD).matches(regex.names, Errors.INCORRECT_REGEX),
-  }),
-  size: yup.string().when("type", {
-    is: AnimalType.DOG,
-    then: (schema) => schema.required(Errors.EMPTY_FIELD),
-  }),
   birthDate: yup.date().required(Errors.EMPTY_FIELD).typeError(Errors.INCORRECT_DATE),
   cityWhereFound: yup
     .string()

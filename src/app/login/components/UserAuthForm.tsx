@@ -47,7 +47,7 @@ export const UserAuthForm = () => {
         router.push(Routes.DASHBOARD)
         handleCloseAlert()
       }
-      handleStopLoading
+      handleStopLoading()
     })
   }
 

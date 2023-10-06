@@ -1,12 +1,10 @@
 import { AnimalTable, NavigationBar } from "@/components"
-import { Button } from "@/components/ui/button"
-import { Suspense } from "react"
 import { SkeletonDemo } from "@/components/Skeleton/Skeleton"
-import Link from "next/link"
+import { Suspense } from "react"
 
 export default function Home() {
   return (
-    <main className="container space-y-5 pb-5">
+    <main className="px-2 sm:container space-y-5 pb-5">
       <NavigationBar />
       <section>
         <Suspense fallback={<SkeletonDemo />}>

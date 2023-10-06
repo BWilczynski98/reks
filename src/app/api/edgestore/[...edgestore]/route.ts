@@ -7,7 +7,7 @@ const es = initEdgeStore.create()
 const edgeStoreRouter = es.router({
   publicFiles: es.fileBucket({
     maxSize: 1024 * 1024 * 2, // 2MB
-    accept: ["image/jpeg", "image/png"],
+    accept: ["image/jpeg", "image/png", "image/jpg"],
   }),
 })
 const handler = createEdgeStoreNextHandler({
