@@ -8,6 +8,7 @@ import { pl } from "date-fns/locale"
 import Link from "next/link"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./date-table-actions"
+import { Badge } from "@/components/ui/badge"
 
 export const columns: ColumnDef<Animal>[] = [
   {

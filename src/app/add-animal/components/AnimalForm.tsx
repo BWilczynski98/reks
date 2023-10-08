@@ -45,6 +45,7 @@ export function AnimalForm() {
       cityTemporaryHome: "",
       postalCodeTemporaryHome: "",
       stateOfHealth: "",
+      description: "",
     },
   })
 
@@ -104,6 +105,7 @@ export function AnimalForm() {
       temporaryHomeCity: formData.cityTemporaryHome,
       temporaryHomePostalCode: formData.postalCodeTemporaryHome,
       descriptionOfHealth: formData.stateOfHealth,
+      description: formData.description,
       userId: userId,
     })
       .unwrap()
@@ -195,6 +197,22 @@ export function AnimalForm() {
                   <FormControl>
                     <Textarea
                       placeholder="Opisz stan zdrowia zwierzęcia w dniu przyjęcia"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Uwagi dodatkowe</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Dodatkowe uwagi odnośnie okoliczności zabezpieczenia zwierzęcia"
                       {...field}
                     />
                   </FormControl>

@@ -59,6 +59,7 @@ export const animalFormSchema = yup.object({
     then: (schema) => schema.required(Errors.EMPTY_FIELD).matches(regex.numbersWithDash, Errors.INCORRECT_REGEX),
   }),
   stateOfHealth: yup.string(),
+  description: yup.string(),
 })
 
 export type AnimalFormData = yup.InferType<typeof animalFormSchema>

@@ -7,14 +7,6 @@ import { signOut } from "next-auth/react"
 export const NavigationBar = () => {
   return (
     <div className="flex justify-between py-5">
-      <Image
-        src="/vercel.svg"
-        alt="Vercel Logo"
-        className="dark:invert"
-        width={100}
-        height={24}
-        priority
-      />
       <ModeToggle />
       <div>
         <Button onClick={() => signOut()}>Wyloguj</Button>

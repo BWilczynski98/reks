@@ -23,12 +23,12 @@ const injectedRtkApi = api.injectEndpoints({
         method: "DELETE",
         body: id,
       }),
-      // getAnimalById: build.query<Animal, string>({
     }),
-    //   query: (petId) => ({
-    //     url: `/animal/getById?id=${petId}`,
-    //   }),
-    // }),
+    getAnimalById: build.query<Animal, string>({
+      query: (petId) => ({
+        url: `/animal/get/byAnimalId?id=${petId}`,
+      }),
+    }),
     // getAnimalHealthCard: build.query<HealthRecords, string>({
     //   query: (animalId: string) => ({
     //     url: `/animal/healthCard/get?id=${animalId}`,
@@ -50,7 +50,8 @@ export const {
   useCreateAnimalMutation,
   useGetAllTemporaryHomesQuery,
   useDeleteAnimalMutation,
-  // useGetAnimalByIdQuery,
+  useGetAnimalByIdQuery,
+  useLazyGetAnimalByIdQuery,
   // useGetAnimalHealthCardQuery,
   // useCreateAllergyRecordInHealthCardMutation,
 } = injectedRtkApi
