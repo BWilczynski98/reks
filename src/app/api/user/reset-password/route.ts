@@ -1,8 +1,9 @@
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
-import { prisma } from "@lib/prisma"
+
 import bcrypt from "bcrypt"
-import { RequestErrors } from "@/app/types/errorsDictionary"
+import { RequestErrors } from "@/types/errorsDictionary"
+import prisma from "@/lib/prisma"
 
 const dayjs = require("dayjs")
 

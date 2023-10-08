@@ -1,50 +1,58 @@
-import { Allergy, AllergyCategory, HealthRecords } from "@/app/types/health"
+import type { NextResponse } from "next/server"
 import { emptySplitApi as api } from "../emptyApi"
-
-type AllergyRecord = {
-  animalId: string
-  category: string
-  allergen: string
-  symptoms: string
-}
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
+    getAllAnimal: build.query<Animal[], void>({
+      query: () => "animal/get",
+      transformResponse: (response: Animal[]) => response.reverse(),
+    }),
     createAnimal: build.mutation({
       query: (animal) => ({
-        url: "animal/create",
+        url: "animal/post",
         method: "POST",
         body: animal,
       }),
     }),
-    getAllAnimal: build.query<Animal[], void>({
-      query: () => "animal/get",
+    getAllTemporaryHomes: build.query<TemporaryHomeType[], void>({
+      query: () => "temporaryHome/get",
+    }),
+    deleteAnimal: build.mutation<NextResponse, { id: string }>({
+      query: (id) => ({
+        url: "animal/delete",
+        method: "DELETE",
+        body: id,
+      }),
     }),
     getAnimalById: build.query<Animal, string>({
       query: (petId) => ({
-        url: `/animal/getById?id=${petId}`,
+        url: `/animal/get/byAnimalId?id=${petId}`,
       }),
     }),
-    getAnimalHealthCard: build.query<HealthRecords, string>({
-      query: (animalId: string) => ({
-        url: `/animal/healthCard/get?id=${animalId}`,
-      }),
-    }),
-    createAllergyRecordInHealthCard: build.mutation<null, AllergyRecord>({
-      query: (allergy) => ({
-        url: "animal/healthCard/allergies/create",
-        method: "POST",
-        body: allergy,
-      }),
-    }),
+    // getAnimalHealthCard: build.query<HealthRecords, string>({
+    //   query: (animalId: string) => ({
+    //     url: `/animal/healthCard/get?id=${animalId}`,
+    //   }),
+    // }),
+    // createAllergyRecordInHealthCard: build.mutation<null, AllergyRecord>({
+    //   query: (allergy) => ({
+    //     url: "animal/healthCard/allergies/create",
+    //     method: "POST",
+    //     body: allergy,
+    //   }),
+    // }),
   }),
 })
 
 export const {
-  useCreateAnimalMutation,
   useGetAllAnimalQuery,
+  // useGetAllAnimalQuery,
+  useCreateAnimalMutation,
+  useGetAllTemporaryHomesQuery,
+  useDeleteAnimalMutation,
   useGetAnimalByIdQuery,
-  useGetAnimalHealthCardQuery,
-  useCreateAllergyRecordInHealthCardMutation,
+  useLazyGetAnimalByIdQuery,
+  // useGetAnimalHealthCardQuery,
+  // useCreateAllergyRecordInHealthCardMutation,
 } = injectedRtkApi
 export { injectedRtkApi as animalApi }

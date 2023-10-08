@@ -1,4 +1,7 @@
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toaster"
 import AuthProvider from "@/context/AuthProvider"
+import { EdgeStoreProvider } from "@/lib/edgestore"
 import { Providers } from "@/redux/provider"
 import type { Metadata } from "next"
 import "./globals.css"
@@ -10,12 +13,30 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="bg-background">
-        <AuthProvider>
-          <Providers>{children}</Providers>
-        </AuthProvider>
-      </body>
-    </html>
+    <>
+      <html
+        lang="en"
+        suppressHydrationWarning
+      >
+        <head />
+        <body>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AuthProvider>
+              <Providers>
+                <EdgeStoreProvider>
+                  {children}
+                  <Toaster />
+                </EdgeStoreProvider>
+              </Providers>
+            </AuthProvider>
+          </ThemeProvider>
+        </body>
+      </html>
+    </>
   )
 }

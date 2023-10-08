@@ -36,7 +36,7 @@ const injectedRtkApi = api.injectEndpoints({
       }),
     }),
     getListOfUsers: build.query<User[], void>({
-      query: () => "user/get",
+      query: () => "user/getAllUsers",
     }),
   }),
 })

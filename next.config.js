@@ -1,31 +1,13 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
-  experimental: {
-    serverActions: true,
-  },
+const nextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "utfs.io",
-      },
-      {
-        protocol: "https",
-        hostname: "i.natgeofe.com",
-      },
-      {
-        protocol: "https",
-        hostname: "www.hindustantimes.com",
+        hostname: "files.edgestore.dev",
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/dashboard",
-        permanent: true,
-      },
-    ]
-  },
 }
+
+module.exports = nextConfig

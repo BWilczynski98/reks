@@ -1,12 +1,10 @@
-import { Metadata } from "next"
-import React from "react"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Reks - przypominanie hasła",
+  title: "Reks manager - przypomnij hasło",
+  description: "Reks manager strona przypominania hasła użytkownika",
 }
 
-const ForgotPasswordLayout = ({ children }: { children: React.ReactNode }) => {
-  return <div>{children}</div>
+export default function LoginLayout({ children }: { children: React.ReactNode }) {
+  return <section>{children}</section>
 }
-
-export default ForgotPasswordLayout

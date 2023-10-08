@@ -1,1 +1,0 @@
-export { useComponentVisible } from "./useComponentVisible"

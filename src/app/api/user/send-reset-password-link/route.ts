@@ -1,10 +1,11 @@
-import { prisma } from "@lib/prisma"
-import { RequestErrors } from "@/app/types/errorsDictionary"
 import { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
-import { resend } from "@/app/lib/resend"
-import { EmailTemplate } from "@/app/components/UI/emails/EmailTemplate"
+
 import { randomBytes } from "crypto"
+import { RequestErrors } from "@/types/errorsDictionary"
+import prisma from "@/lib/prisma"
+import { resend } from "@/lib/resend"
+import { EmailTemplate } from "@/components"
 
 const dayjs = require("dayjs")
 
