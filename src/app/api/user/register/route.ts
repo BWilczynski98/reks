@@ -10,7 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { email, name } = body
+  const { email } = body
   const token = randomBytes(40).toString("hex")
   // body empty input validation
   if (!email) {
@@ -32,7 +32,6 @@ export async function POST(req: NextRequest) {
     data: {
       email,
       password: "",
-      name,
     },
   })
 
@@ -41,7 +40,6 @@ export async function POST(req: NextRequest) {
   })
 
   try {
-    const firstNameCapitalize = name.charAt(0).toUpperCase() + name.slice(1)
     const description =
       "Na podany adres email zostało założone konto w aplikacji reks-manager. Aby dokończyć proces rejestracji przejdz na strone aktywacji naciskając przycisk i nadaj hasło."
     const notice =
@@ -52,7 +50,7 @@ export async function POST(req: NextRequest) {
       from: "Reks <support@reks-manager.pl>",
       to: email,
       subject: "Aktywuj konto",
-      react: EmailTemplate({ firstName: firstNameCapitalize, description, notice, link, buttonTitle }),
+      react: EmailTemplate({ description, notice, link, buttonTitle }),
     })
 
     return NextResponse.json("Registration successful", { status: 201 })

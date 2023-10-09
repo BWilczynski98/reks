@@ -2,7 +2,8 @@ export enum Routes {
   LOGIN = "/login",
   REGISTER = "/register",
   FORGOT_PASSWORD = "/forgot-password",
-  DASHBOARD = "/",
+  DASHBOARD = "/dashboard",
   ADMIN = "/admin",
   ADDING_ANIMAL = "/adding-animal",
+  TEMPORARY_HOMES = "/temporary-homes",
 }

@@ -1,21 +1,20 @@
 import { Body, Button, Container, Head, Heading, Html, Tailwind, Text } from "@react-email/components"
 
 type TemplateProps = {
-  firstName: string
   description: string
   notice?: string
   link: string
   buttonTitle: string
 }
 
-export const EmailTemplate = ({ firstName, description, notice, link, buttonTitle }: TemplateProps) => {
+export const EmailTemplate = ({ description, notice, link, buttonTitle }: TemplateProps) => {
   return (
     <Html>
       <Head />
       <Tailwind>
         <Body>
           <Container className="text-neutral-950">
-            <Heading className="text-lg font-medium">Hello {firstName} 👋</Heading>
+            <Heading className="text-lg font-medium">Cześć 👋</Heading>
             <Text>{description}</Text>
             {notice ? <Text className="font-medium">{notice}</Text> : null}
             <Button

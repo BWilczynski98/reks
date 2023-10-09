@@ -1,8 +1,8 @@
+import { NextResponse } from "next/server"
 import { emptySplitApi as api } from "../emptyApi"
 
 type CreateUserProps = {
   email: string
-  name: string
 }
 
 const injectedRtkApi = api.injectEndpoints({

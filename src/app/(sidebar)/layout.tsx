@@ -10,7 +10,7 @@ export default function SidebarLayout({
       <nav>
         <Sidebar />
       </nav>
-      <div>{children}</div>
+      <div className="w-full h-screen py-20 sm:py-10 sm:overflow-auto">{children}</div>
     </section>
   )
 }

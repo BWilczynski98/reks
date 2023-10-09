@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
       from: "Reks <support@reks-manager.pl>",
       to: email,
       subject: "Resetowanie hasła",
-      react: EmailTemplate({ firstName: firstNameCapitalize, description, notice, link, buttonTitle }),
+      react: EmailTemplate({ description, notice, link, buttonTitle }),
     })
     return NextResponse.json("Send email", { status: 201 })
   } catch (error) {
