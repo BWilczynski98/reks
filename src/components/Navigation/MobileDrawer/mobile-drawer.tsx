@@ -45,64 +45,63 @@ export const MobileDrawer = ({ className }: React.HTMLAttributes<HTMLDivElement>
       <SheetTrigger className={className}>
         <Menu />
       </SheetTrigger>
-      <SheetContent
-        side={"left"}
-        className="pb-10"
-      >
+      <SheetContent side={"left"}>
         <div className={cn("h-screen flex flex-col justify-between py-6 px-2")}>
           <div className="flex items-center justify-between">
-            <h2 className="px-4 text-2xl font-semibold tracking-tight">
+            <h2 className="px-2 text-2xl font-semibold tracking-tight">
               <span className="text-primary">Reks</span> manager
             </h2>
             <ModeToggle />
           </div>
-          <div className="grow py-5 space-y-2">
-            <SheetClose asChild>
-              <Link
-                href={Routes.ADMIN}
-                className={cn(
-                  "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
-                  {
-                    "bg-accent": currentPath === Routes.ADMIN,
-                  }
-                )}
-              >
-                <div></div>
-                <div>Panel administratora</div>
-              </Link>
-            </SheetClose>
+          <div className="grow py-5 space-y-2 flex flex-col justify-between">
+            <div>
+              <SheetClose asChild>
+                <Link
+                  href={Routes.ADMIN}
+                  className={cn(
+                    "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
+                    {
+                      "bg-accent": currentPath === Routes.ADMIN,
+                    }
+                  )}
+                >
+                  <div></div>
+                  <div>Panel administratora</div>
+                </Link>
+              </SheetClose>
 
-            <SheetClose asChild>
-              <Link
-                href={Routes.DASHBOARD}
-                className={cn(
-                  "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
-                  {
-                    "bg-accent": currentPath === Routes.DASHBOARD,
-                  }
-                )}
-              >
-                <div></div>
-                <div>Panel główny</div>
-              </Link>
-            </SheetClose>
-            <SheetClose asChild>
-              <Link
-                href={Routes.TEMPORARY_HOMES}
-                className={cn(
-                  "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
-                  {
-                    "bg-accent": currentPath === Routes.TEMPORARY_HOMES,
-                  }
-                )}
-              >
-                <div></div>
-                <div>Domy tymczasowe</div>
-              </Link>
-            </SheetClose>
-          </div>
-          <div className="mb-6">
-            <UserTile />
+              <SheetClose asChild>
+                <Link
+                  href={Routes.DASHBOARD}
+                  className={cn(
+                    "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
+                    {
+                      "bg-accent": currentPath === Routes.DASHBOARD,
+                    }
+                  )}
+                >
+                  <div></div>
+                  <div>Panel główny</div>
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                <Link
+                  href={Routes.TEMPORARY_HOMES}
+                  className={cn(
+                    "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
+                    {
+                      "bg-accent": currentPath === Routes.TEMPORARY_HOMES,
+                    }
+                  )}
+                >
+                  <div></div>
+                  <div>Domy tymczasowe</div>
+                </Link>
+              </SheetClose>
+            </div>
+            <div>
+              <UserTile />
+            </div>
           </div>
         </div>
       </SheetContent>
