@@ -1,19 +1,4 @@
 "use client"
-import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
-import { useToast } from "@/components/ui/use-toast"
-import { useEdgeStore } from "@/lib/edgestore"
-import { useDeleteAnimalMutation, useGetAllAnimalQuery, useGetAnimalByIdQuery } from "@/redux/services/animalApi"
-import { AnimalGender, AnimalResidence, AnimalStatus, AnimalType } from "@/types/animal"
-import { Gender, Residence, Status, Type } from "@prisma/client"
-import { formatDistanceToNow } from "date-fns"
-import pl from "date-fns/locale/pl"
-import { PawPrint } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import React from "react"
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -23,17 +8,23 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { notFound, useRouter } from "next/navigation"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Skeleton } from "@/components/ui/skeleton"
+import { useToast } from "@/components/ui/use-toast"
+import { useEdgeStore } from "@/lib/edgestore"
+import { useDeleteAnimalMutation, useGetAllAnimalQuery, useGetAnimalByIdQuery } from "@/redux/services/animalApi"
+import { AnimalGender, AnimalResidence, AnimalStatus, AnimalType } from "@/types/animal"
 import { Routes } from "@/types/routes"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Gender, Residence, Status, Type } from "@prisma/client"
+import { formatDistanceToNow } from "date-fns"
+import pl from "date-fns/locale/pl"
+import { PawPrint } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { notFound, useRouter } from "next/navigation"
+import { useState } from "react"
 
 type Props = {
   animalId: string
@@ -46,11 +37,11 @@ type RowProps = {
 
 export const Row = ({ fieldName, value }: RowProps): React.ReactElement => {
   return (
-    <div className="flex">
-      <div className="text-neutral-400 w-full">
+    <div className="flex space-x-2">
+      <div className="text-sm md:text-base text-neutral-400 w-full">
         <p>{fieldName}:</p>
       </div>
-      <div className="w-full text-justify font-semibold">
+      <div className="text-sm md:text-base w-full text-justify font-semibold">
         {fieldName === "Dom tymczasowy" ? (
           <Link
             href={`/temporaryHomeProfile/${value}`}
@@ -94,7 +85,7 @@ const LoadingTile = () => {
 
 export const Profile = ({ animalId }: Props) => {
   const { data: animal, error } = useGetAnimalByIdQuery(animalId)
-  const [showDeleteDialog, setShowDeleteDialog] = React.useState(false)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const { toast } = useToast()
   const { edgestore } = useEdgeStore()
   const { refetch: refetchAnimalQuery } = useGetAllAnimalQuery()
@@ -169,7 +160,7 @@ export const Profile = ({ animalId }: Props) => {
         </CardHeader>
         <CardContent>
           {/* Image */}
-          <div className="flex justify-between">
+          <div className="flex flex-col space-y-4 items-center md:flex-row md:space-y-0 md:space-x-4 md:justify-between">
             <div className="relative w-52 h-52">
               {animal ? (
                 animal.photoUrl.length ? (
@@ -195,9 +186,9 @@ export const Profile = ({ animalId }: Props) => {
               )}
             </div>
             {animal ? (
-              <div className="flex flex-col gap-3 basis-full lg:basis-3/4">
+              <div className="w-full flex flex-col space-y-3 basis-2/3">
                 <div className="flex gap-2">
-                  <p className="text-xl font-semibold text-primary-700">{animal?.name}</p>
+                  <p className="text-lg md:text-xl font-semibold text-primary-700">{animal?.name}</p>
                 </div>
                 <Row
                   fieldName="Gatunek"

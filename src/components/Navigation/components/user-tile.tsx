@@ -53,7 +53,7 @@ export const UserTile = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>Zmień hasło</DropdownMenuItem>
+            <DropdownMenuItem disabled>Zmień hasło</DropdownMenuItem>
             <DropdownMenuItem onClick={() => signOut()}>Wyloguj</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

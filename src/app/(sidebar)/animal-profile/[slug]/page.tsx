@@ -8,7 +8,7 @@ export default function AnimalPage({ params }: { params: { slug: string } }) {
   return (
     <div className="container mx-auto py-5">
       <Tabs defaultValue="profile">
-        <TabsList>
+        <TabsList className="max-sm:w-full overflow-auto">
           <TabsTrigger value="profile">Profil</TabsTrigger>
           <TabsTrigger value="health-card">Karta zdrowia</TabsTrigger>
           <TabsTrigger

@@ -8,6 +8,7 @@ import { pl } from "date-fns/locale"
 import Link from "next/link"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./date-table-actions"
+import { Routes } from "@/types/routes"
 
 export const columns: ColumnDef<Animal>[] = [
   {
@@ -17,7 +18,7 @@ export const columns: ColumnDef<Animal>[] = [
       const { id } = row.original
       return (
         <Link
-          href={`/animalProfile/${id}`}
+          href={`${Routes.ANIMAL_PROFILE}/${id}`}
           className="font-semibold"
         >
           {row.getValue("name")}
