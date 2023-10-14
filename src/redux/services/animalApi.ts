@@ -15,7 +15,7 @@ const injectedRtkApi = api.injectEndpoints({
       }),
     }),
     getAllTemporaryHomes: build.query<TemporaryHomeType[], void>({
-      query: () => "temporaryHome/get",
+      query: () => "temporary-home/get",
     }),
     deleteAnimal: build.mutation<NextResponse, { id: string }>({
       query: (id) => ({
@@ -26,7 +26,7 @@ const injectedRtkApi = api.injectEndpoints({
     }),
     getAnimalById: build.query<Animal, string>({
       query: (petId) => ({
-        url: `/animal/get/byAnimalId?id=${petId}`,
+        url: `/animal/get/by-animal-id?id=${petId}`,
       }),
     }),
     // getAnimalHealthCard: build.query<HealthRecords, string>({

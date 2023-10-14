@@ -1,6 +1,6 @@
 import { regex } from "@/lib/regex"
 import { AnimalResidence, AnimalType } from "@/types/animal"
-import { Errors } from "@/types/errorsDictionary"
+import { Errors } from "@/types/errors-dictionary"
 import * as yup from "yup"
 
 export const animalFormSchema = yup.object({

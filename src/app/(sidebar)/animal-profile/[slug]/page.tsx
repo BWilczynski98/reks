@@ -1,8 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { HealthCard } from "./components/HealthCard"
-import { Profile } from "./components/Profile"
+import { HealthCard } from "./components/health-card"
+import { Profile } from "./components/profile"
 
-export default async function AnimalPage({ params }: { params: { slug: string } }) {
+export default function AnimalPage({ params }: { params: { slug: string } }) {
   const animalId = params.slug
 
   return (

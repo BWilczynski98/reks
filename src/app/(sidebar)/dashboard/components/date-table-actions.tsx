@@ -21,7 +21,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../ui/alert-dialog"
+} from "@/components/ui/alert-dialog"
+import { Routes } from "@/types/routes"
 
 type DataTableRowActionsProps = {
   animalId: string
@@ -73,7 +74,7 @@ export function DataTableRowActions({ animalId, animalName, animalPhotoUrls }: D
           align="end"
           className="w-[160px]"
         >
-          <Link href={`/animalProfile/${animalId}`}>
+          <Link href={`${Routes.ANIMAL_PROFILE}/${animalId}`}>
             <DropdownMenuItem>Otwórz profil</DropdownMenuItem>
           </Link>
           <DropdownMenuSeparator />

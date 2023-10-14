@@ -3,7 +3,7 @@ import { AuthAlert } from "@/components/AuthAlert"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Routes } from "@/types/routes"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -52,7 +52,7 @@ export const UserAuthForm = () => {
   }
 
   return (
-    <Card className="w-full md:w-2/3 lg:w-1/3">
+    <Card className="w-full max-w-lg">
       <CardHeader>
         <CardTitle>Logowanie</CardTitle>
       </CardHeader>
@@ -83,6 +83,7 @@ export const UserAuthForm = () => {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -100,6 +101,7 @@ export const UserAuthForm = () => {
                         placeholder={passwordIsVisible ? "hasło" : "•••••"}
                         {...field}
                       />
+                      <FormMessage />
                       <div className="flex items-center space-x-2 justify-end">
                         <Checkbox
                           id="passwordToggle"

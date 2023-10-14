@@ -1,1 +1,1 @@
-export { EmailTemplate } from "./EmailTemplate"
+export { EmailTemplate } from "./email-template"

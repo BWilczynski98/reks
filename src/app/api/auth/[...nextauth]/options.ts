@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma"
-import { RequestErrors } from "@/types/errorsDictionary"
+import { RequestErrors } from "@/types/errors-dictionary"
 import { Routes } from "@/types/routes"
 import bcrypt from "bcrypt"
 import type { NextAuthOptions } from "next-auth"

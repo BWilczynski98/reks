@@ -2,7 +2,7 @@ import { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
 import { randomBytes } from "crypto"
-import { RequestErrors } from "@/types/errorsDictionary"
+import { RequestErrors } from "@/types/errors-dictionary"
 import prisma from "@/lib/prisma"
 import { resend } from "@/lib/resend"
 import { EmailTemplate } from "@/components"

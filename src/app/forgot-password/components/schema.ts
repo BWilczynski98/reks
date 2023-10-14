@@ -1,4 +1,4 @@
-import { Errors } from "@/types/errorsDictionary"
+import { Errors } from "@/types/errors-dictionary"
 import * as yup from "yup"
 
 export const userForgotPasswordFormSchema = yup.object({

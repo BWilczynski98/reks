@@ -1,4 +1,5 @@
 "use client"
+import { AuthAlert } from "@/components"
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -9,13 +10,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
-import { useCreateAnimalMutation } from "@/redux/services/animalApi"
+import { useAlert } from "@/hooks"
 import { useCreateUserMutation, useGetListOfUsersQuery } from "@/redux/services/userApi"
-import { Errors } from "@/types/errorsDictionary"
+import { Severity } from "@/types/alert"
+import { Errors } from "@/types/errors-dictionary"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Loader2 } from "lucide-react"
 import { useState } from "react"
@@ -34,21 +35,23 @@ type FormData = yup.InferType<typeof schema>
 
 export const UserCreationForm = () => {
   const form = useForm<FormData>({ resolver: yupResolver(schema), defaultValues: { email: "" } })
-  const [isLoading, setIsLoading] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const { toast } = useToast()
-  const [createUser] = useCreateUserMutation()
+  const [createUser, { isLoading, isError }] = useCreateUserMutation()
   const { refetch: refetchListOfUsers } = useGetListOfUsersQuery()
+
+  const [userEmailAddress, setUserEmailAddress] = useState("")
+  const { alert, handleOpen: handleOpenAlert, handleClose: handleCloseAlert } = useAlert()
 
   function onSubmit(formData: FormData) {
     if (formData.email) {
+      const email = form.getValues("email")
+      setUserEmailAddress(email)
       setShowDeleteDialog(true)
     }
   }
 
   const sendEmail = async () => {
-    const userEmailAddress = await form.getValues("email")
-    await setIsLoading(true)
     await createUser({ email: userEmailAddress })
       .unwrap()
       .then(() => {
@@ -58,72 +61,66 @@ export const UserCreationForm = () => {
         refetchListOfUsers()
         form.resetField("email")
       })
-      .catch((err) =>
+      .catch((err) => {
+        handleOpenAlert({ severity: Severity.DESTRUCTIVE, data: err.data })
         toast({
           description: "Coś poszło nie tak, spróbuj jeszcze raz",
         })
-      )
+      })
       .finally(() => {
         setShowDeleteDialog(false)
-        setIsLoading(false)
       })
   }
 
   return (
     <>
-      <Card className="w-2/5">
-        <CardHeader>
-          <CardTitle>Zarejestruj konto użytkownika</CardTitle>
-          <CardDescription>
-            Ten formularz pozwala utworzyć konto użytkownika. Wypełnij pole adresem email na który zostanie przesłany
-            link, dzięki któremu użytkownik będzie mógł zarejestrować się do aplikacji.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-8"
-              autoComplete="off"
-            >
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        required
-                        type="email"
-                        placeholder="adres@email.com"
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <div>
-                <Button
-                  className="order-first md:order-last w-full"
-                  type="submit"
-                >
-                  Stwórz konto
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-8 w-full max-w-sm"
+          autoComplete="off"
+        >
+          {isError ? (
+            <AuthAlert
+              variant={alert.severity}
+              description={alert.message}
+            />
+          ) : null}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Adres email</FormLabel>
+                <FormControl>
+                  <Input
+                    required
+                    type="email"
+                    placeholder="adres@email.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Na podany adres email, zostanie wysłany link pozwalający użytkownikowi zarejestrować się do aplikacji.
+                </FormDescription>
+              </FormItem>
+            )}
+          />
+          <div>
+            <Button type="submit">Stwórz konto</Button>
+          </div>
+        </form>
+      </Form>
       <AlertDialog
         open={showDeleteDialog}
         onOpenChange={setShowDeleteDialog}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Czy na pewno chcesz usunąć profil zwierzęcia?</AlertDialogTitle>
+            <AlertDialogTitle>Czy na pewno chcesz wysłać link aktywacyjny?</AlertDialogTitle>
             <AlertDialogDescription>
-              Potwierdzając usuniesz profil&nbsp;<span className="font-bold"></span>, tej czynności nie można cofnąć.
+              Potwierdzając wysyłasz link umożliwiający rejestracje konta w aplikacji. Link zostanie wysłany na
+              konto&nbsp;<span className="font-bold">{userEmailAddress}</span>.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

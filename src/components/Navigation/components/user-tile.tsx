@@ -29,7 +29,10 @@ export const UserTile = () => {
     <>
       {user ? (
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger
+            asChild
+            className="py-6"
+          >
             <Button
               asChild
               variant="ghost"

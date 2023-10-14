@@ -1,6 +1,6 @@
 import { EmailTemplate } from "@/components"
 import prisma from "@/lib/prisma"
-import { RequestErrors } from "@/types/errorsDictionary"
+import { RequestErrors } from "@/types/errors-dictionary"
 import { randomBytes } from "crypto"
 import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"

@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils"
 import { Routes } from "@/types/routes"
-import { ModeToggle } from "../ModeToggle/ModeToggle"
-import { NavLink } from "./components/NavLink"
-import { UserTile } from "./components/UserTile"
+import { ModeToggle } from "../../ModeToggle/mode-toggle"
+import { NavLink } from "../components/nav-link"
+import { UserTile } from "../components/user-tile"
 
 export const Sidebar = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
   return (

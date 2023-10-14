@@ -1,7 +1,6 @@
-export { AnimalTable } from "./AnimalTable"
 export { AuthAlert } from "./AuthAlert"
 export { ModeToggle } from "./ModeToggle"
 export { MultiFileDropzone } from "./MultiFileDropzone"
-export { Sidebar } from "./Sidebar"
+export { Sidebar } from "./Navigation"
 export { SingleImageDropzone } from "./SingleImageDropzone"
 export { EmailTemplate } from "./email"

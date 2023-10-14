@@ -41,7 +41,7 @@ export const UserForgotPasswordForm = () => {
   }
 
   return (
-    <Card className="w-full md:w-2/3 lg:w-1/3">
+    <Card className="w-full max-w-lg">
       <CardHeader>
         <CardTitle>{isSubmitted ? "Sprawdź skrzynkę email" : "Przypominanie hasła"}</CardTitle>
       </CardHeader>

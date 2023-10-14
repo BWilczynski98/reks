@@ -2,7 +2,7 @@ import type { NextRequest } from "next/server"
 import { NextResponse } from "next/server"
 
 import bcrypt from "bcrypt"
-import { RequestErrors } from "@/types/errorsDictionary"
+import { RequestErrors } from "@/types/errors-dictionary"
 import prisma from "@/lib/prisma"
 
 const dayjs = require("dayjs")
@@ -27,11 +27,11 @@ export async function POST(req: NextRequest) {
   const userId = token[0].userId
 
   if (tokenIsOutdated) {
-    return new NextResponse(RequestErrors.OUTDATED_TOKEN, { status: 400 })
+    return NextResponse.json({ message: RequestErrors.OUTDATED_TOKEN, success: false })
   }
 
   if (tokenIsUsed) {
-    return new NextResponse(RequestErrors.IS_USED_TOKEN, { status: 400 })
+    return NextResponse.json({ message: RequestErrors.IS_USED_TOKEN, success: false })
   }
 
   await prisma.user.update({

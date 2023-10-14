@@ -1,9 +1,9 @@
-import { UserCreationForm } from "./components/user-creation-form"
+import { UsersManagementPanel } from "./components/users-management-panel"
 
 export default function AdminPage() {
   return (
     <main className="container mx-auto">
-      <UserCreationForm />
+      <UsersManagementPanel />
     </main>
   )
 }

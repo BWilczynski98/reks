@@ -1,1 +1,1 @@
-export { MultiFileDropzone } from "./MultiFileDropzone"
+export { MultiFileDropzone } from "./multi-file-dropzone"

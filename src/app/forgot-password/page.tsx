@@ -1,6 +1,6 @@
 "use client"
 import { useLayoutEffect } from "react"
-import { UserForgotPasswordForm } from "./components/UserForgotPasswordForm"
+import { UserForgotPasswordForm } from "./components/user-forgot-password-form"
 
 import { Routes } from "@/types/routes"
 import { useSession } from "next-auth/react"

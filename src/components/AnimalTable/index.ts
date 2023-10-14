@@ -1,1 +1,0 @@
-export { AnimalTable } from "./AnimalTable"

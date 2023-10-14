@@ -1,1 +1,1 @@
-export { useDisclose } from "./useDisclose"
+export { useDisclose } from "./use-disclose"

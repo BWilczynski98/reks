@@ -1,1 +1,1 @@
-export { ModeToggle } from "./ModeToggle"
+export { ModeToggle } from "./mode-toggle"

@@ -1,6 +1,6 @@
 "use client"
 import { useLayoutEffect } from "react"
-import { UserAuthForm } from "./components/UserAuthForm"
+import { UserAuthForm } from "./components/user-auth-form"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Routes } from "@/types/routes"

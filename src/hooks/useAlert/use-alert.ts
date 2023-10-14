@@ -1,5 +1,5 @@
 import { Severity as SeverityType } from "@/types/alert"
-import { RequestErrors } from "@/types/errorsDictionary"
+import { RequestErrors } from "@/types/errors-dictionary"
 
 import { useState } from "react"
 

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import type { NextResponse } from "next/server"
 import { emptySplitApi as api } from "../emptyApi"
 
 type CreateUserProps = {
@@ -28,15 +28,21 @@ const injectedRtkApi = api.injectEndpoints({
         body: user,
       }),
     }),
-    changeUserPassword: build.mutation({
-      query: (user) => ({
+    changeUserPassword: build.mutation<NextResponse, { tokenToResetPassword: string; password: string }>({
+      query: ({ tokenToResetPassword, password }) => ({
         url: "/user/reset-password",
         method: "POST",
-        body: user,
+        body: { tokenToResetPassword, password },
       }),
     }),
     getListOfUsers: build.query<User[], void>({
-      query: () => "user/getAllUsers",
+      query: () => "user/get-all-users",
+    }),
+    deleteAccount: build.mutation<NextResponse, string>({
+      query: (id) => ({
+        url: `/user/delete?id=${id}`,
+        method: "DELETE",
+      }),
     }),
   }),
 })
@@ -47,5 +53,6 @@ export const {
   useSendResetPasswordLinkMutation,
   useChangeUserPasswordMutation,
   useGetListOfUsersQuery,
+  useDeleteAccountMutation,
 } = injectedRtkApi
 export { injectedRtkApi as userApi }

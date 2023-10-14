@@ -1,1 +1,1 @@
-export { SingleImageDropzone } from "./SingleImageDropzone"
+export { SingleImageDropzone } from "./single-image-dropzone"

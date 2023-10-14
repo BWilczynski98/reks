@@ -1,1 +1,1 @@
-export { AuthAlert } from "./AuthAlert"
+export { AuthAlert } from "./auth-alert"
