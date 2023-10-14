@@ -71,7 +71,7 @@ export const MobileDrawer = ({ className }: React.HTMLAttributes<HTMLDivElement>
 
             <SheetClose asChild>
               <Link
-                href={Routes.ADMIN}
+                href={Routes.DASHBOARD}
                 className={cn(
                   "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
                   {
@@ -89,7 +89,7 @@ export const MobileDrawer = ({ className }: React.HTMLAttributes<HTMLDivElement>
                 className={cn(
                   "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
                   {
-                    "bg-accent": currentPath === Routes.ADMIN,
+                    "bg-accent": currentPath === Routes.TEMPORARY_HOMES,
                   }
                 )}
               >
