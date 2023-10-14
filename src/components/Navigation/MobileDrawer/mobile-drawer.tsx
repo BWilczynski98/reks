@@ -45,7 +45,10 @@ export const MobileDrawer = ({ className }: React.HTMLAttributes<HTMLDivElement>
       <SheetTrigger className={className}>
         <Menu />
       </SheetTrigger>
-      <SheetContent side={"left"}>
+      <SheetContent
+        side={"left"}
+        className="pb-10"
+      >
         <div className={cn("h-screen flex flex-col justify-between py-6 px-2")}>
           <div className="flex items-center justify-between">
             <h2 className="px-4 text-2xl font-semibold tracking-tight">
