@@ -6,7 +6,7 @@ export default function AnimalPage({ params }: { params: { slug: string } }) {
   const animalId = params.slug
 
   return (
-    <div className="container mx-auto py-5">
+    <div className="container mx-auto">
       <Tabs defaultValue="profile">
         <TabsList className="max-sm:w-full overflow-auto">
           <TabsTrigger value="profile">Profil</TabsTrigger>
