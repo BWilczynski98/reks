@@ -80,7 +80,7 @@ export function DataTableRowActions({ userId, userEmailAddress }: DataTableRowAc
             className="text-red-600"
             disabled={buttonDeactivationCondition}
           >
-            Usuń
+            Dezaktywuj
           </DropdownMenuItem>
           <DropdownMenuSeparator />
         </DropdownMenuContent>

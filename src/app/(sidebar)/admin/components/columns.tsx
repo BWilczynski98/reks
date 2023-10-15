@@ -31,13 +31,13 @@ export const columns: ColumnDef<User>[] = [
       return <span>{active ? "Konto aktywowane" : "Konto nieaktywne"}</span>
     },
   },
-  {
-    id: "actions",
-    cell: ({ row }) => (
-      <DataTableRowActions
-        userId={row.original.id}
-        userEmailAddress={row.original.email}
-      />
-    ),
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => (
+  //     <DataTableRowActions
+  //       userId={row.original.id}
+  //       userEmailAddress={row.original.email}
+  //     />
+  //   ),
+  // },
 ]

@@ -37,7 +37,7 @@ const LoadingTile = () => {
 
 export const AnimalTable = () => {
   const { data, isFetching } = useGetAllAnimalQuery()
-
+  const newTable = data?.concat(data, data, data, data, data, data, data, data, data, data)
   return (
     <Card>
       <CardHeader className="flex-row justify-between">
@@ -63,7 +63,7 @@ export const AnimalTable = () => {
         ) : (
           <DataTable
             columns={columns}
-            data={data ? data : []}
+            data={newTable ? newTable : []}
           />
         )}
       </CardContent>

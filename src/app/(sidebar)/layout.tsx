@@ -10,11 +10,11 @@ export default function SidebarLayout({
     <section className="flex flex-col lg:flex-row">
       <div>
         <Sidebar className="max-lg:hidden" />
-        <div className="px-2 py-2 sm:container items-center lg:hidden">
+        <div className="px-2 py-2 items-center lg:hidden">
           <MobileDrawer />
         </div>
       </div>
-      <div className="w-full h-screen pt-10 pb-28 overflow-auto">{children}</div>
+      <div className="w-full h-screen overflow-auto border py-10">{children}</div>
     </section>
   )
 }
