@@ -140,7 +140,7 @@ export function AnimalForm() {
               dropzoneOptions={{
                 accept: { "image/png": [".png"], "image/jpg": [".jpg"], "image/jpeg": [".jpeg"] },
                 maxFiles: 4,
-                maxSize: 1024 * 1024 * 2, // 2MB
+                maxSize: 1024 * 1024 * 5, // 2MB
               }}
               className="w-full h-40"
               value={fileStates}
