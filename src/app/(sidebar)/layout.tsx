@@ -14,7 +14,7 @@ export default function SidebarLayout({
           <MobileDrawer />
         </div>
       </div>
-      <div className="w-full h-screen overflow-auto border py-10">{children}</div>
+      <div className="w-full h-screen overflow-auto py-10">{children}</div>
     </section>
   )
 }
