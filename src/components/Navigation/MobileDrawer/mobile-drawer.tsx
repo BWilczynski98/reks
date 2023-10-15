@@ -46,15 +46,15 @@ export const MobileDrawer = ({ className }: React.HTMLAttributes<HTMLDivElement>
         <Menu />
       </SheetTrigger>
       <SheetContent side={"left"}>
-        <div className={cn("min-h-screen flex flex-col justify-between py-6 px-2 max-md:pb-[30%] h-full")}>
+        <div className={cn("min-h-screen flex flex-col justify-between py-6 px-2  h-full")}>
           <div className="flex items-center justify-between">
             <h2 className="px-2 text-2xl font-semibold tracking-tight">
               <span className="text-primary">Reks</span> manager
             </h2>
             <ModeToggle />
           </div>
-          <div className="grow py-5 space-y-2 flex flex-col justify-between border-2 border-red-500">
-            <div className="border-2 border-blue-500 h-[100%] flex flex-col justify-between">
+          <div className="grow py-5 space-y-2 flex flex-col justify-between">
+            <div className="h-full flex flex-col justify-between">
               <div className="space-y-2">
                 <SheetClose asChild>
                   <Link
@@ -100,12 +100,9 @@ export const MobileDrawer = ({ className }: React.HTMLAttributes<HTMLDivElement>
                   </Link>
                 </SheetClose>
               </div>
-              <div className="md:hidden">
+              <div>
                 <UserTile />
               </div>
-            </div>
-            <div className="hidden md:block">
-              <UserTile />
             </div>
           </div>
         </div>
