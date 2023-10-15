@@ -46,60 +46,65 @@ export const MobileDrawer = ({ className }: React.HTMLAttributes<HTMLDivElement>
         <Menu />
       </SheetTrigger>
       <SheetContent side={"left"}>
-        <div className={cn("min-h-screen flex flex-col justify-between py-6 px-2 max-md:pb-[30%]")}>
+        <div className={cn("min-h-screen flex flex-col justify-between py-6 px-2 max-md:pb-[30%] h-full")}>
           <div className="flex items-center justify-between">
             <h2 className="px-2 text-2xl font-semibold tracking-tight">
               <span className="text-primary">Reks</span> manager
             </h2>
             <ModeToggle />
           </div>
-          <div className="grow py-5 space-y-2 flex flex-col justify-between">
-            <div>
-              <SheetClose asChild>
-                <Link
-                  href={Routes.ADMIN}
-                  className={cn(
-                    "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
-                    {
-                      "bg-accent": currentPath === Routes.ADMIN,
-                    }
-                  )}
-                >
-                  <div></div>
-                  <div>Panel administratora</div>
-                </Link>
-              </SheetClose>
+          <div className="grow py-5 space-y-2 flex flex-col justify-between border-2 border-red-500">
+            <div className="border-2 border-blue-500 h-[80%] flex flex-col justify-between">
+              <div className="space-y-2">
+                <SheetClose asChild>
+                  <Link
+                    href={Routes.ADMIN}
+                    className={cn(
+                      "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
+                      {
+                        "bg-accent": currentPath === Routes.ADMIN,
+                      }
+                    )}
+                  >
+                    <div></div>
+                    <div>Panel administratora</div>
+                  </Link>
+                </SheetClose>
 
-              <SheetClose asChild>
-                <Link
-                  href={Routes.DASHBOARD}
-                  className={cn(
-                    "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
-                    {
-                      "bg-accent": currentPath === Routes.DASHBOARD,
-                    }
-                  )}
-                >
-                  <div></div>
-                  <div>Panel główny</div>
-                </Link>
-              </SheetClose>
-              <SheetClose asChild>
-                <Link
-                  href={Routes.TEMPORARY_HOMES}
-                  className={cn(
-                    "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
-                    {
-                      "bg-accent": currentPath === Routes.TEMPORARY_HOMES,
-                    }
-                  )}
-                >
-                  <div></div>
-                  <div>Domy tymczasowe</div>
-                </Link>
-              </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href={Routes.DASHBOARD}
+                    className={cn(
+                      "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
+                      {
+                        "bg-accent": currentPath === Routes.DASHBOARD,
+                      }
+                    )}
+                  >
+                    <div></div>
+                    <div>Panel główny</div>
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href={Routes.TEMPORARY_HOMES}
+                    className={cn(
+                      "flex items-center space-x-2 hover:bg-accent duration-150 ease-in rounded-md p-2 w-full font-semibold",
+                      {
+                        "bg-accent": currentPath === Routes.TEMPORARY_HOMES,
+                      }
+                    )}
+                  >
+                    <div></div>
+                    <div>Domy tymczasowe</div>
+                  </Link>
+                </SheetClose>
+              </div>
+              <div className="md:hidden">
+                <UserTile />
+              </div>
             </div>
-            <div>
+            <div className="hidden md:block">
               <UserTile />
             </div>
           </div>
