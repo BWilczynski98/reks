@@ -54,7 +54,7 @@ export const MobileDrawer = ({ className }: React.HTMLAttributes<HTMLDivElement>
             <ModeToggle />
           </div>
           <div className="grow py-5 space-y-2 flex flex-col justify-between">
-            <div className="h-3/4 flex flex-col justify-between">
+            <div className="h-[90%] flex flex-col justify-between">
               <div className="space-y-2">
                 <SheetClose asChild>
                   <Link
