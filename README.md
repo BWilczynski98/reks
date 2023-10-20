@@ -20,8 +20,51 @@ Here're some of the project's best features:
 *   Easy and clear filtering and sorting of entries
 *   A profile of the animal which includes a health card that contains information about treatments received medications taken allergies and veterinary visits made.
 *   Creating an adoption profile (A second platform is being created aimed at residents of Malbork County through which they will be able to browse adoption announcements of the Reks shelter)
+  
+<h2>💻 Built with</h2>
 
-<h2>Project Screenshots:</h2>
+Technologies used in the project:
+
+*   Next.js 13.4
+*   Redux
+*   RTK Query
+*   TailwindCSS
+*   TanStack Table
+*   React Email
+*   React Hook Form
+*   Yup
+*   NextAuth
+*   Prisma.io
+*   Neon.db
+*   Resend
+*   shadcn/ui
+*   TypeScript
+*   Edge Store
+*   date-fns
+*   bcrypt
+*   react-dropzone
+
+<h2>🛠️ Installation Steps:</h2>
+
+<p>1. Instalation</p>
+
+```
+npm install
+```
+
+<p>2. Build</p>
+
+```
+npm run build
+```
+
+<p>3. Start</p>
+
+```
+npm run start
+```
+
+<h2>📷 Project Screenshots:</h2>
 
 **Login screen**
 
@@ -54,26 +97,3 @@ Here're some of the project's best features:
 <img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132919.png" alt="project-screenshot">
 <img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132951.png" alt="project-screenshot">
 <img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20133004.png" alt="project-screenshot">
-  
-<h2>💻 Built with</h2>
-
-Technologies used in the project:
-
-*   Next.js 13.4
-*   Redux
-*   RTK Query
-*   TailwindCSS
-*   TanStack Table
-*   React Email
-*   React Hook Form
-*   Yup
-*   NextAuth
-*   Prisma.io
-*   Neon.db
-*   Resend
-*   shadcn/ui
-*   TypeScript
-*   Edge Store
-*   date-fns
-*   bcrypt
-*   react-dropzone
