@@ -1,37 +1,79 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center" id="title">Reks manager</h1>
 
-## Getting Started
+<p align="center"><img src="https://socialify.git.ci/BWilczynski98/reks/image?description=1&amp;descriptionEditable=Shelter%20management%20application&amp;font=Inter&amp;language=1&amp;name=1&amp;owner=1&amp;pattern=Circuit%20Board&amp;theme=Auto" alt="project-image"></p>
 
-First, run the development server:
+<p id="description">The app is dedicated to managing a shelter for abandoned animals in the small Polish town of Malbork.</p>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<h2>🧐 Features</h2>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Here're some of the project's best features:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+*   Light/dark mode toggle
+*   User authentication
+*   Role support - admin/user
+*   Email support for user support - account activation password reset
+*   Full RWD support
+*   Full keyboard support for forms, buttons and switches
+*   Adding entries to the database on the animal
+*   Adding entries to the temporary home database
+*   Support for uploading photos and files
+*   Easy and clear filtering and sorting of entries
+*   A profile of the animal which includes a health card that contains information about treatments received medications taken allergies and veterinary visits made.
+*   Creating an adoption profile (A second platform is being created aimed at residents of Malbork County through which they will be able to browse adoption announcements of the Reks shelter)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<h2>Project Screenshots:</h2>
 
-## Learn More
+**Login screen**
 
-To learn more about Next.js, take a look at the following resources:
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132903.png" alt="project-screenshot">
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Dashboard**
+  
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20131900.png" alt="project-screenshot">
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132514.png" alt="project-screenshot">
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132535.png" alt="project-screenshot">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Form for creating a new entry about an animal in the database**
 
-## Deploy on Vercel
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132553.png" alt="project-screenshot">
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Animal profile**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# manager
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132830.png" alt="project-screenshot">
+
+**Admin panel and user registration flow**
+
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20133220.png" alt="project-screenshot">
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132853.png" alt="project-screenshot">
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20124952.png" alt="project-screenshot">
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20133028.png" alt="project-screenshot">
+
+**Resetting user password flow**
+
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132912.png" alt="project-screenshot">
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132919.png" alt="project-screenshot">
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20132951.png" alt="project-screenshot">
+<img src="https://github.com/BWilczynski98/reks/blob/main/screenshots/Zrzut%20ekranu%202023-10-20%20133004.png" alt="project-screenshot">
+  
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+*   Next.js 13.4
+*   Redux
+*   RTK Query
+*   TailwindCSS
+*   TanStack Table
+*   React Email
+*   React Hook Form
+*   Yup
+*   NextAuth
+*   Prisma.io
+*   Neon.db
+*   Resend
+*   shadcn/ui
+*   TypeScript
+*   Edge Store
+*   date-fns
+*   bcrypt
+*   react-dropzone
