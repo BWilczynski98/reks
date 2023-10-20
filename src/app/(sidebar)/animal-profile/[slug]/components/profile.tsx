@@ -164,7 +164,7 @@ export const Profile = ({ animalId }: Props) => {
         <CardContent>
           {/* Image */}
           <div className="flex flex-col space-y-4 items-center md:flex-row md:space-y-0 md:space-x-4 md:justify-between">
-            <div className="relative w-52 h-52">
+            <div className="relative w-64 h-64">
               {animal ? (
                 animal.photoUrl.length ? (
                   <AspectRatio ratio={1 / 1}>

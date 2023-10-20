@@ -1,5 +1,7 @@
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import React from "react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { VisitForm } from "./visit-form"
 
 export const HealthCard = () => {
   return (
@@ -7,7 +9,19 @@ export const HealthCard = () => {
       <CardHeader>
         <CardTitle>Karta zdrowia</CardTitle>
       </CardHeader>
-      <CardContent></CardContent>
+      <CardContent>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline">Dodaj wizyte</Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-sm">
+            <DialogHeader>
+              <DialogTitle>Formularz wizyty</DialogTitle>
+            </DialogHeader>
+            <VisitForm />
+          </DialogContent>
+        </Dialog>
+      </CardContent>
     </Card>
   )
 }
