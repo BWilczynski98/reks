@@ -96,8 +96,11 @@ export const Profile = ({ animalId }: Props) => {
     notFound()
   }
 
+  //FIXME: Incorrect formatting when address does not include building and premises number
   // Formatting the address where the animal was caught
+  console.log(animal?.locationWhereFound)
   const whereFoundParts = animal?.locationWhereFound.split(" ")
+  console.log(whereFoundParts)
   let formattedAddress = ""
   if (whereFoundParts) {
     const city = whereFoundParts[0]
@@ -161,7 +164,7 @@ export const Profile = ({ animalId }: Props) => {
         <CardContent>
           {/* Image */}
           <div className="flex flex-col space-y-4 items-center md:flex-row md:space-y-0 md:space-x-4 md:justify-between">
-            <div className="relative w-52 h-52">
+            <div className="relative w-64 h-64">
               {animal ? (
                 animal.photoUrl.length ? (
                   <AspectRatio ratio={1 / 1}>
@@ -205,7 +208,7 @@ export const Profile = ({ animalId }: Props) => {
                 />
                 <Row
                   fieldName="Miejsce zabezpieczenia"
-                  value={formattedAddress}
+                  value={animal.locationWhereFound}
                 />
                 <Row
                   fieldName="Gdzie przebywa"
