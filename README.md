@@ -1,6 +1,6 @@
 <h1 align="center" id="title">Reks manager</h1>
 
-<p align="center"><img src="https://socialify.git.ci/BWilczynski98/reks/image?description=1&amp;descriptionEditable=Shelter%20management%20application&amp;font=Inter&amp;language=1&amp;name=1&amp;owner=1&amp;pattern=Circuit%20Board&amp;theme=Auto" alt="project-image"></p>
+<p align="center"><img src="https://socialify.git.ci/BWilczynski98/reks/image?description=1&amp;descriptionEditable=Shelter%20management%20application&amp;font=Inter&amp;language=1&amp;name=1&amp;owner=1&amp;pattern=Circuit%20Board&amp;theme=Auto](https://socialify.git.ci/BWilczynski98/reks/image?description=1&descriptionEditable=Shelter%20management%20application&language=1&name=1&owner=1&theme=Auto" alt="project-image"></p>
 
 <p id="description">The app is dedicated to managing a shelter for abandoned animals in the small Polish town of Malbork.</p>
 
